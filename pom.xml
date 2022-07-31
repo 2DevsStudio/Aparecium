@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.ignitedev</groupId>
+  <artifactId>Aparecium</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+
+  <name>Aparecium</name>
+
+  <description>"The Revealing Charm will reveal invisible ink and messages hidden by magical means.
+    Simply tap a book or parchment with your wand and any hidden message will be revealed. This
+    spell is more than sufficient to overcome the basic concealing charms and so is a favourite of
+    parents and teachers alike."
+  </description>
+  <properties>
+    <java.version>1.18</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <url>2DevsStudio.com</url>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
+
+  <repositories>
+    <repository>
+      <id>papermc-repo</id>
+      <url>https://repo.papermc.io/repository/maven-public/</url>
+    </repository>
+    <repository>
+      <id>sonatype</id>
+      <url>https://oss.sonatype.org/content/groups/public/</url>
+    </repository>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+    <repository>
+      <id>aikar</id>
+      <url>https://repo.aikar.co/content/groups/aikar/</url>
+    </repository>
+    <repository>
+      <id>dmulloy2-repo</id>
+      <url>https://repo.dmulloy2.net/repository/public/</url>
+    </repository>
+    <repository>
+      <id>codemc-repo</id>
+      <url>https://repo.codemc.io/repository/maven-public/</url>
+    </repository>
+    <repository>
+      <id>placeholderapi</id>
+      <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+    </repository>
+    <repository>
+      <id>sk89q-repo</id>
+      <url>https://maven.enginehub.org/repo/</url>
+    </repository>
+  </repositories>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.intellectualsites.bom</groupId>
+        <artifactId>bom-1.18.x</artifactId>
+        <version>1.11</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.papermc.paper</groupId>
+      <artifactId>paper-api</artifactId>
+      <version>1.19-R0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Integrations  -->
+
+    <dependency>
+      <artifactId>holographicdisplays-api</artifactId>
+      <groupId>com.gmail.filoghost.holographicdisplays</groupId>
+      <scope>provided</scope>
+      <version>2.4.0</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>adventure-text-minimessage</artifactId>
+      <groupId>net.kyori</groupId>
+      <version>4.11.0</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>com.sk89q.worldguard</groupId>
+      <artifactId>worldguard-bukkit</artifactId>
+      <version>7.0.7-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fastasyncworldedit</groupId>
+      <artifactId>FastAsyncWorldEdit-Core</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fastasyncworldedit</groupId>
+      <artifactId>FastAsyncWorldEdit-Bukkit</artifactId>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>FastAsyncWorldEdit-Core</artifactId>
+          <groupId>*</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- IO  -->
+
+    <dependency>
+      <groupId>com.github.2DevsStudio</groupId>
+      <artifactId>SimpleJSONConfig</artifactId>
+      <version>1.2</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- MISC  -->
+
+    <dependency>
+      <artifactId>item-nbt-api-plugin</artifactId>
+      <groupId>de.tr7zw</groupId>
+      <scope>provided</scope>
+      <version>2.8.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>31.1-jre</version>
+    </dependency>
+
+
+    <dependency>
+      <artifactId>lombok</artifactId>
+      <groupId>org.projectlombok</groupId>
+      <scope>provided</scope>
+      <version>1.18.24</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>annotations</artifactId>
+      <groupId>org.jetbrains</groupId>
+      <scope>provided</scope>
+      <version>23.0.0</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>commons-lang3</artifactId>
+      <groupId>org.apache.commons</groupId>
+      <version>3.12.0</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>acf-paper</artifactId>
+      <groupId>co.aikar</groupId>
+      <version>0.5.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>ProtocolLib</artifactId>
+      <groupId>com.comphenix.protocol</groupId>
+      <scope>provided</scope>
+      <version>4.7.0</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>placeholderapi</artifactId>
+      <groupId>me.clip</groupId>
+      <scope>provided</scope>
+      <version>2.10.10</version>
+    </dependency>
+
+  </dependencies>
+</project>

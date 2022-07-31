@@ -1,0 +1,62 @@
+package com.ignitedev.aparecium;
+
+/*
+ * "Very smart ow`l` you've got there."
+ *
+ *  ~~ Tom noting Hedwig's impressive intelligence
+ */
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * @implNote This class is used as Logger for your plugin as well for whole Aparecium, you can
+ *     obtain it instances with {@link #getOrCreate(Aparecium)} or{@link
+ *     #getAPARECIUM_HEDWIG_LOGGER()} for main aparecium logger, by using this one you are logging
+ *     messages as Aparecium, not your plugin
+ */
+public class HedwigLogger {
+
+  @Getter private static final Map<Aparecium, HedwigLogger> hedwigCache = new HashMap<>();
+
+  /**
+   * @implNote Hedwig logger that's global for Aparecium
+   */
+  @Getter
+  private static final HedwigLogger APARECIUM_HEDWIG_LOGGER =
+      getOrCreate(ApareciumMain.getInstance());
+
+  @Setter private Logger logger = null;
+
+  /**
+   * @param aparecium your main class instance
+   * @return hedwig saved cached for aparecium or new dedicated hedwig
+   */
+  public static HedwigLogger getOrCreate(Aparecium aparecium) {
+    if (hedwigCache.containsKey(aparecium)) {
+      return hedwigCache.get(aparecium);
+    }
+    HedwigLogger hedwigLogger = new HedwigLogger();
+
+    hedwigLogger.setLogger(aparecium.getLogger());
+    hedwigCache.put(aparecium, hedwigLogger);
+
+    return hedwigLogger;
+  }
+
+  public void info(String text) {
+    logger.log(Level.INFO, text);
+  }
+
+  public void error(String text) {
+    logger.log(Level.SEVERE, text);
+  }
+
+  public void warning(String text) {
+    logger.log(Level.WARNING, text);
+  }
+}
