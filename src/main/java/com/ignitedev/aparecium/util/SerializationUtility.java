@@ -1,11 +1,14 @@
+/*
+ * Copyright (c) 2022.  Made by 2DevsStudio LLC ( https://2devsstudio.com/ ) using one of our available slaves; IgniteDEV
+ */
+
 package com.ignitedev.aparecium.util;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import lombok.experimental.UtilityClass;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public final class SerializationUtility {

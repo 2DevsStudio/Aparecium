@@ -1,4 +1,13 @@
+/*
+ * Copyright (c) 2022.  Made by 2DevsStudio LLC ( https://2devsstudio.com/ ) using one of our available slaves; IgniteDEV
+ */
+
 package com.ignitedev.aparecium.util.collections;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
+import static java.util.Spliterator.IMMUTABLE;
+import static java.util.Spliterator.ORDERED;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -8,11 +17,6 @@ import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
-import static com.google.common.base.Preconditions.checkArgument;
-import static java.util.Objects.requireNonNull;
-import static java.util.Spliterator.IMMUTABLE;
-import static java.util.Spliterator.ORDERED;
 
 /**
  * A tool to randomly select elements from collections.

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2022.  Made by 2DevsStudio LLC ( https://2devsstudio.com/ ) using one of our available slaves; IgniteDEV
+ */
+
 package com.ignitedev.aparecium.sorting;
 
 /*
@@ -29,8 +33,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SortingHat<T extends Comparable<T>> {
 
-  private Set<T> collection = new ConcurrentSkipListSet<>();
   private final Map<String, Predicate<? super T>> filters = new HashMap<>();
+  private Set<T> collection = new ConcurrentSkipListSet<>();
 
   public SortingHat(Set<T> value) {
     this.collection = value;
