@@ -22,4 +22,7 @@ import lombok.experimental.UtilityClass;
 public class Constants {
 
   public static final String DEFAULT_FACTORY = "DEFAULT";
+
+  public static final int ITEMBASE_ITEMS_IN_ROW = 5;
+
 }
