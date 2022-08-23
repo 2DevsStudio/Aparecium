@@ -7,6 +7,7 @@ package com.ignitedev.aparecium.item;
 import com.ignitedev.aparecium.enums.ItemType;
 import com.ignitedev.aparecium.enums.Rarity;
 import com.ignitedev.aparecium.interfaces.Identifiable;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import lombok.Builder;
@@ -16,14 +17,19 @@ import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @implNote Base representation of item in Aparecium
  */
 @Data
 @SuperBuilder(toBuilder = true)
-public abstract class MagicItem implements Cloneable, Identifiable {
+public abstract class MagicItem implements Cloneable, Identifiable, Comparable<MagicItem> {
+
   protected String id;
+
+  private final Instant itemSaveInstant = Instant.now();
+
   @Builder.Default protected Material material = Material.AIR;
   /**
    * @implNote Item Type useful for sorting and categorizing
@@ -48,6 +54,7 @@ public abstract class MagicItem implements Cloneable, Identifiable {
    */
   @Singular protected Map<String, Object> tags;
 
+
   /**
    * @param amount amount of itemstack you'd like to get
    * @return Prepared itemstack with all specified values and methods
@@ -67,5 +74,14 @@ public abstract class MagicItem implements Cloneable, Identifiable {
     clone.id = this.id;
 
     return clone;
+  }
+  @Override
+  public int compareTo(@NotNull MagicItem compareTo) {
+    int compare = Long.compare(itemSaveInstant.getEpochSecond(), compareTo.getItemSaveInstant().getEpochSecond());
+
+    if (compare != 0) {
+      return compare;
+    }
+    return itemSaveInstant.getNano() - compareTo.getItemSaveInstant().getNano();
   }
 }
