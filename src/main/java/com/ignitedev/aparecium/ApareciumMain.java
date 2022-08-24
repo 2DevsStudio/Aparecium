@@ -10,7 +10,18 @@ package com.ignitedev.aparecium;
  *  ~~ Hermione using the spell on Tom Riddle's diary
  */
 
+import com.ignitedev.aparecium.command.custom.CustomCommand;
+import com.ignitedev.aparecium.command.custom.CustomCommandProcessor;
+import com.ignitedev.aparecium.config.CustomCommandsBase;
+import com.ignitedev.aparecium.util.ReflectionUtility;
+import com.twodevsstudio.simplejsonconfig.SimpleJSONConfig;
+import com.twodevsstudio.simplejsonconfig.api.Config;
+import com.twodevsstudio.simplejsonconfig.def.Serializer;
+import java.lang.reflect.Field;
 import lombok.Getter;
+import lombok.SneakyThrows;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
 
 /**
  * @implNote Aparecium Main engine, this is implementation of Aparecium, as well it is perfect
@@ -32,8 +43,31 @@ public class ApareciumMain extends Aparecium {
   @Override
   public void onEnabling() {
     instance = this;
+    Serializer.getInst().setGson(new ApareciumGsonBuilder().build());
+    SimpleJSONConfig.INSTANCE.register(this);
+
+    registerCustomCommands();
   }
 
   @Override
   public void onDisabling() {}
+
+  @SneakyThrows
+  private void registerCustomCommands(){
+    CustomCommandsBase commandsBase = Config.getConfig(CustomCommandsBase.class);
+    Field bukkitCommandMap = ReflectionUtility.getField(Bukkit.getServer().getClass(), "commandMap");
+    CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+
+    for (CustomCommand value : commandsBase.getSavedCommands().values()) {
+      commandMap.register(
+            value.getCommandName(),
+            new CustomCommandProcessor(
+                value.getCommandName(),
+                "Permission: " + value.getCommandPermission(),
+                value.getCommandName(),
+                value.getCommandAliases()));
+      }
+
+
+  }
 }
