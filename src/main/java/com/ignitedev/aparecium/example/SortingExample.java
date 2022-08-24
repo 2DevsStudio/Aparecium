@@ -26,8 +26,9 @@ public class SortingExample {
     playerSort.addAll(List.of(new ExamplePlayer(10,  false), new ExamplePlayer(11, false)));
     // add elements to collection, added element is automatically sorted using it Comparator
 
-    playerSort.sort(Comparator.comparing(examplePlayer -> examplePlayer.level));
-    // sort players by level
+    @Example
+    Set<ExamplePlayer> sort = playerSort.sort(Comparator.comparing(examplePlayer -> examplePlayer.level));
+    // sort players by level ( sort returns clone of list which is sorted, not going to affect original )
 
     playerSort.addFilter("gays-only", examplePlayer -> examplePlayer.gay);
     playerSort.addFilter("level-3-only", examplePlayer -> examplePlayer.level == 3);

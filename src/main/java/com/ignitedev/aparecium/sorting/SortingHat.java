@@ -62,7 +62,7 @@ public class SortingHat<T extends Comparable<T>> {
     for (Predicate<? super T> value : filters.values()) {
       stream = stream.filter(value);
     }
-    return stream.distinct().collect(Collectors.toCollection(ConcurrentSkipListSet::new));
+    return stream.collect(Collectors.toCollection(ConcurrentSkipListSet::new));
   }
 
   public Set<T> getCollection() {
