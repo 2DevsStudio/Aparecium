@@ -15,8 +15,10 @@ import org.bukkit.Material;
 /**
  * @implNote These class has example usages of hologram api
  */
+@Example
 public class HologramExample {
 
+  @Example
   public void createHologram(Aparecium apareciumInstance) {
     SimpleBaseHologram firstExampleHologram =
         new SimpleBaseHologram(

@@ -10,30 +10,37 @@ import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
 /**
  * @implNote These class has example usages of item api
  */
+@Example
 public class ItemExample {
 
-    @Autowired // autowired fields HAVE to be STATIC
-    private static ItemBase itemBase;
+  @Autowired // autowired fields HAVE to be STATIC
+  private static ItemBase itemBase;
 
 
-    public void createItem() {
-        Item item = Item.builder().id("test").name("test").itemType(ItemType.COMMON)
-            .addDescription("test desc").build();
+  @Example
+  public void createItem() {
+    @Example
+    Item item = Item.builder().id("test").name("test").itemType(ItemType.COMMON)
+        .addDescription("test desc").build();
 
-        DropItem build = DropItem.builder().dropChance(0.5).id("dropItemTest")
-            .itemType(ItemType.COMMON).addDescription("test").build();
-    }
+    @Example
+    DropItem build = DropItem.builder().dropChance(0.5).id("dropItemTest")
+        .itemType(ItemType.COMMON).addDescription("test").build();
+  }
 
-    public void saveItem(){
-        Item item = Item.builder().id("test").name("test").itemType(ItemType.COMMON)
-            .addDescription("test desc").build();
+  @Example
+  public void saveItem(){
+    Item item = Item.builder().id("test").name("test").itemType(ItemType.COMMON)
+        .addDescription("test desc").build();
 
-        itemBase.saveItem(item);
-    }
+    itemBase.saveItem(item);
+  }
 
-    public void getItemFromRepository() {
-        MagicItem byId = itemBase.getById("default");
-    }
+  @Example
+  public void getItemFromRepository() {
+    @Example
+    MagicItem byId = itemBase.getById("default");
+  }
 
 
 }
