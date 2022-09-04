@@ -1,11 +1,10 @@
 package com.ignitedev.aparecium.config;
 
-
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.item.MagicItem;
 import com.ignitedev.aparecium.item.basic.Item;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.interfaces.Configuration;
-import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
 import org.bukkit.Material;
@@ -22,14 +21,14 @@ public class ItemBase extends Config {
    * @implNote This item is returned if none item with specified id was found
    */
   private Item noneItem =
-      Item.builder().material(Material.BARRIER).name("Couldn't find item, check typed id").build();
+      Item.builder().material(Material.BARRIER).name(new ApareciumComponent("Couldn't find item, check typed id")).build();
 
   /**
-   * @implNote please note that this method save and reload config, if you have any pending changes in your config
-   * file then it might be overridden
+   * @implNote please note that this method save and reload config, if you have any pending changes
+   *     in your config file then it might be overridden
    * @param magicItem item to save
    */
-  public void saveItem(MagicItem magicItem){
+  public void saveItem(MagicItem magicItem) {
     savedItems.put(magicItem.getId(), magicItem);
 
     save();
@@ -38,21 +37,15 @@ public class ItemBase extends Config {
 
   @NotNull
   public MagicItem getById(String itemId) {
-    return ((Item) savedItems.getOrDefault(itemId, this.noneItem.clone().toBuilder().name(itemId).build())).clone();
+    return ((Item)
+            savedItems.getOrDefault(itemId,
+                this.noneItem.clone().toBuilder().name(new ApareciumComponent(itemId)).build()))
+        .clone();
   }
 
   private Map<String, MagicItem> exampleItems() {
-    Map<String, MagicItem> map = new HashMap<>();
-
-    map.put(
+    return Map.of(
         "default",
-        Item.builder()
-            .id("default")
-            .material(Material.DIRT)
-            .name("<yellow>DEFAULT")
-            .build());
-
-    return map;
+        Item.builder().id("default").material(Material.DIRT).name(new ApareciumComponent("<yellow>DEFAULT")).build());
   }
-
 }
