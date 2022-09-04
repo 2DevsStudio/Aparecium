@@ -19,8 +19,8 @@ import org.bukkit.block.BlockState;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * @implNote This Gson Builder is used for SimpleJsonConfig .json files processing to provide type adapters for
- * Aparecium stuff
+ * @implNote This Gson Builder is used for SimpleJsonConfig .json files processing to provide type
+ *     adapters for Aparecium stuff
  */
 @Data
 public class ApareciumGsonBuilder {
@@ -48,6 +48,4 @@ public class ApareciumGsonBuilder {
   public Gson build() {
     return gsonBuilder.create();
   }
-
 }
-

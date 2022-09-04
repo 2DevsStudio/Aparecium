@@ -25,13 +25,12 @@ public class MagicItemRepository implements Repository<MagicItem> {
   }
 
   @Nullable
-  public MagicItem findByItemStack(ItemStack itemStack){
+  public MagicItem findByItemStack(ItemStack itemStack) {
     NBTItem nbtItem = new NBTItem(itemStack, true);
     String id = nbtItem.getString("id");
 
     return findById(id);
   }
-
 
   @Override
   public void remove(String identifier) {

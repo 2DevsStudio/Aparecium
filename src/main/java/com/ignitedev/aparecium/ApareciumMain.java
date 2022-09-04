@@ -53,21 +53,20 @@ public class ApareciumMain extends Aparecium {
   public void onDisabling() {}
 
   @SneakyThrows
-  private void registerCustomCommands(){
+  private void registerCustomCommands() {
     CustomCommandsBase commandsBase = Config.getConfig(CustomCommandsBase.class);
-    Field bukkitCommandMap = ReflectionUtility.getField(Bukkit.getServer().getClass(), "commandMap");
+    Field bukkitCommandMap =
+        ReflectionUtility.getField(Bukkit.getServer().getClass(), "commandMap");
     CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
 
     for (CustomCommand value : commandsBase.getSavedCommands().values()) {
       commandMap.register(
-            value.getCommandName(),
-            new CustomCommandProcessor(
-                value.getCommandName(),
-                "Permission: " + value.getCommandPermission(),
-                value.getCommandName(),
-                value.getCommandAliases()));
-      }
-
-
+          value.getCommandName(),
+          new CustomCommandProcessor(
+              value.getCommandName(),
+              "Permission: " + value.getCommandPermission(),
+              value.getCommandName(),
+              value.getCommandAliases()));
+    }
   }
 }

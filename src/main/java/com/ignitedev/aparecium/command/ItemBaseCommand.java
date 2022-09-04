@@ -22,26 +22,25 @@ import org.bukkit.entity.Player;
 @CommandPermission("aparecium.itembase")
 public class ItemBaseCommand extends BaseCommand {
 
-  @Autowired
-  private static ItemBase itemBase;
+  @Autowired private static ItemBase itemBase;
 
   @Default
   @HelpCommand
   @CommandPermission("aparecium.itembase.help")
-  public void onHelp(Player player){
+  public void onHelp(Player player) {
     for (Entry<String, RegisteredCommand> key : this.getSubCommands().entries()) {
-        MessageUtility.send(player, "<blue>/itembase <purple>" + key.getValue().getSyntaxText());
+      MessageUtility.send(player, "<blue>/itembase <purple>" + key.getValue().getSyntaxText());
     }
   }
 
   @Subcommand("list")
   @CommandPermission("aparecium.itembase.list")
-  public void onList(Player player){
+  public void onList(Player player) {
     StringBuilder stringBuilder = new StringBuilder("<red>Items \n");
     int rowCounter = 0;
 
     for (Entry<String, MagicItem> entry : itemBase.getSavedItems().entrySet()) {
-      if(rowCounter >= Constants.ITEMBASE_ITEMS_IN_ROW){
+      if (rowCounter >= Constants.ITEMBASE_ITEMS_IN_ROW) {
         stringBuilder.append("\n");
         rowCounter = 0;
       }
@@ -67,13 +66,14 @@ public class ItemBaseCommand extends BaseCommand {
 
   @Subcommand("get")
   @CommandPermission("aparecium.itembase.get")
-  public void onGet(Player player, String id, @Optional int amount){
+  public void onGet(Player player, String id, @Optional int amount) {
     itemBase.getById(id).give(player, amount <= 0 ? 1 : amount);
   }
 
   @Subcommand("give")
   @CommandPermission("aparecium.itembase.give")
-  public void onGive(CommandSender ignoredCommandSender, OnlinePlayer target, String id, @Optional int amount){
+  public void onGive(
+      CommandSender ignoredCommandSender, OnlinePlayer target, String id, @Optional int amount) {
     itemBase.getById(id).give(target.getPlayer(), amount <= 0 ? 1 : amount);
   }
 }
