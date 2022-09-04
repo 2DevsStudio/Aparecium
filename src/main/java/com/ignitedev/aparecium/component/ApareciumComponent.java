@@ -3,6 +3,7 @@ package com.ignitedev.aparecium.component;
 import com.ignitedev.aparecium.util.text.TextUtility;
 import java.util.List;
 import java.util.function.Supplier;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
@@ -12,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 @Data
 @Builder
+@AllArgsConstructor
 public class ApareciumComponent {
 
   @NotNull
