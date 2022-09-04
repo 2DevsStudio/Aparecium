@@ -10,9 +10,9 @@ public interface Usable<T> {
 
   String getCallbackId();
 
-//  void onUse(List<Callback<T>> callbacks);
-//
-//  void onUse(Callback<T> callback);
+  //  void onUse(List<Callback<T>> callbacks);
+  //
+  //  void onUse(Callback<T> callback);
 
   void onUse(Consumer<T> consumer);
 

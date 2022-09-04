@@ -3,7 +3,6 @@ package com.ignitedev.aparecium.config;
 import com.ignitedev.aparecium.gui.Layout;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.interfaces.Configuration;
-import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
@@ -15,13 +14,12 @@ public class GuiBase extends Config {
 
   private Map<String, Layout> savedLayouts = exampleLayouts();
 
-
   /**
-   * @implNote please note that this method save and reload config, if you have any pending changes in your config
-   * file then it might be overridden
+   * @implNote please note that this method save and reload config, if you have any pending changes
+   *     in your config file then it might be overridden
    * @param layout layout to save
    */
-  public void saveLayout(Layout layout){
+  public void saveLayout(Layout layout) {
     // todo
 
     save();
@@ -29,17 +27,14 @@ public class GuiBase extends Config {
   }
 
   @NotNull
-  public Layout getById(String layoutId){
+  public Layout getById(String layoutId) {
     // todo
     return null;
   }
 
   private Map<String, Layout> exampleLayouts() {
-    Map<String, Layout> map = new HashMap<>();
-
     // todo
-
-    return map;
+//    return Map.of("testLayout", new Layout());
+    return null;
   }
-
 }

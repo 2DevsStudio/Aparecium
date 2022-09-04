@@ -23,9 +23,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * @implNote base implementation of Hologram, if you want to create your own implementation you can
- *     extend that class look at {@link com.ignitedev.aparecium.hologram.SimpleBaseHologram} it is
- *     simple implementation of that class
+ * @implNote abstraction of Hologram, if you want to create your own implementation you can extend
+ *     that class look at {@link com.ignitedev.aparecium.hologram.SimpleBaseHologram} it is simple
+ *     implementation of that class
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -34,10 +34,10 @@ public abstract class AbstractBaseHologram implements BaseHologram {
   /**
    * @implNote hologram cached instance, not applicable for serialization
    */
-  @Nullable private transient Hologram hologram;
+  @Nullable protected transient Hologram hologram;
 
-  private String id;
-  private Location location;
+  protected String id;
+  protected Location location;
 
   /**
    * @implNote you can create hologram entry by {@link HologramEntry#HologramEntry(String,
@@ -45,7 +45,7 @@ public abstract class AbstractBaseHologram implements BaseHologram {
    */
   @Singular("line")
   @NotNull
-  private List<HologramEntry> lines;
+  protected List<HologramEntry> lines;
 
   /**
    * @implNote placeholder system, you can simply create placeholder by {@link
@@ -53,7 +53,7 @@ public abstract class AbstractBaseHologram implements BaseHologram {
    */
   @Singular("data")
   @NotNull
-  private List<Placeholder> placeholderData;
+  protected List<Placeholder> placeholderData;
 
   public AbstractBaseHologram(
       String id,
