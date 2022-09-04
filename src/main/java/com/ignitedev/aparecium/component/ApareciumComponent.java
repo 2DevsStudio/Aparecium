@@ -55,6 +55,26 @@ public class ApareciumComponent {
   }
 
   @Nullable
+  public String getAsString() {
+    List<String> asStrings = getAsStrings();
+
+    if (asStrings != null && !asStrings.isEmpty()) {
+      return asStrings.get(0);
+    }
+    return null;
+  }
+
+  @Nullable
+  public Component getAsComponent() {
+    List<Component> asComponents = getAsComponents();
+
+    if (asComponents != null && !asComponents.isEmpty()) {
+      return asComponents.get(0);
+    }
+    return null;
+  }
+
+  @Nullable
   public List<Component> getAsComponents() {
     if (!strings.isEmpty()) {
       return TextUtility.colorizeToComponent(strings);
