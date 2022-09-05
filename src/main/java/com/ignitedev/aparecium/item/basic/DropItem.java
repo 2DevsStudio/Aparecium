@@ -19,6 +19,9 @@ import org.bukkit.inventory.ItemStack;
 @EqualsAndHashCode(callSuper = true)
 public class DropItem extends Item {
 
+  /**
+   * @implNote Global drop chance if not included in {{@link #dropChancesForMaterials}}
+   */
   private double dropChance;
 
   /**
@@ -40,6 +43,11 @@ public class DropItem extends Item {
 
   @Override
   public DropItem clone() {
-    return (DropItem) super.clone();
+    DropItem clone = ((DropItem) super.clone());
+
+    clone.dropChance = this.dropChance;
+    clone.dropChancesForMaterials = this.dropChancesForMaterials;
+
+    return clone;
   }
 }
