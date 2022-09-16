@@ -38,6 +38,19 @@ public class Layout extends AbstractLayout {
     super(id, layoutTitle, layoutSize, inventoryType, layoutBackgroundLayer, layers, content);
   }
 
+  public Layout(String id, int layoutSize) {
+    super(id, layoutSize);
+    this.id = id;
+    this.layoutSize = layoutSize;
+  }
+
+  public Layout(String id, @Nullable String layoutTitle, InventoryType inventoryType) {
+    super(id, layoutTitle, inventoryType);
+    this.id = id;
+    this.layoutTitle = layoutTitle;
+    this.inventoryType = inventoryType;
+  }
+
   public Layout(AbstractLayoutBuilder<?, ?> builder) {
     super(builder);
   }
