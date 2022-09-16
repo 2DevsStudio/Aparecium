@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.Nullable;
@@ -42,6 +43,21 @@ public class Layout extends AbstractLayout {
   }
 
   @Override
+  public Inventory createLayout() {
+    Inventory createdInventory;
+    String layoutTitle = this.layoutTitle == null ? "" : this.layoutTitle;
+
+    if (this.inventoryType == InventoryType.CHEST) {
+      createdInventory = Bukkit.createInventory(null, this.layoutSize, layoutTitle);
+    } else {
+      createdInventory = Bukkit.createInventory(null, this.inventoryType, layoutTitle);
+    }
+    fill(createdInventory, true, false);
+
+    return createdInventory;
+  }
+
+  @Override
   public void fill(Inventory inventory, boolean fillBackground, boolean force) {
     if (!force) {
       if (inventory.getType() != this.inventoryType) {
@@ -60,7 +76,9 @@ public class Layout extends AbstractLayout {
     }
     this.content.forEach(
         (slot, itemId) -> inventory.setItem(slot, itemBase.getById(itemId).toItemStack(1)));
-    fillBackground(inventory);
+    if (fillBackground) {
+      fillBackground(inventory);
+    }
   }
 
   @Override
