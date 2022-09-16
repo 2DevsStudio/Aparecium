@@ -5,6 +5,7 @@
 package com.ignitedev.aparecium.item.basic;
 
 import com.ignitedev.aparecium.Aparecium;
+import com.ignitedev.aparecium.util.MathUtility;
 import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -39,6 +40,13 @@ public class DropItem extends Item {
         .getMagicItemFactories()
         .getDefaultFactory()
         .toItemStack(this, amount);
+  }
+
+  /**
+   * @return try your luck with {{{@link #dropChance}}}
+   */
+  public boolean tryLuck() {
+    return MathUtility.getRandomPercent(dropChance);
   }
 
   @Override
