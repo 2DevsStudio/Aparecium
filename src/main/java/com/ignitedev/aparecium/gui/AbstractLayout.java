@@ -63,8 +63,14 @@ public abstract class AbstractLayout
   @SneakyThrows
   public AbstractLayout clone() {
     AbstractLayout clone = (AbstractLayout) super.clone();
-    // todo
+
     clone.id = this.id;
+    clone.layoutTitle = this.layoutTitle;
+    clone.layoutSize = this.layoutSize;
+    clone.inventoryType = this.inventoryType;
+    clone.layoutBackgroundLayer = this.layoutBackgroundLayer;
+    clone.layers = this.layers;
+    clone.content = this.content;
 
     return clone;
   }
