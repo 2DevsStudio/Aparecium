@@ -4,6 +4,7 @@
 
 package com.ignitedev.aparecium.util.text;
 
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -14,32 +15,32 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Placeholder {
 
-  @Getter @Setter private String key;
-  @Getter @Setter private String value;
+  @Getter @Setter private ApareciumComponent key;
+  @Getter @Setter private ApareciumComponent value;
 
-  public static Placeholder replacing(String key, String value) {
+  public static Placeholder replacing(ApareciumComponent key, ApareciumComponent value) {
     return new Placeholder(key, value);
   }
 
-  public static Placeholder replacing(String key, Number value) {
+  public static Placeholder replacing(ApareciumComponent key, Number value) {
     if (value == null) {
       return Placeholder.replacing(key, "0");
     }
-    return Placeholder.replacing(key, String.valueOf(value));
+    return Placeholder.replacing(key, ApareciumComponent.of(String.valueOf(value)));
   }
 
-  public static Placeholder replacing(String key, Object value) {
+  public static Placeholder replacing(ApareciumComponent key, Object value) {
     if (value == null) {
       return Placeholder.replacing(key, "");
     }
-    return Placeholder.replacing(key, value.toString());
+    return Placeholder.replacing(key, ApareciumComponent.of(value.toString()));
   }
 
-  public String replaceIn(String text) {
-    return text.replace(key, value);
+  public ApareciumComponent replaceIn(ApareciumComponent text) {
+    return text.replace(key.getAsString(), value.getAsString());
   }
 
-  public List<String> replaceIn(List<String> text) {
+  public List<ApareciumComponent> replaceIn(List<ApareciumComponent> text) {
     return text.stream().map(this::replaceIn).collect(Collectors.toList());
   }
 }
