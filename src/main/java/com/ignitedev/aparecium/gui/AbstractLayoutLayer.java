@@ -1,6 +1,7 @@
 package com.ignitedev.aparecium.gui;
 
 import com.ignitedev.aparecium.interfaces.Identifiable;
+import com.ignitedev.aparecium.item.basic.LayoutItem;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,7 @@ public abstract class AbstractLayoutLayer
    * @implNote <SLOT NUMBER, MAGIC ITEM ID>
    */
   @Singular("content")
-  protected Map<Integer, String> contents;
+  protected Map<Integer, LayoutItem> contents;
 
   /**
    * @implNote InventoryType to match layouts

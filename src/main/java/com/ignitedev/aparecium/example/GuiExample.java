@@ -20,7 +20,7 @@ public class GuiExample {
             .id("backgroundLayer")
             .layoutSize(18)
             .layoutInventoryType(InventoryType.CHEST)
-            .content(0, "itemId")
+            .content(0, LayoutItem.getCachedLayoutItem("itemId"))
             .build();
 
     Layout layout =
@@ -29,7 +29,7 @@ public class GuiExample {
             .layoutSize(18)
             .layoutTitle(ApareciumComponent.of("2Devs on FIRE"))
             .inventoryType(InventoryType.CHEST)
-            .content(
+            .contents(
                 Map.of(
                     0,
                     LayoutItem.getCachedLayoutItem("itemId"),
@@ -61,7 +61,7 @@ public class GuiExample {
         new Layout("testID", ApareciumComponent.of("Title"), InventoryType.ANVIL);
 
     layoutAnotherAnother.setLayoutSize(27);
-    layoutAnotherAnother.setContent(
+    layoutAnotherAnother.setContents(
         Map.of(
             0,
             LayoutItem.getCachedLayoutItem("itemId1"),

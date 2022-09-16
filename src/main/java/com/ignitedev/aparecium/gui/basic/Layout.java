@@ -125,7 +125,7 @@ public class Layout extends AbstractLayout {
         layerBase.getById(layerId).fill(inventory, force);
       }
     }
-    this.content.forEach((slot, itemId) -> inventory.setItem(slot, itemId.toItemStack(1)));
+    this.contents.forEach((slot, itemId) -> inventory.setItem(slot, itemId.toItemStack(1)));
     if (fillBackground) {
       fillBackground(inventory);
     }
