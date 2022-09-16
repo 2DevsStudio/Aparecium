@@ -67,6 +67,28 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
    */
   @Singular protected Map<String, Object> tags;
 
+  public MagicItem(@NotNull String id, @NotNull Material material) {
+    this.id = id;
+    this.material = material;
+  }
+
+  public MagicItem(@NotNull String id, @NotNull Material material, ApareciumComponent name) {
+    this.id = id;
+    this.material = material;
+    this.name = name;
+  }
+
+  public MagicItem(
+      @NotNull String id,
+      @NotNull Material material,
+      ApareciumComponent name,
+      ApareciumComponent description) {
+    this.id = id;
+    this.material = material;
+    this.name = name;
+    this.description = description;
+  }
+
   /**
    * @param amount amount of itemstack you'd like to get
    * @return Prepared itemstack with all specified values and methods
