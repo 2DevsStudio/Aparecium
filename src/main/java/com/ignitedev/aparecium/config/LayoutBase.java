@@ -1,5 +1,6 @@
 package com.ignitedev.aparecium.config;
 
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.gui.basic.Layout;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.interfaces.Configuration;
@@ -20,7 +21,7 @@ public class LayoutBase extends Config {
           .id("default")
           .layoutSize(9)
           .inventoryType(InventoryType.CHEST)
-          .layoutTitle("default")
+          .layoutTitle(ApareciumComponent.of("default"))
           .content(Map.of(0, "default"))
           .build();
 
@@ -48,7 +49,7 @@ public class LayoutBase extends Config {
             .id("default")
             .layoutSize(9)
             .inventoryType(InventoryType.CHEST)
-            .layoutTitle("default")
+            .layoutTitle(ApareciumComponent.of("default"))
             .content(Map.of(0, "default"))
             .build());
   }

@@ -1,5 +1,6 @@
 package com.ignitedev.aparecium.example;
 
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.gui.basic.Layout;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class GuiExample {
         Layout.builder()
             .id("exampleLayout")
             .layoutSize(18)
-            .layoutTitle("2Devs on FIRE")
+            .layoutTitle(ApareciumComponent.of("2Devs on FIRE"))
             .inventoryType(InventoryType.CHEST)
             .content(Map.of(0, "itemId", 1, "itemId"))
             .layers(Map.of(0, "LayerID5", 1, "LayerID3", 2, "LayerID8"))
@@ -37,7 +38,7 @@ public class GuiExample {
     Layout layoutAnother =
         new Layout(
             "exampleLayout",
-            "2Devs On FIRE",
+            ApareciumComponent.of("2Devs On FIRE"),
             18,
             InventoryType.CHEST,
             backgroundLayer,
@@ -46,7 +47,7 @@ public class GuiExample {
 
     // another
 
-    Layout layoutAnotherAnother = new Layout("testID", "Title", InventoryType.ANVIL);
+    Layout layoutAnotherAnother = new Layout("testID", ApareciumComponent.of("Title"), InventoryType.ANVIL);
 
     layoutAnotherAnother.setLayoutSize(27);
     layoutAnotherAnother.setContent(Map.of(0, "itemId1", 1, "itemId2"));
