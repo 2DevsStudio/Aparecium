@@ -46,6 +46,15 @@ public abstract class Aparecium extends JavaPlugin {
    * Aparecium logic
    */
 
+  private static boolean checkPaper() {
+    try {
+      Class.forName("com.destroystokyo.paper.ClientOption");
+      return true;
+    } catch (ClassNotFoundException ignored) {
+    }
+    return false;
+  }
+
   @Override
   public void onLoad() {
     this.startupStage = StartupStage.PRE_LOAD;
@@ -73,6 +82,10 @@ public abstract class Aparecium extends JavaPlugin {
     AdmittanceBook.getAdmittanceBook().cachePlugin(this.getName(), this);
   }
 
+  /*
+   * Plugin Logic
+   */
+
   @Override
   public void onDisable() {
     this.startupStage = StartupStage.DISABLING;
@@ -87,10 +100,6 @@ public abstract class Aparecium extends JavaPlugin {
     AdmittanceBook.getAdmittanceBook().removePluginCache(this.getName(), this);
   }
 
-  /*
-   * Plugin Logic
-   */
-
   /** LOAD STAGE 1 */
   public abstract void onPreLoad();
 
@@ -103,12 +112,12 @@ public abstract class Aparecium extends JavaPlugin {
   /** Starting Plugin */
   public abstract void onEnabling();
 
-  /** Disabling Plugin */
-  public abstract void onDisabling();
-
   /*
    * Aparecium logic
    */
+
+  /** Disabling Plugin */
+  public abstract void onDisabling();
 
   /**
    * @param stopWatch stopwatch instance can be obtained by {@link Stopwatch#createUnstarted()}
@@ -152,14 +161,5 @@ public abstract class Aparecium extends JavaPlugin {
             + getLastFiveMinuteTPS()
             + "\n Last 10 Minute TPS: "
             + getLastTenMinuteTPS());
-  }
-
-  private static boolean checkPaper() {
-    try {
-      Class.forName("com.destroystokyo.paper.ClientOption");
-      return true;
-    } catch (ClassNotFoundException ignored) {
-    }
-    return false;
   }
 }
