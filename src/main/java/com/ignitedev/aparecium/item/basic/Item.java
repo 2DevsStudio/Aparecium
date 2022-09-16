@@ -45,6 +45,22 @@ public class Item extends MagicItem {
     MagicItemRepository.getInstance().add(this);
   }
 
+  public Item(@NotNull String id, @NotNull Material material) {
+    super(id, material);
+  }
+
+  public Item(@NotNull String id, @NotNull Material material, ApareciumComponent name) {
+    super(id, material, name);
+  }
+
+  public Item(
+      @NotNull String id,
+      @NotNull Material material,
+      ApareciumComponent name,
+      ApareciumComponent description) {
+    super(id, material, name, description);
+  }
+
   @Override
   public ItemStack toItemStack(int amount) {
     return Aparecium.getFactoriesManager()
