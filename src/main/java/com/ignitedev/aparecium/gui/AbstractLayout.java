@@ -5,6 +5,7 @@ import com.ignitedev.aparecium.gui.basic.Layout;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import com.ignitedev.aparecium.interfaces.Identifiable;
 import com.ignitedev.aparecium.item.basic.LayoutItem;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,11 @@ import org.jetbrains.annotations.Nullable;
 @AllArgsConstructor
 public abstract class AbstractLayout
     implements Cloneable, Identifiable, Comparable<AbstractLayout> {
+
+  /**
+   * @implNote Item creation Instant
+   */
+  protected final Instant layoutSaveInstant = Instant.now();
 
   protected String id;
 
@@ -74,8 +80,14 @@ public abstract class AbstractLayout
 
   @Override
   public int compareTo(@NotNull AbstractLayout compareTo) {
-    // todo
-    return 0;
+    int compare =
+        Long.compare(
+            layoutSaveInstant.getEpochSecond(), compareTo.getLayoutSaveInstant().getEpochSecond());
+
+    if (compare != 0) {
+      return compare;
+    }
+    return layoutSaveInstant.getNano() - compareTo.getLayoutSaveInstant().getNano();
   }
 
   @Override
