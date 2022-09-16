@@ -2,6 +2,7 @@ package com.ignitedev.aparecium.gui.layer;
 
 import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.gui.AbstractLayoutLayer;
+import com.ignitedev.aparecium.item.basic.LayoutItem;
 import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
 import java.util.Map;
 import lombok.Data;
@@ -25,7 +26,10 @@ public class LayoutLayer extends AbstractLayoutLayer {
   }
 
   public LayoutLayer(
-      String id, Map<Integer, String> content, InventoryType layoutInventoryType, int layoutSize) {
+      String id,
+      Map<Integer, LayoutItem> content,
+      InventoryType layoutInventoryType,
+      int layoutSize) {
     super(id, content, layoutInventoryType, layoutSize);
   }
 
@@ -41,7 +45,6 @@ public class LayoutLayer extends AbstractLayoutLayer {
       }
     }
     this.contents.forEach(
-        (slot, magicItemID) ->
-            inventory.setItem(slot, itemBase.getById(magicItemID).toItemStack(1)));
+        (slot, magicItemID) -> inventory.setItem(slot, magicItemID.toItemStack(1)));
   }
 }

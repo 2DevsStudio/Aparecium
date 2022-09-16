@@ -65,6 +65,9 @@ public class SortingHat<T extends Comparable<T>> {
     return stream.collect(Collectors.toCollection(ConcurrentSkipListSet::new));
   }
 
+  /**
+   * @return copy of Collection
+   */
   public Set<T> getCollection() {
     return new ConcurrentSkipListSet<>(this.collection);
   }
