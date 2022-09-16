@@ -5,11 +5,13 @@ import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import com.ignitedev.aparecium.interfaces.Identifiable;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
  */
 @Data
 @SuperBuilder(toBuilder = true)
+@AllArgsConstructor
 public abstract class AbstractLayout
     implements Cloneable, Identifiable, Comparable<AbstractLayout> {
 
@@ -36,15 +39,19 @@ public abstract class AbstractLayout
   @Nullable protected LayoutLayer layoutBackgroundLayer;
 
   /**
-   * @implNote <LAYER WEIGHT, LAYER ID>
+   * @implNote <LAYER WEIGHT (LOWER = HIGHER PRIORITY), LAYER ID>
    */
-  @Nullable protected Map<Integer, Integer> layers;
+  @Builder.Default protected Map<Integer, String> layers = new HashMap<>();
 
   /**
    * @implNote first applied is {{@link #layers}} then content
    * @implNote <SLOT NUMBER, MAGIC ITEM ID>
    */
-  @Builder.Default protected Map<Integer, Integer> content = new HashMap<>();
+  @Builder.Default protected Map<Integer, String> content = new HashMap<>();
+
+  public abstract void fill(Inventory inventory, boolean fillBackground, boolean force);
+
+  public abstract void fillBackground(Inventory inventory);
 
   @Override
   public int compareTo(@NotNull AbstractLayout compareTo) {
