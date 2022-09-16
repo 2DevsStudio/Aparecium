@@ -1,11 +1,16 @@
 package com.ignitedev.aparecium.item.basic;
 
 import com.ignitedev.aparecium.Aparecium;
+import com.ignitedev.aparecium.component.ApareciumComponent;
+import com.ignitedev.aparecium.config.ItemBase;
+import com.twodevsstudio.simplejsonconfig.api.Config;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 @Data
 @SuperBuilder(toBuilder = true)
@@ -18,6 +23,26 @@ public class LayoutItem extends Item {
 
   public LayoutItem(MagicItemBuilder<?, ?> builder) {
     super(builder);
+  }
+
+  public LayoutItem(@NotNull String id, @NotNull Material material) {
+    super(id, material);
+  }
+
+  public LayoutItem(@NotNull String id, @NotNull Material material, ApareciumComponent name) {
+    super(id, material, name);
+  }
+
+  public LayoutItem(
+      @NotNull String id,
+      @NotNull Material material,
+      ApareciumComponent name,
+      ApareciumComponent description) {
+    super(id, material, name, description);
+  }
+
+  public static LayoutItem getCachedLayoutItem(String string) {
+    return ((LayoutItem) Config.getConfig(ItemBase.class).getById(string));
   }
 
   @Override
