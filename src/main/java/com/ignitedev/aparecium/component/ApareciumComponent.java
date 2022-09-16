@@ -26,16 +26,6 @@ public class ApareciumComponent {
   @Singular(value = "component")
   private List<Component> components;
 
-  @NotNull
-  public static ApareciumComponent of(@NotNull String string) {
-    return new ApareciumComponent(string);
-  }
-
-  @NotNull
-  public static ApareciumComponent of(@NotNull Component component) {
-    return new ApareciumComponent(component);
-  }
-
   public ApareciumComponent(ListComponents components) {
     this.components = components.get();
     this.strings = TextUtility.serializeComponent(components.get());
@@ -54,6 +44,16 @@ public class ApareciumComponent {
   public ApareciumComponent(Component component) {
     this.components = List.of(component);
     this.strings = TextUtility.serializeComponent(List.of(component));
+  }
+
+  @NotNull
+  public static ApareciumComponent of(@NotNull String string) {
+    return new ApareciumComponent(string);
+  }
+
+  @NotNull
+  public static ApareciumComponent of(@NotNull Component component) {
+    return new ApareciumComponent(component);
   }
 
   @Nullable

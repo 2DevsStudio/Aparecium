@@ -4,6 +4,7 @@ import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.gui.basic.Layout;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import com.ignitedev.aparecium.interfaces.Identifiable;
+import com.ignitedev.aparecium.item.basic.LayoutItem;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -46,16 +47,17 @@ public abstract class AbstractLayout
 
   /**
    * @implNote first applied is {{@link #layers}} then content
-   * @implNote <SLOT NUMBER, MAGIC ITEM ID>
+   * @implNote <SLOT NUMBER, LayoutItem>
    */
-  @Builder.Default protected Map<Integer, String> content = new HashMap<>();
+  @Builder.Default protected Map<Integer, LayoutItem> content = new HashMap<>();
 
   public AbstractLayout(String id, int layoutSize) {
     this.id = id;
     this.layoutSize = layoutSize;
   }
 
-  public AbstractLayout(String id, @Nullable ApareciumComponent layoutTitle, InventoryType inventoryType) {
+  public AbstractLayout(
+      String id, @Nullable ApareciumComponent layoutTitle, InventoryType inventoryType) {
     this.id = id;
     this.layoutTitle = layoutTitle;
     this.inventoryType = inventoryType;

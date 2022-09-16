@@ -3,6 +3,7 @@ package com.ignitedev.aparecium.example;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.gui.basic.Layout;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
+import com.ignitedev.aparecium.item.basic.LayoutItem;
 import java.util.Map;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
@@ -28,7 +29,12 @@ public class GuiExample {
             .layoutSize(18)
             .layoutTitle(ApareciumComponent.of("2Devs on FIRE"))
             .inventoryType(InventoryType.CHEST)
-            .content(Map.of(0, "itemId", 1, "itemId"))
+            .content(
+                Map.of(
+                    0,
+                    LayoutItem.getCachedLayoutItem("itemId"),
+                    1,
+                    LayoutItem.getCachedLayoutItem("itemId")))
             .layers(Map.of(0, "LayerID5", 1, "LayerID3", 2, "LayerID8"))
             .layoutBackgroundLayer(backgroundLayer)
             .build();
@@ -43,14 +49,24 @@ public class GuiExample {
             InventoryType.CHEST,
             backgroundLayer,
             Map.of(0, "LayerID5", 1, "LayerID3", 2, "LayerID8"),
-            Map.of(0, "itemId", 1, "itemId"));
+            Map.of(
+                0,
+                LayoutItem.getCachedLayoutItem("itemId"),
+                1,
+                LayoutItem.getCachedLayoutItem("itemId")));
 
     // another
 
-    Layout layoutAnotherAnother = new Layout("testID", ApareciumComponent.of("Title"), InventoryType.ANVIL);
+    Layout layoutAnotherAnother =
+        new Layout("testID", ApareciumComponent.of("Title"), InventoryType.ANVIL);
 
     layoutAnotherAnother.setLayoutSize(27);
-    layoutAnotherAnother.setContent(Map.of(0, "itemId1", 1, "itemId2"));
+    layoutAnotherAnother.setContent(
+        Map.of(
+            0,
+            LayoutItem.getCachedLayoutItem("itemId1"),
+            1,
+            LayoutItem.getCachedLayoutItem("itemId2")));
 
     // this Inventory contains all specified data
     Inventory createdInventory = layout.createLayout();
