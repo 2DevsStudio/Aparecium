@@ -2,6 +2,7 @@ package com.ignitedev.aparecium.gui;
 
 import com.ignitedev.aparecium.interfaces.Identifiable;
 import com.ignitedev.aparecium.item.basic.LayoutItem;
+import java.time.Instant;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,11 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor
 public abstract class AbstractLayoutLayer
     implements Cloneable, Identifiable, Comparable<AbstractLayoutLayer> {
+
+  /**
+   * @implNote Item creation Instant
+   */
+  protected final Instant layerSaveInstant = Instant.now();
 
   protected String id;
 
@@ -41,8 +47,14 @@ public abstract class AbstractLayoutLayer
 
   @Override
   public int compareTo(@NotNull AbstractLayoutLayer compareTo) {
-    // todo
-    return 0;
+    int compare =
+        Long.compare(
+            layerSaveInstant.getEpochSecond(), compareTo.getLayerSaveInstant().getEpochSecond());
+
+    if (compare != 0) {
+      return compare;
+    }
+    return layerSaveInstant.getNano() - compareTo.getLayerSaveInstant().getNano();
   }
 
   @Override
