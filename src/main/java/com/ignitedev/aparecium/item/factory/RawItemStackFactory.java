@@ -9,6 +9,8 @@ import com.ignitedev.aparecium.item.MagicItem;
 import com.ignitedev.aparecium.item.basic.Item;
 import com.ignitedev.aparecium.item.repository.MagicItemRepository;
 import de.tr7zw.nbtapi.NBTItem;
+import java.util.HashMap;
+import java.util.Map;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -50,14 +52,18 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
       return cachedMagicItem;
     }
     ItemMeta itemMeta = itemStack.getItemMeta();
+    NBTItem nbtItem = new NBTItem(itemStack);
+    Map<String, Object> tags = new HashMap<>();
 
-    // todo nbt tags
-
+    for (String key : nbtItem.getKeys()) {
+      tags.put(key, nbtItem.getObject(key, Object.class));
+    }
     return Item.builder()
         .id(itemStack.toString())
         .material(itemStack.getType())
         .name(new ApareciumComponent(itemMeta.displayName()))
         .description(new ApareciumComponent(() -> itemMeta.lore()))
+        .tags(tags)
         .build();
   }
 
