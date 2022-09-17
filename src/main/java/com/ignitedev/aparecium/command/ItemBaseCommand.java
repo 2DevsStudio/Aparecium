@@ -10,6 +10,7 @@ import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import com.ignitedev.aparecium.Constants;
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.item.MagicItem;
 import com.ignitedev.aparecium.util.MessageUtility;
@@ -29,7 +30,7 @@ public class ItemBaseCommand extends BaseCommand {
   @CommandPermission("aparecium.itembase.help")
   public void onHelp(Player player) {
     for (Entry<String, RegisteredCommand> key : this.getSubCommands().entries()) {
-      MessageUtility.send(player, "<blue>/itembase <purple>" + key.getValue().getSyntaxText());
+      MessageUtility.send(player, ApareciumComponent.of("<blue>/itembase <purple>" + key.getValue().getSyntaxText()));
     }
   }
 
@@ -61,7 +62,7 @@ public class ItemBaseCommand extends BaseCommand {
 
       rowCounter++;
     }
-    MessageUtility.send(player, stringBuilder.toString());
+    MessageUtility.send(player, ApareciumComponent.of(stringBuilder.toString()));
   }
 
   @Subcommand("get")
