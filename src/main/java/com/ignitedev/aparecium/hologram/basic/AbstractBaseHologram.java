@@ -6,6 +6,7 @@ package com.ignitedev.aparecium.hologram.basic;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.ignitedev.aparecium.Aparecium;
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.hologram.data.HologramEntry;
 import com.ignitedev.aparecium.hologram.factory.HologramFactory;
 import com.ignitedev.aparecium.hologram.manager.HologramManager;
@@ -40,7 +41,7 @@ public abstract class AbstractBaseHologram implements BaseHologram {
   protected Location location;
 
   /**
-   * @implNote you can create hologram entry by {@link HologramEntry#HologramEntry(String,
+   * @implNote you can create hologram entry by {@link HologramEntry#HologramEntry(ApareciumComponent,
    *     Material)}
    */
   @Singular("line")
@@ -49,7 +50,7 @@ public abstract class AbstractBaseHologram implements BaseHologram {
 
   /**
    * @implNote placeholder system, you can simply create placeholder by {@link
-   *     Placeholder#Placeholder(String, String)}
+   *     Placeholder#(ApareciumComponent, ApareciumComponent)}
    */
   @Singular("data")
   @NotNull
@@ -120,7 +121,7 @@ public abstract class AbstractBaseHologram implements BaseHologram {
 
   @Override
   @Nullable
-  public Placeholder getPlaceholderData(String key) {
+  public Placeholder getPlaceholderData(ApareciumComponent key) {
     return placeholderData.stream()
         .filter(placeholder -> placeholder.getKey().equals(key))
         .findAny()
@@ -128,7 +129,7 @@ public abstract class AbstractBaseHologram implements BaseHologram {
   }
 
   @Override
-  public void setPlaceholderData(String key, String value) {
+  public void setPlaceholderData(ApareciumComponent key, ApareciumComponent value) {
     Placeholder placeholderData = getPlaceholderData(key);
 
     if (placeholderData != null) {

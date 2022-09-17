@@ -5,6 +5,7 @@
 package com.ignitedev.aparecium.hologram.basic;
 
 import com.ignitedev.aparecium.Aparecium;
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.hologram.data.HologramEntry;
 import com.ignitedev.aparecium.hologram.factory.HologramFactory;
 import com.ignitedev.aparecium.interfaces.Destroyable;
@@ -27,9 +28,9 @@ public interface BaseHologram extends Identifiable, Updatable, Cloneable, Destro
 
   List<Placeholder> getPlaceholderData();
 
-  Placeholder getPlaceholderData(String key);
+  Placeholder getPlaceholderData(ApareciumComponent key);
 
-  void setPlaceholderData(String key, String value);
+  void setPlaceholderData(ApareciumComponent key, ApareciumComponent value);
 
   Location getLocation();
 
