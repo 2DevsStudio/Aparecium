@@ -31,6 +31,11 @@ public class ApareciumMain extends Aparecium {
 
   @Getter private static ApareciumMain instance;
 
+  public ApareciumMain() {
+    System.out.println("test: " + this);
+    setHedwigLogger(HedwigLogger.getOrCreate(this));
+  }
+
   @Override
   public void onPreLoad() {}
 
@@ -43,6 +48,7 @@ public class ApareciumMain extends Aparecium {
   @Override
   public void onEnabling() {
     instance = this;
+
     Serializer.getInst().setGson(new ApareciumGsonBuilder().build());
     SimpleJSONConfig.INSTANCE.register(this);
 

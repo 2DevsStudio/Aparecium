@@ -8,7 +8,6 @@ import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.enums.ItemType;
 import com.ignitedev.aparecium.enums.Rarity;
 import com.ignitedev.aparecium.interfaces.Identifiable;
-import com.ignitedev.aparecium.util.ItemUtility;
 import java.time.Instant;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -70,14 +69,14 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
   public MagicItem(@NotNull String id, @NotNull Material material) {
     this.id = id;
     this.material = material;
-    this.itemType = ItemUtility.getItemTypeByMaterial(material);
+    this.itemType = ItemType.getByMaterial(material);
   }
 
   public MagicItem(@NotNull String id, @NotNull Material material, ApareciumComponent name) {
     this.id = id;
     this.material = material;
     this.name = name;
-    this.itemType = ItemUtility.getItemTypeByMaterial(material);
+    this.itemType = ItemType.getByMaterial(material);
   }
 
   public MagicItem(
@@ -89,7 +88,7 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
     this.material = material;
     this.name = name;
     this.description = description;
-    this.itemType = ItemUtility.getItemTypeByMaterial(material);
+    this.itemType = ItemType.getByMaterial(material);
   }
 
   /**

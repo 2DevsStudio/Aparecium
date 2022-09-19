@@ -32,6 +32,7 @@ public class MessageUtility {
                 PlaceholderAPI.setPlaceholders(offlinePlayer, placeholdersString));
       }
     }
+    // PAPER CODE
     if (Aparecium.isUsingPaper()) {
       Component asComponents = text.getAsComponent();
 
@@ -39,6 +40,7 @@ public class MessageUtility {
         target.sendMessage(asComponents);
       }
     }
+    // END OF PAPER CODE
     if (messageString != null) {
       if (messageString.equalsIgnoreCase("{BLANK}")) {
         return;
