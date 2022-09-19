@@ -29,22 +29,23 @@ public class ItemBase extends Config {
   /**
    * @implNote please note that this method save and reload config, if you have any pending changes
    *     in your config file then it might be overridden
-   * @param magicItem item to save
+   * @param item item to save
    */
-  public void saveItem(MagicItem magicItem) {
-    savedItems.put(magicItem.getId(), magicItem);
+  public <T extends MagicItem> void saveItem(T item) {
+    savedItems.put(item.getId(), item);
 
     save();
     reload();
   }
 
   @NotNull
-  public MagicItem getById(String itemId) {
-    return ((Item)
-            savedItems.getOrDefault(
-                itemId,
-                this.noneItem.clone().toBuilder().name(new ApareciumComponent(itemId)).build()))
-        .clone();
+  public <T extends MagicItem> T getById(String itemId) {
+    if (savedItems.containsKey(itemId)) {
+      return (T) savedItems.get(itemId).clone();
+    } else {
+      return (T)
+          this.noneItem.clone().toBuilder().name(new ApareciumComponent(itemId)).build().clone();
+    }
   }
 
   private Map<String, MagicItem> exampleItems() {
