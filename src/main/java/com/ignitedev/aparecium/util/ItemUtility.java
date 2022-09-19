@@ -4,7 +4,6 @@
 
 package com.ignitedev.aparecium.util;
 
-import com.ignitedev.aparecium.enums.ItemType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -75,27 +74,5 @@ public class ItemUtility {
     spawner.setItemMeta(spawnerMeta);
 
     return spawner;
-  }
-
-  public ItemType getItemTypeByMaterial(Material material) {
-    String name = material.name().toLowerCase();
-
-    if (name.contains("sword") || name.contains("bow") || name.contains("crossbow")) {
-      return ItemType.WEAPON;
-    } else if (name.contains("boots")
-        || name.contains("chestplate")
-        || name.contains("leggings")
-        || name.contains("helmet")
-        || name.contains("shield")) {
-      return ItemType.ARMOR;
-    } else if (name.contains("shovel")
-        || name.contains("hoe")
-        || name.contains("axe")
-        || name.contains("pickaxe")) {
-      return ItemType.TOOL;
-    } else if (name.contains("potion")) {
-      return ItemType.POTION;
-    }
-    return ItemType.COMMON;
   }
 }
