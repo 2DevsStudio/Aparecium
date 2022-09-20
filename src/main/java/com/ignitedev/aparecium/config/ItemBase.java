@@ -1,8 +1,13 @@
 package com.ignitedev.aparecium.config;
 
+import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.item.MagicItem;
+import com.ignitedev.aparecium.item.basic.DropItem;
 import com.ignitedev.aparecium.item.basic.Item;
+import com.ignitedev.aparecium.item.basic.LayoutItem;
+import com.ignitedev.aparecium.item.factory.factories.DropItemFactory;
+import com.ignitedev.aparecium.item.factory.factories.LayoutItemFactory;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.interfaces.Configuration;
 import java.util.Map;
@@ -15,6 +20,13 @@ import org.jetbrains.annotations.NotNull;
 @Configuration("item-base.json")
 public class ItemBase extends Config {
 
+  private final LayoutItemFactory layoutItemFactory =
+      ((LayoutItemFactory)
+          Aparecium.getFactoriesManager().getMagicItemFactories().getFactory("LAYOUT_DEFAULT"));
+  private final DropItemFactory dropItemFactory =
+      ((DropItemFactory)
+          Aparecium.getFactoriesManager().getMagicItemFactories().getFactory("DROP_DEFAULT"));
+
   private Map<String, MagicItem> savedItems = exampleItems();
 
   /**
@@ -22,6 +34,7 @@ public class ItemBase extends Config {
    */
   private Item noneItem =
       Item.builder()
+          .id("noneItem")
           .material(Material.BARRIER)
           .name(new ApareciumComponent("Couldn't find item, check typed id"))
           .build();
@@ -46,6 +59,35 @@ public class ItemBase extends Config {
       return (T)
           this.noneItem.clone().toBuilder().name(new ApareciumComponent(itemId)).build().clone();
     }
+  }
+
+  @NotNull
+  public <T extends MagicItem> T getById(String itemId, Class<T> castClass) {
+    T magicItem;
+
+    if (savedItems.containsKey(itemId)) {
+      magicItem = (T) savedItems.get(itemId).clone();
+    } else {
+      magicItem =
+          (T)
+              this.noneItem.clone().toBuilder()
+                  .name(new ApareciumComponent(itemId))
+                  .build()
+                  .clone();
+    }
+
+    if (magicItem instanceof Item item && castClass == LayoutItem.class) {
+      magicItem =
+          (T)
+              layoutItemFactory.createItem(
+                  item.getId(), item.getMaterial(), item.getName(), item.getDescription());
+    } else if (magicItem instanceof Item item && castClass == DropItem.class) {
+      magicItem =
+          (T)
+              dropItemFactory.createItem(
+                  item.getId(), item.getMaterial(), item.getName(), item.getDescription());
+    }
+    return magicItem;
   }
 
   private Map<String, MagicItem> exampleItems() {
