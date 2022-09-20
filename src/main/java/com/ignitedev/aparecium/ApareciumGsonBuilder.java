@@ -2,6 +2,7 @@ package com.ignitedev.aparecium;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.ignitedev.aparecium.config.adapter.ComponentAdapter;
 import com.ignitedev.aparecium.config.adapter.InstantAdapter;
 import com.ignitedev.aparecium.item.MagicItem;
 import com.twodevsstudio.simplejsonconfig.def.adapters.ChronoUnitAdapter;
@@ -16,6 +17,7 @@ import java.lang.reflect.Modifier;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import lombok.Data;
+import net.kyori.adventure.text.Component;
 import org.bukkit.World;
 import org.bukkit.block.BlockState;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +40,13 @@ public class ApareciumGsonBuilder {
             .serializeNulls()
             .registerTypeHierarchyAdapter(Class.class, new ClassAdapter())
             .registerTypeHierarchyAdapter(Instant.class, new InstantAdapter())
-            .registerTypeHierarchyAdapter(ChronoUnit.class, new ChronoUnitAdapter())
+            .registerTypeHierarchyAdapter(ChronoUnit.class, new ChronoUnitAdapter());
+
+    if (Aparecium.isUsingPaper()) {
+      this.gsonBuilder.registerTypeHierarchyAdapter(Component.class, new ComponentAdapter());
+    }
+    this.gsonBuilder =
+        this.gsonBuilder
             .registerTypeHierarchyAdapter(ItemStack.class, new ItemStackAdapter())
             .registerTypeHierarchyAdapter(World.class, new WorldAdapter())
             .registerTypeHierarchyAdapter(Reference.class, new ReferenceAdapter())
