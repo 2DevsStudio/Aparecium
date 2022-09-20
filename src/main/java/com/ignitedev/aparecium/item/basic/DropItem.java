@@ -4,15 +4,20 @@
 
 package com.ignitedev.aparecium.item.basic;
 
-import com.ignitedev.aparecium.Aparecium;
+import com.ignitedev.aparecium.component.ApareciumComponent;
+import com.ignitedev.aparecium.enums.ItemType;
+import com.ignitedev.aparecium.enums.Rarity;
 import com.ignitedev.aparecium.util.MathUtility;
+import java.util.HashMap;
 import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Data
 @SuperBuilder(toBuilder = true)
@@ -28,18 +33,25 @@ public class DropItem extends Item {
   /**
    * @implNote Useful for example for block drop system, different chances per types
    */
-  private Map<Material, Double> dropChancesForMaterials;
+  @Singular private Map<Material, Double> dropChancesForMaterials;
 
-  public DropItem(MagicItemBuilder<?, ?> builder) {
-    super(builder);
-  }
+  public DropItem(
+      @NotNull String id,
+      @NotNull Material material,
+      @Nullable ItemType itemType,
+      @Nullable Rarity rarity,
+      @Nullable ApareciumComponent name,
+      @Nullable ApareciumComponent description,
+      @Nullable Map<String, Object> tags,
+      double dropChance,
+      Map<Material, Double> dropChancesForMaterials) {
+    super(id, material, itemType, rarity, name, description, tags);
+    this.dropChance = dropChance;
+    this.dropChancesForMaterials = dropChancesForMaterials;
 
-  @Override
-  public ItemStack toItemStack(int amount) {
-    return Aparecium.getFactoriesManager()
-        .getMagicItemFactories()
-        .getDefaultFactory()
-        .toItemStack(this, amount);
+    if (this.dropChancesForMaterials == null) {
+      this.dropChancesForMaterials = new HashMap<>();
+    }
   }
 
   /**
