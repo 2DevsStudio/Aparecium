@@ -1,16 +1,18 @@
 package com.ignitedev.aparecium.item.basic;
 
-import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.config.ItemBase;
+import com.ignitedev.aparecium.enums.ItemType;
+import com.ignitedev.aparecium.enums.Rarity;
 import com.twodevsstudio.simplejsonconfig.api.Config;
+import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Data
 @SuperBuilder(toBuilder = true)
@@ -21,36 +23,17 @@ public class LayoutItem extends Item {
   /** Interaction id for interaction hook */
   public double layoutItemInteractionId;
 
-  public LayoutItem(MagicItemBuilder<?, ?> builder) {
-    super(builder);
-  }
-
-  public LayoutItem(@NotNull String id, @NotNull Material material) {
-    super(id, material);
-  }
-
-  public LayoutItem(@NotNull String id, @NotNull Material material, ApareciumComponent name) {
-    super(id, material, name);
-  }
-
   public LayoutItem(
       @NotNull String id,
       @NotNull Material material,
-      ApareciumComponent name,
-      ApareciumComponent description) {
-    super(id, material, name, description);
-  }
-
-  public static LayoutItem getCachedLayoutItem(String string) {
-    return ((LayoutItem) Config.getConfig(ItemBase.class).getById(string));
-  }
-
-  @Override
-  public ItemStack toItemStack(int amount) {
-    return Aparecium.getFactoriesManager()
-        .getMagicItemFactories()
-        .getDefaultFactory()
-        .toItemStack(this, amount);
+      @Nullable ItemType itemType,
+      @Nullable Rarity rarity,
+      @Nullable ApareciumComponent name,
+      @Nullable ApareciumComponent description,
+      @Nullable Map<String, Object> tags,
+      double layoutItemInteractionId) {
+    super(id, material, itemType, rarity, name, description, tags);
+    this.layoutItemInteractionId = layoutItemInteractionId;
   }
 
   @Override
@@ -60,5 +43,9 @@ public class LayoutItem extends Item {
     clone.layoutItemInteractionId = this.layoutItemInteractionId;
 
     return clone;
+  }
+
+  public static LayoutItem getCachedLayoutItem(String string) {
+    return Config.getConfig(ItemBase.class).getById(string, LayoutItem.class);
   }
 }

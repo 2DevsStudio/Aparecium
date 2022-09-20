@@ -20,6 +20,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @implNote Base abstraction layer of Item in Aparecium
@@ -54,42 +55,17 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
   /**
    * @implNote name of item applicable to itemstack
    */
-  protected ApareciumComponent name;
+  @Nullable protected ApareciumComponent name;
 
   /**
    * @implNote lore applicable to itemstack
    */
-  protected ApareciumComponent description;
+  @Nullable protected ApareciumComponent description;
 
   /**
    * @implNote NBT-TAGS applicable to ItemStack
    */
   @Singular protected Map<String, Object> tags;
-
-  public MagicItem(@NotNull String id, @NotNull Material material) {
-    this.id = id;
-    this.material = material;
-    this.itemType = ItemType.getByMaterial(material);
-  }
-
-  public MagicItem(@NotNull String id, @NotNull Material material, ApareciumComponent name) {
-    this.id = id;
-    this.material = material;
-    this.name = name;
-    this.itemType = ItemType.getByMaterial(material);
-  }
-
-  public MagicItem(
-      @NotNull String id,
-      @NotNull Material material,
-      ApareciumComponent name,
-      ApareciumComponent description) {
-    this.id = id;
-    this.material = material;
-    this.name = name;
-    this.description = description;
-    this.itemType = ItemType.getByMaterial(material);
-  }
 
   /**
    * @param amount amount of itemstack you'd like to get
