@@ -23,6 +23,17 @@ import org.jetbrains.annotations.Nullable;
  */
 public class DefaultMagicItemFactory<T extends Item> extends RawItemStackFactory {
 
+  public <D extends Item> T from(D from) {
+    return createItem(
+        from.getId(),
+        from.getMaterial(),
+        from.getItemType(),
+        from.getRarity(),
+        from.getName(),
+        from.getDescription(),
+        from.getTags());
+  }
+
   public T createItem(@NotNull String id, @NotNull Material material) {
     return createItem(id, material, null, null, null, null, new HashMap<>());
   }
