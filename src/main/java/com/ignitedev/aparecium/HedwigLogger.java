@@ -19,9 +19,8 @@ import lombok.Setter;
 
 /**
  * @implNote This class is used as Logger for your plugin as well for whole Aparecium, you can
- *     obtain it instances with {@link #getOrCreate(Aparecium)} or{@link
- *     #getAPARECIUM_HEDWIG_LOGGER()} for main aparecium logger, by using this one you are logging
- *     messages as Aparecium, not your plugin
+ *     obtain it instances with {@link #getOrCreate(Aparecium)} or{@link #getMainLogger()}} for main
+ *     aparecium logger, by using this one you are logging messages as Aparecium, not your plugin
  */
 public class HedwigLogger {
 
@@ -30,11 +29,9 @@ public class HedwigLogger {
   /**
    * @implNote Hedwig logger that's global for Aparecium
    */
-  @Getter
-  private static final HedwigLogger APARECIUM_HEDWIG_LOGGER =
-      getOrCreate(ApareciumMain.getInstance());
+  @Getter private static HedwigLogger mainLogger;
 
-  @Setter private Logger logger = null;
+  @Setter private Logger logger;
 
   /**
    * @param aparecium your main class instance
@@ -50,6 +47,11 @@ public class HedwigLogger {
     hedwigCache.put(aparecium, hedwigLogger);
 
     return hedwigLogger;
+  }
+
+  public void initializeMainLogger(HedwigLogger hedwigLogger, Aparecium aparecium) {
+    logger = aparecium.getLogger();
+    mainLogger = hedwigLogger;
   }
 
   public void info(String text) {
