@@ -111,7 +111,8 @@ public class TextUtility {
     return text;
   }
 
-  public List<ApareciumComponent> replace(List<ApareciumComponent> text, Placeholder... placeholders) {
+  public List<ApareciumComponent> replace(
+      List<ApareciumComponent> text, Placeholder... placeholders) {
     for (Placeholder placeholder : placeholders) {
       text = placeholder.replaceIn(text);
     }

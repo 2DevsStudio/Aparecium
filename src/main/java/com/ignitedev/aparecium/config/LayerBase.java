@@ -1,7 +1,6 @@
 package com.ignitedev.aparecium.config;
 
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
-import com.ignitedev.aparecium.item.basic.LayoutItem;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.interfaces.Configuration;
 import java.util.Map;
@@ -19,7 +18,6 @@ public class LayerBase extends Config {
   private LayoutLayer defaultLayer =
       LayoutLayer.builder()
           .id("default")
-          .content(0, LayoutItem.getCachedLayoutItem("itemId"))
           .layoutSize(9)
           .layoutInventoryType(InventoryType.CHEST)
           .build();
@@ -45,7 +43,6 @@ public class LayerBase extends Config {
         "default",
         LayoutLayer.builder()
             .id("default")
-            .content(0, LayoutItem.getCachedLayoutItem("itemId"))
             .layoutSize(9)
             .layoutInventoryType(InventoryType.CHEST)
             .build());

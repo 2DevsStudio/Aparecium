@@ -49,7 +49,8 @@ public class DataUtility {
           }
         });
     if (!isDataFound.get()) {
-      updatedList.add(new Placeholder(ApareciumComponent.of(dataToUpdate), ApareciumComponent.of(updateValue)));
+      updatedList.add(
+          new Placeholder(ApareciumComponent.of(dataToUpdate), ApareciumComponent.of(updateValue)));
     }
 
     return updatedList;

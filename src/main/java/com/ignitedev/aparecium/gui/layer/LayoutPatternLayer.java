@@ -24,7 +24,7 @@ public class LayoutPatternLayer extends AbstractLayoutLayer {
   private static ItemBase itemBase;
 
   @Singular("pattern")
-  private  Map<Integer, PatternItem> patternItemList;
+  private Map<Integer, PatternItem> patternItemList;
 
   public LayoutPatternLayer(AbstractLayoutLayerBuilder<?, ?> builder) {
     super(builder);
@@ -42,7 +42,7 @@ public class LayoutPatternLayer extends AbstractLayoutLayer {
     for (Entry<Integer, PatternItem> entry : this.patternItemList.entrySet()) {
       PatternItem value = entry.getValue();
 
-      if(value.tryLuck()){
+      if (value.tryLuck()) {
         value.rollSet();
       }
     }

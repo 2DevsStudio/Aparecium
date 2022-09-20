@@ -1,10 +1,8 @@
 package com.ignitedev.aparecium.item.basic;
 
 import com.ignitedev.aparecium.component.ApareciumComponent;
-import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.enums.ItemType;
 import com.ignitedev.aparecium.enums.Rarity;
-import com.twodevsstudio.simplejsonconfig.api.Config;
 import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -43,9 +41,5 @@ public class LayoutItem extends Item {
     clone.layoutItemInteractionId = this.layoutItemInteractionId;
 
     return clone;
-  }
-
-  public static LayoutItem getCachedLayoutItem(String string) {
-    return Config.getConfig(ItemBase.class).getById(string, LayoutItem.class);
   }
 }

@@ -41,8 +41,8 @@ public abstract class AbstractBaseHologram implements BaseHologram {
   protected Location location;
 
   /**
-   * @implNote you can create hologram entry by {@link HologramEntry#HologramEntry(ApareciumComponent,
-   *     Material)}
+   * @implNote you can create hologram entry by {@link
+   *     HologramEntry#HologramEntry(ApareciumComponent, Material)}
    */
   @Singular("line")
   @NotNull
