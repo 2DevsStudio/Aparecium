@@ -73,9 +73,7 @@ public abstract class Aparecium extends JavaPlugin {
 
     this.startupStage = StartupStage.ENABLED;
     // Aparecium logic
-    HedwigLogger hedwigLogger = new HedwigLogger();
-
-    hedwigLogger.initializeMainLogger(hedwigLogger, this);
+    HedwigLogger.initializeMainLogger(new HedwigLogger(), this);
 
     AdmittanceBook.getAdmittanceBook().cachePlugin(this.getName(), this);
   }

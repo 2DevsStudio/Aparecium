@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @implNote This class is used as Logger for your plugin as well for whole Aparecium, you can
@@ -37,7 +38,7 @@ public class HedwigLogger {
    * @param aparecium your main class instance
    * @return hedwig saved cached for aparecium or new dedicated hedwig
    */
-  public static HedwigLogger getOrCreate(Aparecium aparecium) {
+  public static HedwigLogger getOrCreate(@NotNull Aparecium aparecium) {
     if (hedwigCache.containsKey(aparecium)) {
       return hedwigCache.get(aparecium);
     }
@@ -49,8 +50,8 @@ public class HedwigLogger {
     return hedwigLogger;
   }
 
-  public void initializeMainLogger(HedwigLogger hedwigLogger, Aparecium aparecium) {
-    logger = aparecium.getLogger();
+  public static void initializeMainLogger(HedwigLogger hedwigLogger, @NotNull Aparecium aparecium) {
+    hedwigLogger.setLogger(aparecium.getLogger());
     mainLogger = hedwigLogger;
   }
 
