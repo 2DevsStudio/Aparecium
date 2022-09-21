@@ -49,6 +49,14 @@ public class MessageUtility {
     }
   }
 
+  public void send(Audience target, String text, Placeholder... placeholders) {
+    send(target, ApareciumComponent.of(text), placeholders);
+  }
+
+  public void send(Audience target, List<String> text, Placeholder... placeholders) {
+    text.forEach(message -> send(target, ApareciumComponent.of(message), placeholders));
+  }
+
   public void sendApareciumComponents(
       Audience target, List<ApareciumComponent> text, Placeholder... placeholders) {
     text.forEach(message -> send(target, message, placeholders));
