@@ -5,10 +5,11 @@
 package com.ignitedev.aparecium.item.factory.factories;
 
 import com.ignitedev.aparecium.component.ApareciumComponent;
+import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.item.MagicItem;
 import com.ignitedev.aparecium.item.basic.Item;
 import com.ignitedev.aparecium.item.factory.MagicItemFactory;
-import com.ignitedev.aparecium.item.repository.MagicItemRepository;
+import com.twodevsstudio.simplejsonconfig.api.Config;
 import de.tr7zw.nbtapi.NBTItem;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,8 +47,7 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
 
   @Override
   public MagicItem fromItemStack(ItemStack itemStack) {
-    MagicItemRepository repository = MagicItemRepository.getInstance();
-    MagicItem cachedMagicItem = repository.findByItemStack(itemStack);
+    MagicItem cachedMagicItem = Config.getConfig(ItemBase.class).findByItemStack(itemStack);
 
     if (cachedMagicItem != null) {
       return cachedMagicItem;
@@ -87,8 +87,6 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
    */
   public void applyTags(MagicItem magicItem, NBTItem nbtItem) {
     nbtItem.setString("id", magicItem.getId());
-    nbtItem.setString("rarity", magicItem.getRarity().name());
-    nbtItem.setString("itemType", magicItem.getItemType().name());
 
     magicItem.getTags().forEach(nbtItem::setObject);
   }
