@@ -5,7 +5,6 @@ import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.enums.ItemType;
 import com.ignitedev.aparecium.enums.Rarity;
 import com.ignitedev.aparecium.item.MagicItem;
-import com.ignitedev.aparecium.item.repository.MagicItemRepository;
 import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,8 +18,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * @implNote This is default implementation of MagicItem, you should use it if you don't need any
  *     additional type of custom implementation, or you should use it for creating your own
- *     implementation, it is using additional logic like caching items in repository {{@link
- *     com.ignitedev.aparecium.item.repository.MagicItemRepository}}
+ *     implementation
  */
 @Data
 @SuperBuilder(toBuilder = true)
@@ -30,7 +28,6 @@ public class Item extends MagicItem {
 
   public Item(MagicItemBuilder<?, ?> builder) {
     super(builder);
-    MagicItemRepository.getInstance().add(this);
   }
 
   public Item(
@@ -49,7 +46,6 @@ public class Item extends MagicItem {
     if (this.itemType == null) {
       this.itemType = ItemType.getByMaterial(this.material);
     }
-    MagicItemRepository.getInstance().add(this);
   }
 
   @Override

@@ -1,8 +1,9 @@
 package com.ignitedev.aparecium.item.util;
 
 import com.ignitedev.aparecium.Aparecium;
+import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.item.MagicItem;
-import com.ignitedev.aparecium.item.repository.MagicItemRepository;
+import com.twodevsstudio.simplejsonconfig.api.Config;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.experimental.UtilityClass;
@@ -19,10 +20,10 @@ public class MagicItemConverter {
   public List<MagicItem> convertItemStackList(
       List<ItemStack> itemStackList, boolean createNewMagicItems) {
     List<MagicItem> magicItems = new ArrayList<>();
-    MagicItemRepository repository = MagicItemRepository.getInstance();
+    ItemBase config = Config.getConfig(ItemBase.class);
 
     for (ItemStack itemStack : itemStackList) {
-      MagicItem byItemStack = repository.findByItemStack(itemStack);
+      MagicItem byItemStack = config.findByItemStack(itemStack);
 
       if (byItemStack != null) {
         magicItems.add(byItemStack);
