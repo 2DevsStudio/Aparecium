@@ -2,12 +2,15 @@ package com.ignitedev.aparecium.config;
 
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.gui.basic.Layout;
+import com.ignitedev.aparecium.gui.repository.InventoriesRepository;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.interfaces.Configuration;
 import java.util.Map;
 import lombok.Getter;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("FieldMayBeFinal") // simplejsonconfig is not supporting final fields yet
 @Getter
@@ -37,8 +40,18 @@ public class LayoutBase extends Config {
   }
 
   @NotNull
-  public Layout getById(String layoutId) {
+  public Layout getByIdOrDefault(String layoutId) {
     return this.savedLayouts.getOrDefault(layoutId, defaultLayout);
+  }
+
+  @Nullable
+  public Layout getById(String layoutId) {
+    return this.savedLayouts.get(layoutId);
+  }
+
+  @Nullable
+  public Layout getByInventory(Inventory inventory) {
+    return InventoriesRepository.getInstance().findByInventory(inventory);
   }
 
   private Map<String, Layout> exampleLayouts() {
