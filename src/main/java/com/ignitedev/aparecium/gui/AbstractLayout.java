@@ -80,7 +80,7 @@ public abstract class AbstractLayout
 
   public abstract void fillBackground(Inventory inventory);
 
-  public abstract Inventory createLayout();
+  public abstract Inventory createLayout(AbstractLayoutLayer... additionalLayers);
 
   @Override
   public int compareTo(@NotNull AbstractLayout compareTo) {
