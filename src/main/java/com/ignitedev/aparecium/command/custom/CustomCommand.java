@@ -7,7 +7,6 @@ import com.ignitedev.aparecium.util.MessageUtility;
 import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
 import java.util.List;
 import lombok.Data;
-import net.kyori.adventure.audience.Audience;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
  * @implNote Custom command system for simple plain commands with command execution or text only
  */
 @Data
-public class CustomCommand implements Sendable<Audience> {
+public class CustomCommand implements Sendable<Player> {
 
   @Autowired private static CustomCommandsBase customCommandsBase;
 
@@ -34,33 +33,30 @@ public class CustomCommand implements Sendable<Audience> {
   @NotNull private final List<String> commandResponse;
 
   /**
-   * @param audience command executor
+   * @param player command executor
    * @implNote for more information look at {@link #commandResponse comment}
    */
   @Override
-  public Audience send(Audience audience) {
+  public Player send(Player player) {
     for (String value : commandResponse) {
-      if (audience instanceof Player player) {
-        if (this.commandPermission != null && !player.hasPermission(this.commandPermission)) {
-          // if player has no permission then we are not executing anything
-          MessageUtility.send(audience, customCommandsBase.getNoPermissionMessage());
-          break;
-        }
-        // replacing placeholders
-        value = value.replace("{PLAYER}", player.getName());
+      if (this.commandPermission != null && !player.hasPermission(this.commandPermission)) {
+        // if player has no permission then we are not executing anything
+        MessageUtility.send(player, customCommandsBase.getNoPermissionMessage());
+        break;
       }
+      // replacing placeholders
+      value = value.replace("{PLAYER}", player.getName());
+
       if (value.startsWith("@/")) {
         // performing commands as console
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), value.substring(2));
       } else if (value.startsWith("/")) {
         // performing commands as player
-        if (audience instanceof Player player) {
-          player.performCommand(value.substring(1));
-        }
+        player.performCommand(value.substring(1));
       } else {
-        MessageUtility.send(audience, ApareciumComponent.of(value));
+        MessageUtility.send(player, ApareciumComponent.of(value));
       }
     }
-    return audience;
+    return player;
   }
 }

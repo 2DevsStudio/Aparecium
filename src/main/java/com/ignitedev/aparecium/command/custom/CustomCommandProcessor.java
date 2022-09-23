@@ -5,6 +5,7 @@ import com.twodevsstudio.simplejsonconfig.api.Config;
 import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class CustomCommandProcessor extends BukkitCommand {
@@ -24,7 +25,7 @@ public class CustomCommandProcessor extends BukkitCommand {
         Config.getConfig(CustomCommandsBase.class).getById(this.getName());
 
     if (customCommand != null) {
-      customCommand.send(commandSender);
+      customCommand.send((Player) commandSender);
       return true;
     }
     return false;
