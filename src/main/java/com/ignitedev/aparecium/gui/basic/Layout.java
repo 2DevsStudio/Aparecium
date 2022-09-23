@@ -5,6 +5,7 @@ import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.config.LayerBase;
 import com.ignitedev.aparecium.gui.AbstractLayout;
+import com.ignitedev.aparecium.gui.AbstractLayoutLayer;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import com.ignitedev.aparecium.item.basic.LayoutItem;
 import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
@@ -76,7 +77,11 @@ public class Layout extends AbstractLayout {
    * @param force should we force layout if inventoryType doesn't match with layoutSize
    */
   @Override
-  public void fill(Inventory inventory, boolean fillBackground, boolean force) {
+  public void fill(
+      Inventory inventory,
+      boolean fillBackground,
+      boolean force,
+      AbstractLayoutLayer... additionalLayers) {
     if (!force) {
       if (inventory.getType() != this.inventoryType) {
         return;
@@ -91,6 +96,9 @@ public class Layout extends AbstractLayout {
       if (layerId != null) {
         layerBase.getById(layerId).fill(inventory, force);
       }
+    }
+    for (AbstractLayoutLayer additionalLayer : additionalLayers) {
+      additionalLayer.fill(inventory, force);
     }
     for (Entry<Integer, LayoutItem> entry : this.contents.entrySet()) {
       inventory.setItem(entry.getKey(), entry.getValue().toItemStack(1));
