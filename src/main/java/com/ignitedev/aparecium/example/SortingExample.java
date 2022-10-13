@@ -4,6 +4,7 @@
 
 package com.ignitedev.aparecium.example;
 
+import com.ignitedev.aparecium.interfaces.Example;
 import com.ignitedev.aparecium.sorting.SortingHat;
 import java.util.Comparator;
 import java.util.List;

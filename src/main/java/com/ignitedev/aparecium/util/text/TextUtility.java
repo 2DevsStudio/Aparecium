@@ -6,6 +6,7 @@ package com.ignitedev.aparecium.util.text;
 
 import com.google.common.base.Strings;
 import com.ignitedev.aparecium.component.ApareciumComponent;
+import com.ignitedev.aparecium.interfaces.PaperOnly;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,10 +28,12 @@ public class TextUtility {
     return ChatColor.translateAlternateColorCodes('&', toColor);
   }
 
+  @PaperOnly
   public Component parseMiniMessage(String toParse) {
     return MiniMessage.miniMessage().deserialize(colorize(toParse));
   }
 
+  @PaperOnly
   public List<Component> parseMiniMessage(List<String> toParse) {
     return toParse.stream().map(TextUtility::parseMiniMessage).collect(Collectors.toList());
   }
@@ -39,18 +42,22 @@ public class TextUtility {
     return toColor.stream().map(TextUtility::colorize).collect(Collectors.toList());
   }
 
+  @PaperOnly
   public Component colorizeToComponent(String toColor) {
     return parseMiniMessage(toColor);
   }
 
+  @PaperOnly
   public String serializeComponent(Component component) {
     return MiniMessage.miniMessage().serialize(component);
   }
 
+  @PaperOnly
   public List<String> serializeComponent(List<Component> component) {
     return component.stream().map(TextUtility::serializeComponent).collect(Collectors.toList());
   }
 
+  @PaperOnly
   public Component removeColor(Component component) {
     return colorizeToComponent(removeColor(serializeComponent(component)));
   }
@@ -68,6 +75,7 @@ public class TextUtility {
     return lines.stream().map(TextUtility::removeColor).collect(Collectors.toList());
   }
 
+  @PaperOnly
   public List<Component> removeColorComponent(List<Component> component) {
     return component.stream()
         .map(TextUtility::removeColor)
@@ -76,6 +84,7 @@ public class TextUtility {
         .collect(Collectors.toList());
   }
 
+  @PaperOnly
   public List<Component> colorizeToComponent(List<String> toColor) {
     List<Component> colorizedComponents = new ArrayList<>();
 
@@ -85,6 +94,7 @@ public class TextUtility {
     return colorizedComponents;
   }
 
+  @PaperOnly
   public Component replace(Component component, Placeholder... placeholders) {
     for (Placeholder placeholder : placeholders) {
       component =

@@ -1,6 +1,7 @@
 package com.ignitedev.aparecium.example;
 
 import com.ignitedev.aparecium.component.ApareciumComponent;
+import com.ignitedev.aparecium.interfaces.Example;
 import java.util.List;
 import net.kyori.adventure.text.Component;
 

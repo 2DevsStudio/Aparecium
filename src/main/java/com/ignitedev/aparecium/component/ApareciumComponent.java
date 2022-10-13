@@ -1,5 +1,6 @@
 package com.ignitedev.aparecium.component;
 
+import com.ignitedev.aparecium.interfaces.PaperOnly;
 import com.ignitedev.aparecium.util.text.TextUtility;
 import java.util.List;
 import java.util.function.Supplier;
@@ -26,6 +27,7 @@ public class ApareciumComponent {
   @Singular(value = "component")
   private List<Component> components;
 
+  @PaperOnly
   public ApareciumComponent(ListComponents components) {
     this.components = components.get();
     this.strings = TextUtility.serializeComponent(components.get());
@@ -41,6 +43,7 @@ public class ApareciumComponent {
     this.components = List.of(TextUtility.colorizeToComponent(string));
   }
 
+  @PaperOnly
   public ApareciumComponent(Component component) {
     this.components = List.of(component);
     this.strings = TextUtility.serializeComponent(List.of(component));
@@ -52,6 +55,7 @@ public class ApareciumComponent {
   }
 
   @NotNull
+  @PaperOnly
   public static ApareciumComponent of(@NotNull Component component) {
     return new ApareciumComponent(component);
   }
@@ -84,6 +88,7 @@ public class ApareciumComponent {
   }
 
   @Nullable
+  @PaperOnly
   public Component getAsComponent() {
     List<Component> asComponents = getAsComponents();
 
@@ -94,6 +99,7 @@ public class ApareciumComponent {
   }
 
   @Nullable
+  @PaperOnly
   public List<Component> getAsComponents() {
     if (!strings.isEmpty()) {
       return TextUtility.colorizeToComponent(strings);

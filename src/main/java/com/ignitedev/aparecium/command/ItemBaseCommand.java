@@ -43,7 +43,7 @@ public class ItemBaseCommand extends BaseCommand {
     StringBuilder stringBuilder = new StringBuilder("<red>Items \n");
     int rowCounter = 0;
 
-    for (Entry<String, Item> entry : itemBase.getSavedItems().entrySet()) {
+    for (Entry<String, MagicItem> entry : itemBase.getSavedItems().entrySet()) {
       if (rowCounter >= Constants.ITEMBASE_ITEMS_IN_ROW) {
         stringBuilder.append("\n");
         rowCounter = 0;
