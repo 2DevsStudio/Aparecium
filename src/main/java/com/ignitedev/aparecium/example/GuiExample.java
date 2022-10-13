@@ -59,6 +59,8 @@ public class GuiExample {
                 1,
                 layoutItemFactory.createItem("itemId", Material.DIRT)));
 
+    Inventory inventoryFromAnotherLayout = layoutAnother.createLayout();
+
     // another
 
     Layout layoutAnotherAnother =

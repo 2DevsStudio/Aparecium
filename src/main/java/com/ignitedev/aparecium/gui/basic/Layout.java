@@ -71,7 +71,7 @@ public class Layout extends AbstractLayout {
 
   /**
    * @implNote should be only used if you want to manually fill set inventory, otherwise use {{@link
-   *     #createLayout()}}
+   *     #createLayout(AbstractLayoutLayer...)}}
    * @param inventory set to be filled
    * @param fillBackground if true, then background layer will be pasted
    * @param force should we force layout if inventoryType doesn't match with layoutSize
