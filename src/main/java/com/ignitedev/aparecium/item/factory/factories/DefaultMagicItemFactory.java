@@ -31,13 +31,13 @@ public class DefaultMagicItemFactory<T extends Item> extends RawItemStackFactory
   public static DefaultMagicItemFactory<?> getByClass(Class<?> castClass) {
     DefaultMagicItemFactory<?> factory;
 
-    if (castClass == LayoutItem.class) {
+    if (castClass.getSimpleName().equals(LayoutItem.class.getSimpleName())) {
       MessageUtility.sendConsole(ApareciumComponent.of("Wybrano LayoutItem dla " + castClass));
       factory = Aparecium.getFactoriesManager().getLayoutItemFactory();
-    } else if (castClass == DropItem.class) {
+    } else if (castClass.getSimpleName().equals(DropItem.class.getSimpleName())) {
       MessageUtility.sendConsole(ApareciumComponent.of("Wybrano DropItem dla " + castClass));
       factory = Aparecium.getFactoriesManager().getDropItemFactory();
-    } else if (castClass == PatternItem.class) {
+    } else if (castClass.getSimpleName().equals(PatternItem.class.getSimpleName())) {
       MessageUtility.sendConsole(ApareciumComponent.of("Wybrano PatternItem dla " + castClass));
       factory = Aparecium.getFactoriesManager().getPatternItemFactory();
     } else {

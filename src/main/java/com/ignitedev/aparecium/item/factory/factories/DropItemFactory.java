@@ -46,4 +46,17 @@ public class DropItemFactory extends DefaultMagicItemFactory<DropItem> {
         dropChance,
         dropChancesForMaterials);
   }
+
+  @Override
+  public DropItem createItem(
+      @NotNull String id,
+      @NotNull Material material,
+      @Nullable ItemType itemType,
+      @Nullable Rarity rarity,
+      @Nullable ApareciumComponent name,
+      @Nullable ApareciumComponent description,
+      @Nullable Map<String, Object> tags) {
+    return new DropItem(
+        id, material, itemType, rarity, name, description, tags, 0, new HashMap<>());
+  }
 }

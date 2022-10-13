@@ -23,4 +23,17 @@ public class LayoutItemFactory extends DefaultMagicItemFactory<LayoutItem> {
     return new LayoutItem(
         id, material, itemType, rarity, name, description, tags, layoutItemInteractionId);
   }
+
+  @Override
+  public LayoutItem createItem(
+      @NotNull String id,
+      @NotNull Material material,
+      @Nullable ItemType itemType,
+      @Nullable Rarity rarity,
+      @Nullable ApareciumComponent name,
+      @Nullable ApareciumComponent description,
+      @Nullable Map<String, Object> tags) {
+    return new LayoutItem(
+        id, material, itemType, rarity, name, description, tags, 0);
+  }
 }
