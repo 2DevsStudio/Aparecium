@@ -26,8 +26,7 @@ public class MessageUtility {
     String placeholdersString = TextUtility.replace(text, placeholders).getAsString();
 
     if (placeholdersString != null) {
-      text =
-          ApareciumComponent.of(PlaceholderAPI.setPlaceholders(target, placeholdersString));
+      text = ApareciumComponent.of(PlaceholderAPI.setPlaceholders(target, placeholdersString));
     }
     // PAPER CODE
     if (Aparecium.isUsingPaper()) {
