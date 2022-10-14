@@ -16,6 +16,3 @@
         ItemBase and saving only item id in configuration??? )
 
 # Items:
-
-    * isSimilar with different modes
-    * Comparable for Item.class
