@@ -8,6 +8,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>Aparecium</artifactId>
 
+  <distributionManagement>
+    <repository>
+      <id>2devs-repository</id>
+      <url>http://2devsstudio.com:8080/latest</url>
+    </repository>
+  </distributionManagement>
+
   <build>
     <plugins>
       <plugin>
