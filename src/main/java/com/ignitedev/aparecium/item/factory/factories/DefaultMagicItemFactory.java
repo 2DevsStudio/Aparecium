@@ -13,7 +13,6 @@ import com.ignitedev.aparecium.item.basic.DropItem;
 import com.ignitedev.aparecium.item.basic.Item;
 import com.ignitedev.aparecium.item.basic.LayoutItem;
 import com.ignitedev.aparecium.item.basic.PatternItem;
-import com.ignitedev.aparecium.util.MessageUtility;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -32,16 +31,12 @@ public class DefaultMagicItemFactory<T extends Item> extends RawItemStackFactory
     DefaultMagicItemFactory<?> factory;
 
     if (castClass.getSimpleName().equals(LayoutItem.class.getSimpleName())) {
-      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano LayoutItem dla " + castClass));
       factory = Aparecium.getFactoriesManager().getLayoutItemFactory();
     } else if (castClass.getSimpleName().equals(DropItem.class.getSimpleName())) {
-      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano DropItem dla " + castClass));
       factory = Aparecium.getFactoriesManager().getDropItemFactory();
     } else if (castClass.getSimpleName().equals(PatternItem.class.getSimpleName())) {
-      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano PatternItem dla " + castClass));
       factory = Aparecium.getFactoriesManager().getPatternItemFactory();
     } else {
-      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano defult dla " + castClass));
       factory =
           (DefaultMagicItemFactory<Item>)
               Aparecium.getFactoriesManager().getMagicItemFactories().getDefaultFactory();
