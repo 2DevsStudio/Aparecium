@@ -43,4 +43,8 @@ public class WeightCollection<E> {
   public NavigableMap<Double, E> getMap() {
     return new TreeMap<>(map);
   }
+
+  public void setMap(TreeMap<Double, E> treeMap) {
+    this.map.putAll(treeMap);
+  }
 }
