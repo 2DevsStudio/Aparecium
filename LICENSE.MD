@@ -1,8 +1,8 @@
                       GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
-Copyright (c) 2022. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ) using one of our available
-slaves; IgniteDEV
+Copyright (c) 2022. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available
+slaves: IgniteDEV. All rights reserved.
 Everyone is permitted to copy and distribute verbatim copies
 of this license document, but changing it is not allowed.
 
