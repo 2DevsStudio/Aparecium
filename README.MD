@@ -1,4 +1,4 @@
-## Description
+# Description
 
 Powerful Library that helps you with creating everything you can imagine with Minecraft.
 
@@ -13,7 +13,7 @@ Whole library is supporting factory pattern and builder pattern :)
 We are supporting PAPER functionalities but as well we support plain Spigot, so you'll be able to run Aparecium
 everywhere you would like to, as long you are using at least java 17.
 
-## Functionalities
+# Functionalities
 
 [+] 30+ Utility Classes
 
@@ -51,8 +51,9 @@ for commands like /info etc.)
 
 [+] Cuboid System for wrapping two locations into one object, and you can get all locations between two locations.
 
+--- 
 
-# Planned:
+### Planned:
 
 [-] Advanced Command System
 
@@ -62,13 +63,16 @@ for commands like /info etc.)
 
 [-] Chat System
 
-## Supported Versions
+# Supported Versions
 
-1.12.2 <-> 1.19
+> 1.12.2 <-> 1.19
+---
+> Spigot and Paper API
+---
+> Java 17+
+---
 
-Java 17+
-
-## Dependency
+# Dependency
 
 ```xml
 
