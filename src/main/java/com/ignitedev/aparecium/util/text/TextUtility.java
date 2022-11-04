@@ -7,14 +7,16 @@ package com.ignitedev.aparecium.util.text;
 import com.google.common.base.Strings;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.interfaces.PaperOnly;
+import com.ignitedev.aparecium.util.PaperUtility;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.bukkit.ChatColor;
@@ -28,13 +30,17 @@ public class TextUtility {
     return ChatColor.translateAlternateColorCodes('&', toColor);
   }
 
+  @SneakyThrows
   @PaperOnly
   public Component parseMiniMessage(String toParse) {
+    PaperUtility.checkPaper();
     return MiniMessage.miniMessage().deserialize(colorize(toParse));
   }
 
+  @SneakyThrows
   @PaperOnly
   public List<Component> parseMiniMessage(List<String> toParse) {
+    PaperUtility.checkPaper();
     return toParse.stream().map(TextUtility::parseMiniMessage).collect(Collectors.toList());
   }
 
@@ -43,22 +49,30 @@ public class TextUtility {
   }
 
   @PaperOnly
+  @SneakyThrows
   public Component colorizeToComponent(String toColor) {
+    PaperUtility.checkPaper();
     return parseMiniMessage(toColor);
   }
 
   @PaperOnly
+  @SneakyThrows
   public String serializeComponent(Component component) {
+    PaperUtility.checkPaper();
     return MiniMessage.miniMessage().serialize(component);
   }
 
+  @SneakyThrows
   @PaperOnly
   public List<String> serializeComponent(List<Component> component) {
+    PaperUtility.checkPaper();
     return component.stream().map(TextUtility::serializeComponent).collect(Collectors.toList());
   }
 
+  @SneakyThrows
   @PaperOnly
   public Component removeColor(Component component) {
+    PaperUtility.checkPaper();
     return colorizeToComponent(removeColor(serializeComponent(component)));
   }
 
@@ -76,7 +90,9 @@ public class TextUtility {
   }
 
   @PaperOnly
+  @SneakyThrows
   public List<Component> removeColorComponent(List<Component> component) {
+    PaperUtility.checkPaper();
     return component.stream()
         .map(TextUtility::removeColor)
         .map(value -> MiniMessage.miniMessage().stripTags(serializeComponent(value)))
@@ -85,7 +101,9 @@ public class TextUtility {
   }
 
   @PaperOnly
+  @SneakyThrows
   public List<Component> colorizeToComponent(List<String> toColor) {
+    PaperUtility.checkPaper();
     List<Component> colorizedComponents = new ArrayList<>();
 
     for (String value : toColor) {
@@ -95,7 +113,10 @@ public class TextUtility {
   }
 
   @PaperOnly
+  @SneakyThrows
   public Component replace(Component component, Placeholder... placeholders) {
+    PaperUtility.checkPaper();
+
     for (Placeholder placeholder : placeholders) {
       component =
           component.replaceText(
