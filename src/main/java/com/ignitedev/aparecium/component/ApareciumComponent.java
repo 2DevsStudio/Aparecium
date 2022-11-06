@@ -4,7 +4,7 @@
 
 package com.ignitedev.aparecium.component;
 
-import com.ignitedev.aparecium.ApareciumMain;
+import com.ignitedev.aparecium.engine.ApareciumMain;
 import com.ignitedev.aparecium.interfaces.PaperOnly;
 import com.ignitedev.aparecium.util.PaperUtility;
 import com.ignitedev.aparecium.util.text.TextUtility;

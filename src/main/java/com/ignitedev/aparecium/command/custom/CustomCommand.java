@@ -25,8 +25,9 @@ public class CustomCommand implements Sendable<Player> {
   @Autowired private static CustomCommandsBase customCommandsBase;
 
   @NotNull private final String commandName;
-  @NotNull private final List<String> commandAliases;
   @Nullable private final String commandPermission;
+
+  @NotNull private final List<String> commandAliases;
 
   /**
    * @implNote this messages command sender is going to receive on command execution, if message

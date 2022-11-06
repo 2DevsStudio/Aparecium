@@ -1,6 +1,6 @@
 package com.ignitedev.aparecium.util;
 
-import com.ignitedev.aparecium.ApareciumMain;
+import com.ignitedev.aparecium.engine.ApareciumMain;
 import com.ignitedev.aparecium.exception.IncorrectEngineException;
 import lombok.experimental.UtilityClass;
 

@@ -1,6 +1,6 @@
 name: Aparecium
 version: '${project.version}'
-main: com.ignitedev.aparecium.ApareciumMain
+main: com.ignitedev.aparecium.engine.ApareciumMain
 api-version: 1.19
 authors: [ IgniteDEV, 2DevsStudio ]
 description: "The Revealing Charm will reveal invisible ink and messages hidden by magical means.
