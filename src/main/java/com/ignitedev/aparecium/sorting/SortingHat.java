@@ -36,8 +36,9 @@ public class SortingHat<T extends Comparable<T>> {
   private final Map<String, Predicate<? super T>> filters = new HashMap<>();
   private Set<T> collection = new ConcurrentSkipListSet<>();
 
-  public SortingHat(Set<T> value) {
-    this.collection = value;
+  public SortingHat(Collection<T> value) {
+    this.collection = new ConcurrentSkipListSet<>();
+    this.collection.addAll(value);
   }
 
   /**
