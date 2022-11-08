@@ -62,9 +62,9 @@ public class Layout extends AbstractLayout {
   }
 
   @Override
-  public Inventory createLayout() {
+  public Inventory createLayout(AbstractLayoutLayer... additionalLayers) {
     Inventory createdInventory = createProperInventory(this.layoutTitle);
-    fill(createdInventory, true, false);
+    fill(createdInventory, true, false, additionalLayers);
 
     return createdInventory;
   }
