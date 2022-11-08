@@ -9,8 +9,11 @@ import com.ignitedev.aparecium.enums.ItemType;
 import com.ignitedev.aparecium.enums.Rarity;
 import com.ignitedev.aparecium.item.basic.DropItem;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,9 +27,21 @@ public class DropItemFactory extends DefaultMagicItemFactory<DropItem> {
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
       @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable List<ItemFlag> flags,
       double dropChance) {
     return new DropItem(
-        id, material, itemType, rarity, name, description, tags, dropChance, new HashMap<>());
+        id,
+        material,
+        itemType,
+        rarity,
+        name,
+        description,
+        tags,
+        enchants,
+        flags,
+        dropChance,
+        new HashMap<>());
   }
 
   public DropItem createItem(
@@ -37,6 +52,8 @@ public class DropItemFactory extends DefaultMagicItemFactory<DropItem> {
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
       @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable List<ItemFlag> flags,
       double dropChance,
       Map<Material, Double> dropChancesForMaterials) {
     return new DropItem(
@@ -47,6 +64,8 @@ public class DropItemFactory extends DefaultMagicItemFactory<DropItem> {
         name,
         description,
         tags,
+        enchants,
+        flags,
         dropChance,
         dropChancesForMaterials);
   }
@@ -59,8 +78,20 @@ public class DropItemFactory extends DefaultMagicItemFactory<DropItem> {
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
-      @Nullable Map<String, Object> tags) {
+      @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable List<ItemFlag> flags) {
     return new DropItem(
-        id, material, itemType, rarity, name, description, tags, 0, new HashMap<>());
+        id,
+        material,
+        itemType,
+        rarity,
+        name,
+        description,
+        tags,
+        enchants,
+        flags,
+        0,
+        new HashMap<>());
   }
 }

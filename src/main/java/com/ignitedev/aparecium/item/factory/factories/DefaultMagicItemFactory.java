@@ -14,9 +14,12 @@ import com.ignitedev.aparecium.item.basic.Item;
 import com.ignitedev.aparecium.item.basic.LayoutItem;
 import com.ignitedev.aparecium.item.basic.PatternItem;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -52,7 +55,9 @@ public class DefaultMagicItemFactory<T extends Item> extends RawItemStackFactory
         from.getRarity(),
         from.getName(),
         from.getDescription(),
-        from.getTags());
+        from.getTags(),
+        from.getEnchants(),
+        from.getFlags());
   }
 
   public T createItem(@NotNull Material material) {
@@ -102,8 +107,33 @@ public class DefaultMagicItemFactory<T extends Item> extends RawItemStackFactory
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
-      @Nullable Map<String, Object> tags) {
-    return ((T) new Item(id, material, itemType, rarity, name, description, tags));
+      @Nullable Map<Enchantment, Integer> enchants) {
+    return createItem(id, material, itemType, rarity, name, description, null, enchants, null);
+  }
+
+  public T createItem(
+      @NotNull String id,
+      @NotNull Material material,
+      @Nullable ItemType itemType,
+      @Nullable Rarity rarity,
+      @Nullable ApareciumComponent name,
+      @Nullable ApareciumComponent description,
+      @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants) {
+    return createItem(id, material, itemType, rarity, name, description, tags, enchants, null);
+  }
+
+  public T createItem(
+      @NotNull String id,
+      @NotNull Material material,
+      @Nullable ItemType itemType,
+      @Nullable Rarity rarity,
+      @Nullable ApareciumComponent name,
+      @Nullable ApareciumComponent description,
+      @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable List<ItemFlag> flags) {
+    return ((T) new Item(id, material, itemType, rarity, name, description, tags, enchants, flags));
   }
 
   @Override

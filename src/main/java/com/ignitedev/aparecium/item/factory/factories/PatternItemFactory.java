@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,6 +27,8 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
       @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable List<ItemFlag> flags,
       double layoutItemInteractionId) {
     return new PatternItem(
         id,
@@ -34,6 +38,8 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
         name,
         description,
         tags,
+        enchants,
+        flags,
         layoutItemInteractionId,
         0,
         new ArrayList<>());
@@ -47,6 +53,8 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
       @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable List<ItemFlag> flags,
       double layoutItemInteractionId,
       double dropChance) {
     return new PatternItem(
@@ -57,6 +65,8 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
         name,
         description,
         tags,
+        enchants,
+        flags,
         layoutItemInteractionId,
         dropChance,
         new ArrayList<>());
@@ -70,10 +80,23 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
       @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable List<ItemFlag> flags,
       double dropChance,
       List<PatternItem> patterns) {
     return new PatternItem(
-        id, material, itemType, rarity, name, description, tags, 0, dropChance, patterns);
+        id,
+        material,
+        itemType,
+        rarity,
+        name,
+        description,
+        tags,
+        enchants,
+        flags,
+        0,
+        dropChance,
+        patterns);
   }
 
   public PatternItem createItem(
@@ -84,6 +107,8 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
       @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable List<ItemFlag> flags,
       double layoutItemInteractionId,
       double dropChance,
       List<PatternItem> patterns) {
@@ -95,6 +120,8 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
         name,
         description,
         tags,
+        enchants,
+        flags,
         layoutItemInteractionId,
         dropChance,
         patterns);
@@ -108,8 +135,21 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
-      @Nullable Map<String, Object> tags) {
+      @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable List<ItemFlag> flags) {
     return new PatternItem(
-        id, material, itemType, rarity, name, description, tags, 0, 0, new ArrayList<>());
+        id,
+        material,
+        itemType,
+        rarity,
+        name,
+        description,
+        tags,
+        enchants,
+        flags,
+        0,
+        0,
+        new ArrayList<>());
   }
 }
