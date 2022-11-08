@@ -39,6 +39,7 @@ for commands like /info etc.)
 Planned:
 
 [-] Advanced Command System
+
 [-] Event system
 [-] Sound system
 [-] Chat System
