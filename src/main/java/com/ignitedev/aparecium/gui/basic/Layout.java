@@ -10,6 +10,7 @@ import com.ignitedev.aparecium.item.basic.LayoutItem;
 import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Map.Entry;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -61,32 +62,19 @@ public class Layout extends AbstractLayout {
 
   @Override
   public Inventory createLayout() {
-    Inventory createdInventory;
-
-    if (this.layoutTitle != null) {
-      // PAPER CODE
-      if (Aparecium.isUsingPaper()) {
-        Component asComponent = this.layoutTitle.getAsComponent();
-
-        if (asComponent != null) {
-          if (this.inventoryType == InventoryType.CHEST) {
-            createdInventory = Bukkit.createInventory(null, this.layoutSize, asComponent);
-          } else {
-            createdInventory = Bukkit.createInventory(null, this.inventoryType, asComponent);
-          }
-          fill(createdInventory, true, false);
-
-          return createdInventory;
-        }
-      }
-      // END OF PAPER CODE
-    }
-    createdInventory = createProperInventory(null, this.layoutTitle.getAsString());
+    Inventory createdInventory = createProperInventory(this.layoutTitle);
     fill(createdInventory, true, false);
 
     return createdInventory;
   }
 
+  /**
+   * @implNote should be only used if you want to manually fill set inventory, otherwise use {{@link
+   *     #createLayout()}}
+   * @param inventory set to be filled
+   * @param fillBackground if true, then background layer will be pasted
+   * @param force should we force layout if inventoryType doesn't match with layoutSize
+   */
   @Override
   public void fill(Inventory inventory, boolean fillBackground, boolean force) {
     if (!force) {
@@ -104,7 +92,9 @@ public class Layout extends AbstractLayout {
         layerBase.getById(layerId).fill(inventory, force);
       }
     }
-    this.contents.forEach((slot, itemId) -> inventory.setItem(slot, itemId.toItemStack(1)));
+    for (Entry<Integer, LayoutItem> entry : this.contents.entrySet()) {
+      inventory.setItem(entry.getKey(), entry.getValue().toItemStack(1));
+    }
     if (fillBackground) {
       fillBackground(inventory);
     }
@@ -118,28 +108,34 @@ public class Layout extends AbstractLayout {
   }
 
   // // //
-
   // // //
 
+  private Inventory createProperInventory(@Nullable ApareciumComponent layoutTitle) {
+    String string = null;
+    Component component = null;
 
-  private Inventory createProperInventory(@Nullable Component component, @Nullable String string) {
-    Inventory createdInventory;
-
-    if (this.inventoryType == InventoryType.CHEST) {
-      if (component != null) {
-        createdInventory = Bukkit.createInventory(null, this.layoutSize, component);
-      } else {
-        createdInventory =
-            Bukkit.createInventory(null, this.layoutSize, string != null ? string : "");
-      }
-    } else {
-      if (component != null) {
-        createdInventory = Bukkit.createInventory(null, this.inventoryType, component);
-      } else {
-        createdInventory =
-            Bukkit.createInventory(null, this.inventoryType, string != null ? string : "");
-      }
+    if (layoutTitle != null) {
+      string = layoutTitle.getAsString();
+      component = layoutTitle.getAsComponent();
     }
-    return createdInventory;
+    if (this.inventoryType == InventoryType.CHEST) {
+      // PAPER CODE
+      if (Aparecium.isUsingPaper()) {
+        if (component != null) {
+          return Bukkit.createInventory(null, this.layoutSize, component);
+        }
+      }
+      // END OF PAPER CODE
+      return Bukkit.createInventory(null, this.layoutSize, string != null ? string : "");
+    } else {
+      // PAPER CODE
+      if (Aparecium.isUsingPaper()) {
+        if (component != null) {
+          return Bukkit.createInventory(null, this.inventoryType, component);
+        }
+      }
+      // END OF PAPER CODE
+      return Bukkit.createInventory(null, this.inventoryType, string != null ? string : "");
+    }
   }
 }
