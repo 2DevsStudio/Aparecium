@@ -2,10 +2,12 @@ package com.ignitedev.aparecium.config;
 
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.gui.basic.Layout;
+import com.ignitedev.aparecium.item.basic.LayoutItem;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.interfaces.Configuration;
 import java.util.Map;
 import lombok.Getter;
+import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryType;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,7 +24,7 @@ public class LayoutBase extends Config {
           .layoutSize(9)
           .inventoryType(InventoryType.CHEST)
           .layoutTitle(ApareciumComponent.of("default"))
-          .content(Map.of(0, "default"))
+          .content(Map.of(0, new LayoutItem("test", Material.DIRT)))
           .build();
 
   /**
@@ -50,7 +52,7 @@ public class LayoutBase extends Config {
             .layoutSize(9)
             .inventoryType(InventoryType.CHEST)
             .layoutTitle(ApareciumComponent.of("default"))
-            .content(Map.of(0, "default"))
+            .content(Map.of(0, LayoutItem.getCachedLayoutItem("default")))
             .build());
   }
 }

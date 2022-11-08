@@ -6,6 +6,7 @@ import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.config.LayerBase;
 import com.ignitedev.aparecium.gui.AbstractLayout;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
+import com.ignitedev.aparecium.item.basic.LayoutItem;
 import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
 import java.util.Collections;
 import java.util.Map;
@@ -37,7 +38,7 @@ public class Layout extends AbstractLayout {
       InventoryType inventoryType,
       @Nullable LayoutLayer layoutBackgroundLayer,
       @Nullable Map<Integer, String> layers,
-      Map<Integer, String> content) {
+      Map<Integer, LayoutItem> content) {
     super(id, layoutTitle, layoutSize, inventoryType, layoutBackgroundLayer, layers, content);
   }
 
@@ -60,7 +61,7 @@ public class Layout extends AbstractLayout {
 
   @Override
   public Inventory createLayout() {
-    Inventory createdInventory = null;
+    Inventory createdInventory;
 
     if (this.layoutTitle != null) {
       // PAPER CODE
@@ -124,8 +125,7 @@ public class Layout extends AbstractLayout {
         layerBase.getById(layerId).fill(inventory, force);
       }
     }
-    this.content.forEach(
-        (slot, itemId) -> inventory.setItem(slot, itemBase.getById(itemId).toItemStack(1)));
+    this.content.forEach((slot, itemId) -> inventory.setItem(slot, itemId.toItemStack(1)));
     if (fillBackground) {
       fillBackground(inventory);
     }
