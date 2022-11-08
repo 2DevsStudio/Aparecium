@@ -49,6 +49,17 @@ public abstract class AbstractLayout
    */
   @Builder.Default protected Map<Integer, String> content = new HashMap<>();
 
+  public AbstractLayout(String id, int layoutSize) {
+    this.id = id;
+    this.layoutSize = layoutSize;
+  }
+
+  public AbstractLayout(String id, @Nullable String layoutTitle, InventoryType inventoryType) {
+    this.id = id;
+    this.layoutTitle = layoutTitle;
+    this.inventoryType = inventoryType;
+  }
+
   public abstract void fill(Inventory inventory, boolean fillBackground, boolean force);
 
   public abstract void fillBackground(Inventory inventory);
