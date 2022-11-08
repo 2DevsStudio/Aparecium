@@ -8,6 +8,10 @@ import java.util.NavigableMap;
 import java.util.Random;
 import java.util.TreeMap;
 
+/**
+ * @implNote That's query and mapping utility for WorldGuard, you can as well create a world-guard
+ *     region using it.
+ */
 @SuppressWarnings("unused")
 public class WeightCollection<E> {
 
@@ -24,17 +28,25 @@ public class WeightCollection<E> {
     this.random = random;
   }
 
+  /**
+   * @param weight of your specified result in argument, higher weight means higher chance, you
+   *     cannot specify weight bellow 0
+   * @param result element that you would like to collection
+   */
   public void add(double weight, E result) {
     if (weight <= 0) {
       return;
     }
-    total += weight;
-    map.put(total, result);
+    this.total += weight;
+    this.map.put(total, result);
   }
 
+  /**
+   * @return generate random entry depending on weight of each item
+   */
   public E next() {
     double value = random.nextDouble() * total;
-    return map.higherEntry(value).getValue();
+    return this.map.higherEntry(value).getValue();
   }
 
   /**
@@ -44,7 +56,7 @@ public class WeightCollection<E> {
     return new TreeMap<>(map);
   }
 
-  public void setMap(TreeMap<Double, E> treeMap) {
+  public void set(TreeMap<Double, E> treeMap) {
     this.map.putAll(treeMap);
   }
 }

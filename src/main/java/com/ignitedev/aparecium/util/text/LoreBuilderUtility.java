@@ -11,6 +11,10 @@ import lombok.EqualsAndHashCode;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * @implNote this utility is used to create lore of item, it is helpful if you are using information
+ *     from item lore, then you depend on that class as well as on { {@link LoreReaderUtility}}
+ */
 @SuppressWarnings("unused")
 @EqualsAndHashCode
 public class LoreBuilderUtility {
