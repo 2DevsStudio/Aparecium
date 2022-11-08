@@ -1,6 +1,7 @@
 package com.ignitedev.aparecium.config;
 
 import com.ignitedev.aparecium.command.custom.CustomCommand;
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.interfaces.Configuration;
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 @Configuration("command-base.json")
 public class CustomCommandsBase extends Config {
+
+  private ApareciumComponent noPermissionMessage = ApareciumComponent.of("No Permission.");
 
   private Map<String, CustomCommand> savedCommands = exampleCommands();
 
