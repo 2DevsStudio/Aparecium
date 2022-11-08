@@ -7,12 +7,15 @@ package com.ignitedev.aparecium.item.basic;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.enums.ItemType;
 import com.ignitedev.aparecium.enums.Rarity;
+import java.util.List;
 import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,9 +35,10 @@ public class LayoutItem extends Item {
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
-      @Nullable Map<String, Object> tags,
+      @Nullable Map<String, Object> tags, @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable List<ItemFlag> flags,
       double layoutItemInteractionId) {
-    super(id, material, itemType, rarity, name, description, tags);
+    super(id, material, itemType, rarity, name, description, tags, enchants, flags);
     this.layoutItemInteractionId = layoutItemInteractionId;
   }
 

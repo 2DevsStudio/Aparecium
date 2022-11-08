@@ -9,6 +9,7 @@ import com.ignitedev.aparecium.enums.ItemType;
 import com.ignitedev.aparecium.enums.Rarity;
 import com.ignitedev.aparecium.util.MathUtility;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,6 +17,8 @@ import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,9 +46,11 @@ public class DropItem extends Item {
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
       @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable List<ItemFlag> flags,
       double dropChance,
       Map<Material, Double> dropChancesForMaterials) {
-    super(id, material, itemType, rarity, name, description, tags);
+    super(id, material, itemType, rarity, name, description, tags, enchants, flags);
     this.dropChance = dropChance;
     this.dropChancesForMaterials = dropChancesForMaterials;
 
