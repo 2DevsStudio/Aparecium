@@ -1,0 +1,10 @@
+jdk:
+  - openjdk18
+before_install:
+  - echo "Before Install"
+  - bash ensure-java-18 install
+install:
+  - echo "Install"
+  - if ! bash ensure-java-18 use; then source ~/.sdkman/bin/sdkman-init.sh; fi
+  - java -version
+  - mvn install
