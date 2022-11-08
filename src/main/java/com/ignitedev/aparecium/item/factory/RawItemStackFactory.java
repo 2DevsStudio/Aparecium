@@ -4,13 +4,15 @@
 
 package com.ignitedev.aparecium.item.factory;
 
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.item.MagicItem;
+import com.ignitedev.aparecium.item.basic.Item;
+import com.ignitedev.aparecium.item.repository.MagicItemRepository;
 import de.tr7zw.nbtapi.NBTItem;
-import java.util.List;
-import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /** Raw ItemStack Factory without implemented text assets; lore and name */
 public abstract class RawItemStackFactory implements MagicItemFactory {
@@ -20,6 +22,7 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
    * @param amount itemstack quantity
    * @return built itemstack with all values in MagicItem
    */
+  @Override
   public ItemStack toItemStack(MagicItem magicItem, int amount) {
     ItemStack itemStack = new ItemStack(magicItem.getMaterial());
 
@@ -27,14 +30,35 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
 
     Damageable itemMeta = (Damageable) itemStack.getItemMeta();
 
-    itemMeta.displayName(buildName(magicItem));
-    itemMeta.lore(buildLore(magicItem));
+    itemStack = buildName(magicItem, itemStack);
+    itemStack = buildLore(magicItem, itemStack);
+
     itemMeta.addItemFlags(ItemFlag.values());
 
     itemStack.setItemMeta(itemMeta);
     itemStack.setAmount(amount);
 
     return itemStack;
+  }
+
+  @Override
+  public MagicItem fromItemStack(ItemStack itemStack) {
+    MagicItemRepository repository = MagicItemRepository.getInstance();
+    MagicItem cachedMagicItem = repository.findByItemStack(itemStack);
+
+    if (cachedMagicItem != null) {
+      return cachedMagicItem;
+    }
+    ItemMeta itemMeta = itemStack.getItemMeta();
+
+    // todo nbt tags
+
+    return Item.builder()
+        .id(itemStack.toString())
+        .material(itemStack.getType())
+        .name(new ApareciumComponent(itemMeta.displayName()))
+        .description(new ApareciumComponent(() -> itemMeta.lore()))
+        .build();
   }
 
   /**
@@ -44,8 +68,8 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
   public void updateItemStack(MagicItem magicItem, ItemStack itemStack) {
     Damageable itemMeta = (Damageable) itemStack.getItemMeta();
 
-    itemMeta.displayName(buildName(magicItem));
-    itemMeta.lore(buildLore(magicItem));
+    itemStack = buildName(magicItem, itemStack);
+    itemStack = buildLore(magicItem, itemStack);
 
     itemStack.setItemMeta(itemMeta);
   }
@@ -66,11 +90,11 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
    * @param magicItem MagicItem instance to apply changes
    * @return built lore with specific implementation
    */
-  public abstract List<Component> buildLore(MagicItem magicItem);
+  public abstract ItemStack buildLore(MagicItem magicItem, ItemStack itemStack);
 
   /**
    * @param magicItem MagicItem instance to apply changes
    * @return built name with specific implementation
    */
-  public abstract Component buildName(MagicItem magicItem);
+  public abstract ItemStack buildName(MagicItem magicItem, ItemStack itemStack);
 }
