@@ -13,7 +13,6 @@ import com.twodevsstudio.simplejsonconfig.api.Config;
 import de.tr7zw.nbtapi.NBTItem;
 import java.util.HashMap;
 import java.util.Map;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -37,7 +36,8 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
     itemStack = buildName(magicItem, itemStack);
     itemStack = buildLore(magicItem, itemStack);
 
-    itemMeta.addItemFlags(ItemFlag.values());
+    magicItem.getFlags().forEach(itemStack::addItemFlags);
+    magicItem.getEnchants().forEach(itemStack::addUnsafeEnchantment);
 
     itemStack.setItemMeta(itemMeta);
     itemStack.setAmount(amount);
@@ -65,6 +65,8 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
         .name(new ApareciumComponent(itemMeta.displayName()))
         .description(new ApareciumComponent(() -> itemMeta.lore()))
         .tags(tags)
+        .enchants(itemStack.getEnchantments())
+        .flags(itemStack.getItemFlags())
         .build();
   }
 

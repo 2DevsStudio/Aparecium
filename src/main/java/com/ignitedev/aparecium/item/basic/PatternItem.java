@@ -78,6 +78,8 @@ public class PatternItem extends LayoutItem {
         this.setRarity(clone.getRarity());
         this.setDropChance(clone.getDropChance());
         this.setTags(clone.getTags());
+        this.setEnchants(clone.getEnchants());
+        this.setFlags(clone.getFlags());
         break;
       }
     }
