@@ -10,6 +10,7 @@ import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Singular;
 import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
 import org.bukkit.event.inventory.InventoryType;
@@ -43,13 +44,15 @@ public abstract class AbstractLayout
   /**
    * @implNote <LAYER WEIGHT (LOWER = HIGHER PRIORITY), LAYER ID>
    */
-  @Builder.Default protected Map<Integer, String> layers = new HashMap<>();
+  @Singular("layer")
+  protected Map<Integer, String> layers = new HashMap<>();
 
   /**
    * @implNote first applied is {{@link #layers}} then content
    * @implNote <SLOT NUMBER, LayoutItem>
    */
-  @Builder.Default protected Map<Integer, LayoutItem> content = new HashMap<>();
+  @Singular("content")
+  protected Map<Integer, LayoutItem> contents = new HashMap<>();
 
   public AbstractLayout(String id, int layoutSize) {
     this.id = id;
@@ -86,7 +89,7 @@ public abstract class AbstractLayout
     clone.inventoryType = this.inventoryType;
     clone.layoutBackgroundLayer = this.layoutBackgroundLayer;
     clone.layers = this.layers;
-    clone.content = this.content;
+    clone.contents = this.contents;
 
     return clone;
   }
