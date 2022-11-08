@@ -28,6 +28,27 @@ import org.jetbrains.annotations.Nullable;
  */
 public class DefaultMagicItemFactory<T extends Item> extends RawItemStackFactory {
 
+  public static DefaultMagicItemFactory<?> getByClass(Class<?> castClass) {
+    DefaultMagicItemFactory<?> factory;
+
+    if (castClass == LayoutItem.class) {
+      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano LayoutItem dla " + castClass));
+      factory = Aparecium.getFactoriesManager().getLayoutItemFactory();
+    } else if (castClass == DropItem.class) {
+      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano DropItem dla " + castClass));
+      factory = Aparecium.getFactoriesManager().getDropItemFactory();
+    } else if (castClass == PatternItem.class) {
+      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano PatternItem dla " + castClass));
+      factory = Aparecium.getFactoriesManager().getPatternItemFactory();
+    } else {
+      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano defult dla " + castClass));
+      factory =
+          (DefaultMagicItemFactory<Item>)
+              Aparecium.getFactoriesManager().getMagicItemFactories().getDefaultFactory();
+    }
+    return factory;
+  }
+
   public <D extends Item> T from(D from) {
     return createItem(
         from.getId(),
@@ -122,26 +143,5 @@ public class DefaultMagicItemFactory<T extends Item> extends RawItemStackFactory
     }
     itemStack.setItemMeta(itemMeta);
     return itemStack;
-  }
-
-  public static DefaultMagicItemFactory<?> getByClass(Class<?> castClass) {
-    DefaultMagicItemFactory<?> factory;
-
-    if (castClass == LayoutItem.class) {
-      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano LayoutItem dla " + castClass));
-      factory = Aparecium.getFactoriesManager().getLayoutItemFactory();
-    } else if (castClass == DropItem.class) {
-      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano DropItem dla " + castClass));
-      factory = Aparecium.getFactoriesManager().getDropItemFactory();
-    } else if (castClass == PatternItem.class) {
-      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano PatternItem dla " + castClass));
-      factory = Aparecium.getFactoriesManager().getPatternItemFactory();
-    } else {
-      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano defult dla " + castClass));
-      factory =
-          (DefaultMagicItemFactory<Item>)
-              Aparecium.getFactoriesManager().getMagicItemFactories().getDefaultFactory();
-    }
-    return factory;
   }
 }
