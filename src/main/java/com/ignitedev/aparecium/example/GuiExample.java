@@ -44,6 +44,13 @@ public class GuiExample {
             Map.of(0, "LayerID5", 1, "LayerID3", 2, "LayerID8"),
             Map.of(0, "itemId", 1, "itemId"));
 
+    // another
+
+    Layout layoutAnotherAnother = new Layout("testID", "Title", InventoryType.ANVIL);
+
+    layoutAnotherAnother.setLayoutSize(27);
+    layoutAnotherAnother.setContent(Map.of(0, "itemId1", 1, "itemId2"));
+
     // this Inventory contains all specified data
     Inventory createdInventory = layout.createLayout();
   }
