@@ -4,6 +4,7 @@
 
 package com.ignitedev.aparecium.hologram.data;
 
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import lombok.Data;
 import org.bukkit.Material;
 import org.jetbrains.annotations.Nullable;
@@ -15,7 +16,7 @@ public final class HologramEntry {
   /**
    * @implNote text of hologram
    */
-  private final @Nullable String line;
+  private final @Nullable ApareciumComponent line;
   /**
    * @implNote item as hologram line
    */

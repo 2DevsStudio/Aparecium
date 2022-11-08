@@ -7,6 +7,7 @@ package com.ignitedev.aparecium.hologram.factory;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.ignitedev.aparecium.Aparecium;
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.hologram.basic.BaseHologram;
 import com.ignitedev.aparecium.hologram.data.HologramEntry;
 import org.bukkit.inventory.ItemStack;
@@ -20,7 +21,11 @@ public class DefaultHologramFactory implements HologramFactory {
       if (line.getMaterial() != null) {
         hologram.appendItemLine(new ItemStack(line.getMaterial()));
       } else {
-        hologram.appendTextLine(line.getLine());
+        ApareciumComponent lineFinal = line.getLine();
+
+        if (lineFinal != null) {
+          hologram.appendTextLine(lineFinal.getAsString());
+        }
       }
     }
     return hologram;
