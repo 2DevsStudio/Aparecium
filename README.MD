@@ -84,9 +84,9 @@ commands like /info etc.)
 </repository>
 
 <dependency>
-<groupId>com.ignitedev</groupId>
-<artifactId>Aparecium</artifactId>
-<version>1.0.0</version>
+  <groupId>com.ignitedev</groupId>
+  <artifactId>Aparecium</artifactId>
+  <version>1.0.0</version>
 </dependency>
 
 ```
