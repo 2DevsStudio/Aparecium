@@ -1,15 +1,20 @@
 package com.ignitedev.aparecium.item.basic;
 
-import com.ignitedev.aparecium.Aparecium;
+import com.ignitedev.aparecium.component.ApareciumComponent;
+import com.ignitedev.aparecium.enums.ItemType;
+import com.ignitedev.aparecium.enums.Rarity;
 import com.ignitedev.aparecium.util.MathUtility;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.Material;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Data
 @SuperBuilder(toBuilder = true)
@@ -25,8 +30,20 @@ public class PatternItem extends LayoutItem {
   @Singular("addPattern")
   private List<PatternItem> patterns;
 
-  public PatternItem(MagicItemBuilder<?, ?> builder) {
-    super(builder);
+  public PatternItem(
+      @NotNull String id,
+      @NotNull Material material,
+      @Nullable ItemType itemType,
+      @Nullable Rarity rarity,
+      @Nullable ApareciumComponent name,
+      @Nullable ApareciumComponent description,
+      @Nullable Map<String, Object> tags,
+      double layoutItemInteractionId,
+      double dropChance,
+      List<PatternItem> patterns) {
+    super(id, material, itemType, rarity, name, description, tags, layoutItemInteractionId);
+    this.dropChance = dropChance;
+    this.patterns = patterns;
   }
 
   /**
@@ -44,9 +61,7 @@ public class PatternItem extends LayoutItem {
     return positiveItems;
   }
 
-  /**
-   * Changes current item to one from patterns
-   */
+  /** Changes current item to one from patterns */
   public void rollSet() {
     for (PatternItem pattern : this.patterns) {
       PatternItem clone = pattern.clone();
@@ -69,14 +84,6 @@ public class PatternItem extends LayoutItem {
    */
   public boolean tryLuck() {
     return MathUtility.getRandomPercent(dropChance);
-  }
-
-  @Override
-  public ItemStack toItemStack(int amount) {
-    return Aparecium.getFactoriesManager()
-        .getMagicItemFactories()
-        .getDefaultFactory()
-        .toItemStack(this, amount);
   }
 
   @Override
