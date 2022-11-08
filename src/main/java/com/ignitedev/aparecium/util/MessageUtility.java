@@ -6,6 +6,7 @@ package com.ignitedev.aparecium.util;
 
 import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.component.ApareciumComponent;
+import com.ignitedev.aparecium.interfaces.PaperOnly;
 import com.ignitedev.aparecium.util.text.Placeholder;
 import com.ignitedev.aparecium.util.text.TextUtility;
 import java.util.List;
@@ -45,10 +46,12 @@ public class MessageUtility {
     }
   }
 
+  @PaperOnly
   public void send(Audience target, ApareciumComponent text, Placeholder... placeholders) {
     send(((Player) target), text, placeholders);
   }
 
+  @PaperOnly
   public void send(Audience target, String text, Placeholder... placeholders) {
     send(target, ApareciumComponent.of(text), placeholders);
   }
@@ -57,6 +60,7 @@ public class MessageUtility {
     send(target, ApareciumComponent.of(text), placeholders);
   }
 
+  @PaperOnly
   public void send(Audience target, List<String> text, Placeholder... placeholders) {
     text.forEach(message -> send(target, ApareciumComponent.of(message), placeholders));
   }
@@ -65,6 +69,7 @@ public class MessageUtility {
     text.forEach(message -> send(target, ApareciumComponent.of(message), placeholders));
   }
 
+  @PaperOnly
   public void sendApareciumComponents(
       Audience target, List<ApareciumComponent> text, Placeholder... placeholders) {
     text.forEach(message -> send(target, message, placeholders));
@@ -75,6 +80,7 @@ public class MessageUtility {
     text.forEach(message -> send(target, message, placeholders));
   }
 
+  @PaperOnly
   public void send(Audience target, Component text, Placeholder... placeholders) {
     if (TextUtility.serializeComponent(text).equalsIgnoreCase("{BLANK}")) {
       return;
@@ -92,15 +98,22 @@ public class MessageUtility {
     send(target, ApareciumComponent.of(text), placeholders);
   }
 
+  @PaperOnly
   public void sendComponents(Audience target, List<Component> text, Placeholder... placeholders) {
     text.forEach(message -> send(target, message, placeholders));
   }
 
   public void sendConsole(ApareciumComponent text) {
-    send(Bukkit.getConsoleSender(), text);
+    String messageString = text.getAsString();
+
+    if (messageString != null) {
+      Bukkit.getConsoleSender().sendMessage(messageString);
+    }
   }
 
   public void sendConsole(List<ApareciumComponent> text) {
-    sendApareciumComponents(Bukkit.getConsoleSender(), text);
+    for (ApareciumComponent apareciumComponent : text) {
+      sendConsole(apareciumComponent);
+    }
   }
 }

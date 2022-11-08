@@ -4,6 +4,7 @@ import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.enums.ItemType;
+import com.ignitedev.aparecium.interfaces.Example;
 import com.ignitedev.aparecium.item.MagicItem;
 import com.ignitedev.aparecium.item.basic.DropItem;
 import com.ignitedev.aparecium.item.basic.Item;

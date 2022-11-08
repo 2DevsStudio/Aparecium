@@ -8,6 +8,7 @@ import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.hologram.SimpleBaseHologram;
 import com.ignitedev.aparecium.hologram.data.HologramEntry;
+import com.ignitedev.aparecium.interfaces.Example;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Bukkit;

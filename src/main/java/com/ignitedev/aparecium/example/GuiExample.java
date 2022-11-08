@@ -4,6 +4,7 @@ import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.gui.basic.Layout;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
+import com.ignitedev.aparecium.interfaces.Example;
 import com.ignitedev.aparecium.item.factory.factories.LayoutItemFactory;
 import java.util.Map;
 import org.bukkit.Material;
