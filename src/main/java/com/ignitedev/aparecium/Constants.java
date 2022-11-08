@@ -16,13 +16,17 @@ package com.ignitedev.aparecium;
 import lombok.experimental.UtilityClass;
 
 /**
- * @implNote this class is only used for constant values, not to change, don't play with 'em
+ * @implNote this class is only used for constant values, not to change ( I mean, you can try, I don't guarantee that
+ * everything going to work as you expect ), don't play with 'em
  */
 @UtilityClass
 public class Constants {
 
   public static final String DEFAULT_FACTORY = "DEFAULT";
 
+  /**
+   * How many items you want to insert in '/itembase list' line before insert new line
+   */
   public static final int ITEMBASE_ITEMS_IN_ROW = 5;
 
 }
