@@ -10,8 +10,8 @@
 
   <distributionManagement>
     <repository>
-      <id>2devs-repository</id>
-      <url>http://2devsstudio.com:8080/latest</url>
+      <id>com.2devsstudio</id>
+      <url>https://repo.2devsstudio.com/latest</url>
     </repository>
   </distributionManagement>
 
