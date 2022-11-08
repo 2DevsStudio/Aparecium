@@ -87,27 +87,6 @@ public class Layout extends AbstractLayout {
     return createdInventory;
   }
 
-  private Inventory createProperInventory(@Nullable Component component, @Nullable String string) {
-    Inventory createdInventory;
-
-    if (this.inventoryType == InventoryType.CHEST) {
-      if (component != null) {
-        createdInventory = Bukkit.createInventory(null, this.layoutSize, component);
-      } else {
-        createdInventory =
-            Bukkit.createInventory(null, this.layoutSize, string != null ? string : "");
-      }
-    } else {
-      if (component != null) {
-        createdInventory = Bukkit.createInventory(null, this.inventoryType, component);
-      } else {
-        createdInventory =
-            Bukkit.createInventory(null, this.inventoryType, string != null ? string : "");
-      }
-    }
-    return createdInventory;
-  }
-
   @Override
   public void fill(Inventory inventory, boolean fillBackground, boolean force) {
     if (!force) {
@@ -136,5 +115,31 @@ public class Layout extends AbstractLayout {
     if (this.layoutBackgroundLayer != null) {
       this.layoutBackgroundLayer.fill(inventory, true);
     }
+  }
+
+  // // //
+
+  // // //
+
+
+  private Inventory createProperInventory(@Nullable Component component, @Nullable String string) {
+    Inventory createdInventory;
+
+    if (this.inventoryType == InventoryType.CHEST) {
+      if (component != null) {
+        createdInventory = Bukkit.createInventory(null, this.layoutSize, component);
+      } else {
+        createdInventory =
+            Bukkit.createInventory(null, this.layoutSize, string != null ? string : "");
+      }
+    } else {
+      if (component != null) {
+        createdInventory = Bukkit.createInventory(null, this.inventoryType, component);
+      } else {
+        createdInventory =
+            Bukkit.createInventory(null, this.inventoryType, string != null ? string : "");
+      }
+    }
+    return createdInventory;
   }
 }
