@@ -45,7 +45,6 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
    * @implNote Item Type useful for sorting and categorizing
    */
   @Builder.Default protected ItemType itemType = ItemUtility.getItemTypeByMaterial(material);
-  // null
 
   /**
    * @implNote Rarity of item, useful for rarity api, sorting(+filterer) api, or any other RNG you

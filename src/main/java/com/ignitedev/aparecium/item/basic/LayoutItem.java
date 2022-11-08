@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 public class LayoutItem extends Item {
 
   /** Interaction id for interaction hook */
-  private double layoutItemInteractionId;
+  public double layoutItemInteractionId;
 
   public LayoutItem(MagicItemBuilder<?, ?> builder) {
     super(builder);
