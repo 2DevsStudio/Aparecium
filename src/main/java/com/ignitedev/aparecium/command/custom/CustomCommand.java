@@ -18,7 +18,7 @@ public class CustomCommand  implements Sendable<Audience> {
 
   @NotNull
   private final String commandName;
-  @Nullable
+  @NotNull
   private final List<String> commandAliases;
   @Nullable
   private final String commandPermission;
@@ -40,6 +40,11 @@ public class CustomCommand  implements Sendable<Audience> {
   public Audience send(Audience audience) {
     for (String value : commandResponse) {
       if(audience instanceof Player player){
+        if(this.commandPermission != null && !player.hasPermission(this.commandPermission)){
+          // if player has no permission then we are not executing anything
+          // todo maybe add message (?)
+          break;
+        }
       // replacing placeholders
         value = value.replace("{PLAYER}", player.getName());
       }
