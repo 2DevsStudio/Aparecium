@@ -8,6 +8,9 @@ import com.ignitedev.aparecium.hologram.factory.DefaultHologramFactory;
 import com.ignitedev.aparecium.hologram.factory.HologramFactories;
 import com.ignitedev.aparecium.item.factory.MagicItemFactories;
 import com.ignitedev.aparecium.item.factory.factories.DefaultMagicItemFactory;
+import com.ignitedev.aparecium.item.factory.factories.DropItemFactory;
+import com.ignitedev.aparecium.item.factory.factories.LayoutItemFactory;
+import com.ignitedev.aparecium.item.factory.factories.PatternItemFactory;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,15 +23,26 @@ public class FactoriesManager {
 
   private HologramFactories hologramFactories;
   private MagicItemFactories magicItemFactories;
+  private LayoutItemFactory layoutItemFactory;
+  private DropItemFactory dropItemFactory;
+  private PatternItemFactory patternItemFactory;
 
   /**
    * @implNote creating factories instances, this method should be only called on runtime
    */
   public void createFactories() {
-    hologramFactories = new HologramFactories();
-    hologramFactories.registerFactory("DEFAULT", new DefaultHologramFactory());
+    this.hologramFactories = new HologramFactories();
+    this.hologramFactories.registerFactory("DEFAULT", new DefaultHologramFactory());
     //
-    magicItemFactories = new MagicItemFactories();
-    magicItemFactories.registerFactory("DEFAULT", new DefaultMagicItemFactory());
+    this.magicItemFactories = new MagicItemFactories();
+    this.magicItemFactories.registerFactory("DEFAULT", new DefaultMagicItemFactory<>());
+
+    this.layoutItemFactory = new LayoutItemFactory();
+    this.dropItemFactory = new DropItemFactory();
+    this.patternItemFactory = new PatternItemFactory();
+
+    this.magicItemFactories.registerFactory("LAYOUT_DEFAULT", layoutItemFactory);
+    this.magicItemFactories.registerFactory("DROP_DEFAULT", dropItemFactory);
+    this.magicItemFactories.registerFactory("PATTERN_DEFAULT", patternItemFactory);
   }
 }
