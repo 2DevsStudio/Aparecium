@@ -21,7 +21,10 @@ public class ItemBase extends Config {
    * @implNote This item is returned if none item with specified id was found
    */
   private Item noneItem =
-      Item.builder().material(Material.BARRIER).name(new ApareciumComponent("Couldn't find item, check typed id")).build();
+      Item.builder()
+          .material(Material.BARRIER)
+          .name(new ApareciumComponent("Couldn't find item, check typed id"))
+          .build();
 
   /**
    * @implNote please note that this method save and reload config, if you have any pending changes
@@ -38,7 +41,8 @@ public class ItemBase extends Config {
   @NotNull
   public MagicItem getById(String itemId) {
     return ((Item)
-            savedItems.getOrDefault(itemId,
+            savedItems.getOrDefault(
+                itemId,
                 this.noneItem.clone().toBuilder().name(new ApareciumComponent(itemId)).build()))
         .clone();
   }
@@ -46,6 +50,10 @@ public class ItemBase extends Config {
   private Map<String, MagicItem> exampleItems() {
     return Map.of(
         "default",
-        Item.builder().id("default").material(Material.DIRT).name(new ApareciumComponent("<yellow>DEFAULT")).build());
+        Item.builder()
+            .id("default")
+            .material(Material.DIRT)
+            .name(new ApareciumComponent("<yellow>DEFAULT"))
+            .build());
   }
 }

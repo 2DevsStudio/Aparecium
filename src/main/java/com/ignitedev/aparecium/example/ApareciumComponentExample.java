@@ -9,10 +9,8 @@ public class ApareciumComponentExample {
 
   @Example
   public void createComponent() {
-    @Example
-    ApareciumComponent stringComponent = new ApareciumComponent("test");
-    @Example
-    ApareciumComponent componentComponent = new ApareciumComponent(Component.text("test"));
+    @Example ApareciumComponent stringComponent = new ApareciumComponent("test");
+    @Example ApareciumComponent componentComponent = new ApareciumComponent(Component.text("test"));
 
     @Example
     ApareciumComponent stringsComponent = new ApareciumComponent(() -> List.of("test", "test"));

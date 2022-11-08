@@ -15,6 +15,7 @@ public class WeightCollection<E> {
 
   private final Random random;
   private double total = 0;
+
   public WeightCollection() {
     this(new Random());
   }
