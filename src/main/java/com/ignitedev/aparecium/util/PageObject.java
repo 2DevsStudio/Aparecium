@@ -5,6 +5,7 @@
 package com.ignitedev.aparecium.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,12 @@ public class PageObject<P> {
 
   private final List<P> objects;
   private final int objectsCountPerPage;
+
+  public PageObject(Collection<P> objects, int objectsCountPerPage) {
+    this.objects = new ArrayList<>();
+    this.objectsCountPerPage = objectsCountPerPage;
+    this.objects.addAll(objects);
+  }
 
   private final Map<Integer, List<P>> pages = new HashMap<>();
 
