@@ -31,11 +31,6 @@ public class ApareciumMain extends Aparecium {
 
   @Getter private static ApareciumMain instance;
 
-  public ApareciumMain() {
-    System.out.println("test: " + this);
-    setHedwigLogger(HedwigLogger.getOrCreate(this));
-  }
-
   @Override
   public void onPreLoad() {}
 
