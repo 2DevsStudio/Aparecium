@@ -27,7 +27,6 @@ import org.jetbrains.annotations.Nullable;
  *     location, keep in mind that minimum location coordinates should be lower than maximum
  *     coordinates
  */
-@SuppressWarnings("ClassCanBeRecord")
 @Data
 public final class Cuboid implements Cloneable {
 

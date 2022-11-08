@@ -12,9 +12,9 @@ import java.util.TreeMap;
 public class WeightCollection<E> {
 
   private final NavigableMap<Double, E> map = new TreeMap<>();
+
   private final Random random;
   private double total = 0;
-
   public WeightCollection() {
     this(new Random());
   }
@@ -34,5 +34,12 @@ public class WeightCollection<E> {
   public E next() {
     double value = random.nextDouble() * total;
     return map.higherEntry(value).getValue();
+  }
+
+  /**
+   * @return clone of map
+   */
+  public NavigableMap<Double, E> getMap() {
+    return new TreeMap<>(map);
   }
 }
