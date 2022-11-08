@@ -21,7 +21,7 @@ import org.bukkit.inventory.ItemStack;
  * @implNote Base representation of item in Aparecium
  */
 @Data
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 public abstract class MagicItem implements Cloneable, Identifiable {
   protected String id;
   @Builder.Default protected Material material = Material.AIR;

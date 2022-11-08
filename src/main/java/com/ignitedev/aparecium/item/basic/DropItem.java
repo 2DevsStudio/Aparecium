@@ -33,7 +33,7 @@ public class DropItem extends MagicItem {
   }
 
   @Override
-  public LayoutItem clone() {
-    return (LayoutItem) super.clone();
+  public DropItem clone() {
+    return (DropItem) super.clone();
   }
 }
