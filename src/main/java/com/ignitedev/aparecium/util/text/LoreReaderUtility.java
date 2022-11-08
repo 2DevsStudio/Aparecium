@@ -11,6 +11,10 @@ import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * @implNote this utility is used to read lore of item, it is helpful if you are using information
+ *     from item lore, then you depend on that class as well as on { {@link LoreBuilderUtility}}
+ */
 @SuppressWarnings("unused")
 public record LoreReaderUtility(List<Component> lore) {
 

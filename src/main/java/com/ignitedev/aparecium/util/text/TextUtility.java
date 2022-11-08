@@ -22,14 +22,23 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * @implNote Utility to manipulate Strings and Components
+ */
 @SuppressWarnings("unused")
 @UtilityClass
 public class TextUtility {
 
+  /**
+   * @implNote standard translation of color codes
+   */
   public String colorize(String toColor) {
     return ChatColor.translateAlternateColorCodes('&', toColor);
   }
 
+  /**
+   * @implNote colorizing then parsing all json components of message by MiniMessage
+   */
   @SneakyThrows
   @PaperOnly
   public Component parseMiniMessage(String toParse) {
@@ -37,6 +46,9 @@ public class TextUtility {
     return MiniMessage.miniMessage().deserialize(colorize(toParse));
   }
 
+  /**
+   * @implNote colorizing then parsing all json components of message by MiniMessage
+   */
   @SneakyThrows
   @PaperOnly
   public List<Component> parseMiniMessage(List<String> toParse) {
@@ -44,6 +56,9 @@ public class TextUtility {
     return toParse.stream().map(TextUtility::parseMiniMessage).collect(Collectors.toList());
   }
 
+  /**
+   * @implNote standard translation of color codes
+   */
   public List<String> colorize(List<String> toColor) {
     return toColor.stream().map(TextUtility::colorize).collect(Collectors.toList());
   }
@@ -150,6 +165,9 @@ public class TextUtility {
     return text;
   }
 
+  /**
+   * @implNote get capitalized and without down score enum name
+   */
   public String getEnumFriendlyName(Enum<?> anEnum) {
     return WordUtils.capitalizeFully(anEnum.name().replace("_", " "));
   }
