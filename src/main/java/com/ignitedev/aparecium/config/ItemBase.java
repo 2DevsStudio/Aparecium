@@ -5,7 +5,6 @@ import com.ignitedev.aparecium.item.MagicItem;
 import com.ignitedev.aparecium.item.basic.Item;
 import com.ignitedev.aparecium.item.basic.LayoutItem;
 import com.ignitedev.aparecium.item.factory.factories.DefaultMagicItemFactory;
-import com.ignitedev.aparecium.util.MessageUtility;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.interfaces.Configuration;
 import de.tr7zw.nbtapi.NBTItem;
@@ -51,10 +50,8 @@ public class ItemBase extends Config {
     DefaultMagicItemFactory<?> factory = DefaultMagicItemFactory.getByClass(castClass);
 
     if (savedItems.containsKey(itemId)) {
-      MessageUtility.sendConsole(ApareciumComponent.of("JADYMY NA KURWY :" + itemId));
       return ((T) ((T) savedItems.get(itemId)).clone());
     } else {
-      MessageUtility.sendConsole(ApareciumComponent.of("Return NONE ITEM for :" + itemId));
       return (T)
           factory.from(((T) this.noneItem)).toBuilder()
               .name(new ApareciumComponent(itemId))
