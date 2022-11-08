@@ -92,6 +92,8 @@ public class ApareciumComponent {
 
   @Nullable
   public List<String> getAsStrings() {
+    fetch();
+
     if (!strings.isEmpty()) {
       return TextUtility.colorize(strings);
     } else if (!components.isEmpty()) {
@@ -104,6 +106,7 @@ public class ApareciumComponent {
 
   @Nullable
   public String getAsString() {
+    fetch();
     List<String> asStrings = getAsStrings();
 
     if (asStrings != null && !asStrings.isEmpty()) {
@@ -117,6 +120,7 @@ public class ApareciumComponent {
   @PaperOnly
   public Component getAsComponent() {
     PaperUtility.checkPaper();
+    fetch();
     List<Component> asComponents = getAsComponents();
 
     if (asComponents != null && !asComponents.isEmpty()) {
@@ -130,6 +134,7 @@ public class ApareciumComponent {
   @SneakyThrows
   public List<Component> getAsComponents() {
     PaperUtility.checkPaper();
+    fetch();
 
     if (!strings.isEmpty()) {
       return TextUtility.colorizeToComponent(strings);
@@ -137,6 +142,19 @@ public class ApareciumComponent {
       return components;
     }
     return null;
+  }
+
+  @PaperOnly
+  public void fetch() {
+    // paper code
+    if(ApareciumMain.isUsingPaper()){
+      if(this.components.isEmpty() && !this.strings.isEmpty()){
+        this.components = TextUtility.colorizeToComponent(this.strings);
+      }
+      if(this.strings.isEmpty() && !this.components.isEmpty()){
+        this.strings = TextUtility.serializeComponent(this.components);
+      }
+    }
   }
 
   public interface ListStrings extends Supplier<List<String>> {}
