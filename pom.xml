@@ -44,11 +44,12 @@
     </resources>
   </build>
   <dependencies>
+
     <dependency>
-      <artifactId>paper-api</artifactId>
-      <groupId>io.papermc.paper</groupId>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot-api</artifactId>
+      <version>1.12.2-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
-      <version>1.19-R0.1-SNAPSHOT</version>
     </dependency>
 
     <!-- Integrations  -->
@@ -182,14 +183,14 @@
   <packaging>jar</packaging>
 
   <properties>
-    <java.version>1.18</java.version>
+    <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <repositories>
     <repository>
-      <id>papermc-repo</id>
-      <url>https://repo.papermc.io/repository/maven-public/</url>
+      <id>spigotmc-repo</id>
+      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
     <repository>
       <id>sonatype</id>
