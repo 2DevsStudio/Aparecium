@@ -1,4 +1,4 @@
-# To-Do LIST   
+# To-Do LIST
 
 ---
 ---
@@ -19,6 +19,7 @@ ItemBase and saving only item id in configuration??? )
 [-] Add wrapper for layer
 
 ---
+
 ## Items
 
 [-] onClick

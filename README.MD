@@ -42,11 +42,11 @@ support for that soon)
 [+] Configuration Adapters and Wrappers for giving you possibility to create configuration which will for example give
 possibility for Configurator to choose between creating Item/Layer...etc. or getting it from Layer/Item/Layout Base.
 
-[+] ApareciumComponent which is used instead of String/Paper Component, it's holding all information about 
-String/Paper Component, and depending on platform you are running you can use it as String or Paper Component. It 
+[+] ApareciumComponent which is used instead of String/Paper Component, it's holding all information about
+String/Paper Component, and depending on platform you are running you can use it as String or Paper Component. It
 automatically converts String to Paper Component and vice versa.
 
-[+] Simple Command system, so you can create your own simple text commands with using only configuration. ( Helpful 
+[+] Simple Command system, so you can create your own simple text commands with using only configuration. ( Helpful
 for commands like /info etc.)
 
 [+] Cuboid System for wrapping two locations into one object, and you can get all locations between two locations.

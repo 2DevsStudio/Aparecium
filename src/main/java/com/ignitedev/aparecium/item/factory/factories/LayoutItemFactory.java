@@ -37,7 +37,6 @@ public class LayoutItemFactory extends DefaultMagicItemFactory<LayoutItem> {
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
       @Nullable Map<String, Object> tags) {
-    return new LayoutItem(
-        id, material, itemType, rarity, name, description, tags, 0);
+    return new LayoutItem(id, material, itemType, rarity, name, description, tags, 0);
   }
 }

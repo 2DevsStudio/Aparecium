@@ -4,6 +4,4 @@
 
 package com.ignitedev.aparecium.config.wrapper;
 
-public class MagicItemWrapper {
-
-}
+public class MagicItemWrapper {}

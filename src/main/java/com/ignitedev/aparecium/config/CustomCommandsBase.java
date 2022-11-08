@@ -50,12 +50,13 @@ public class CustomCommandsBase extends Config {
   }
 
   private Map<String, CustomCommand> exampleCommands() {
-    return new HashMap<>(Map.of(
-        "aparecium",
-        new CustomCommand(
+    return new HashMap<>(
+        Map.of(
             "aparecium",
-            new ArrayList<>(),
-            null,
-            List.of("Hey, this is test CustomCommand by Aparecium"))));
+            new CustomCommand(
+                "aparecium",
+                new ArrayList<>(),
+                null,
+                List.of("Hey, this is test CustomCommand by Aparecium"))));
   }
 }

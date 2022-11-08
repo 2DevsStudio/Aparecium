@@ -60,13 +60,14 @@ public class LayoutBase extends Config {
   }
 
   private Map<String, Layout> exampleLayouts() {
-    return new HashMap<>(Map.of(
-        "dadadadadada",
-        Layout.builder()
-            .id("dadadadadada")
-            .layoutSize(9)
-            .inventoryType(InventoryType.CHEST)
-            .layoutTitle(ApareciumComponent.of("dadadada"))
-            .build()));
+    return new HashMap<>(
+        Map.of(
+            "dadadadadada",
+            Layout.builder()
+                .id("dadadadadada")
+                .layoutSize(9)
+                .inventoryType(InventoryType.CHEST)
+                .layoutTitle(ApareciumComponent.of("dadadada"))
+                .build()));
   }
 }

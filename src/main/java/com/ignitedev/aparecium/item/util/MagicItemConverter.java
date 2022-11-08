@@ -43,7 +43,9 @@ public class MagicItemConverter {
     return magicItems;
   }
 
-  public boolean isSimilarComponent(boolean isSimilar, ApareciumComponent componentLore,
+  public boolean isSimilarComponent(
+      boolean isSimilar,
+      ApareciumComponent componentLore,
       ApareciumComponent toCheckComponentLore) {
 
     if (componentLore == null || toCheckComponentLore == null) {

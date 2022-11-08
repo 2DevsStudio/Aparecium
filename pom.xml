@@ -8,13 +8,6 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>Aparecium</artifactId>
 
-  <distributionManagement>
-    <repository>
-      <id>com.2devsstudio</id>
-      <url>https://repo.2devsstudio.com/latest</url>
-    </repository>
-  </distributionManagement>
-
   <build>
     <plugins>
       <plugin>
@@ -50,6 +43,7 @@
       </resource>
     </resources>
   </build>
+
   <dependencies>
     <dependency>
       <artifactId>paper-api</artifactId>
@@ -181,6 +175,12 @@
     spell is more than sufficient to overcome the basic concealing charms and so is a favourite of
     parents and teachers alike."
   </description>
+  <distributionManagement>
+    <repository>
+      <id>com.2devsstudio</id>
+      <url>https://repo.2devsstudio.com/latest</url>
+    </repository>
+  </distributionManagement>
 
   <groupId>com.ignitedev</groupId>
 

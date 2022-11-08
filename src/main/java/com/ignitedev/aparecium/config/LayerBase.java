@@ -44,12 +44,13 @@ public class LayerBase extends Config {
   }
 
   private Map<String, LayoutLayer> defaultLayouts() {
-    return new HashMap<>(Map.of(
-        "default",
-        LayoutLayer.builder()
-            .id("default")
-            .layoutSize(9)
-            .layoutInventoryType(InventoryType.CHEST)
-            .build()));
+    return new HashMap<>(
+        Map.of(
+            "default",
+            LayoutLayer.builder()
+                .id("default")
+                .layoutSize(9)
+                .layoutInventoryType(InventoryType.CHEST)
+                .build()));
   }
 }

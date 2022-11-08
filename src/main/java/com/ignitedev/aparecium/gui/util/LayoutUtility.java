@@ -17,7 +17,8 @@ import org.jetbrains.annotations.Nullable;
 @UtilityClass
 public class LayoutUtility {
 
-  public Inventory createProperInventory(AbstractLayout abstractLayout, @Nullable ApareciumComponent layoutTitle) {
+  public Inventory createProperInventory(
+      AbstractLayout abstractLayout, @Nullable ApareciumComponent layoutTitle) {
     String string = null;
     Component component = null;
 
@@ -33,17 +34,19 @@ public class LayoutUtility {
         }
       }
       // END OF PAPER CODE
-      return Bukkit.createInventory(abstractLayout, abstractLayout.getLayoutSize(), string != null ? string : "");
+      return Bukkit.createInventory(
+          abstractLayout, abstractLayout.getLayoutSize(), string != null ? string : "");
     } else {
       // PAPER CODE
       if (Aparecium.isUsingPaper()) {
         if (component != null) {
-          return Bukkit.createInventory(abstractLayout, abstractLayout.getInventoryType(), component);
+          return Bukkit.createInventory(
+              abstractLayout, abstractLayout.getInventoryType(), component);
         }
       }
       // END OF PAPER CODE
-      return Bukkit.createInventory(abstractLayout, abstractLayout.getInventoryType(), string != null ? string : "");
+      return Bukkit.createInventory(
+          abstractLayout, abstractLayout.getInventoryType(), string != null ? string : "");
     }
   }
-
 }

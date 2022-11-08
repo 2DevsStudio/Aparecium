@@ -32,13 +32,11 @@ import org.jetbrains.annotations.Nullable;
 public abstract class AbstractLayout
     implements Cloneable, Identifiable, Comparable<AbstractLayout>, InventoryHolder {
 
-  protected transient Inventory createdInventoryInstance;
-
   /**
    * @implNote Item creation Instant
    */
   protected final Instant layoutSaveInstant = Instant.now();
-
+  protected transient Inventory createdInventoryInstance;
   protected String id;
 
   @Nullable protected ApareciumComponent layoutTitle;
@@ -77,9 +75,14 @@ public abstract class AbstractLayout
     this.inventoryType = inventoryType;
   }
 
-  public AbstractLayout(String id, @Nullable ApareciumComponent layoutTitle, int layoutSize,
+  public AbstractLayout(
+      String id,
+      @Nullable ApareciumComponent layoutTitle,
+      int layoutSize,
       InventoryType inventoryType,
-      @Nullable LayoutLayer layoutBackgroundLayer, Map<Integer, String> layers, Map<Integer, LayoutItem> contents) {
+      @Nullable LayoutLayer layoutBackgroundLayer,
+      Map<Integer, String> layers,
+      Map<Integer, LayoutItem> contents) {
     this.id = id;
     this.layoutTitle = layoutTitle;
     this.layoutSize = layoutSize;
@@ -98,7 +101,6 @@ public abstract class AbstractLayout
   public abstract void fillBackground(Inventory inventory);
 
   public abstract Inventory createLayout(AbstractLayoutLayer... additionalLayers);
-
 
   @Override
   public int compareTo(@NotNull AbstractLayout compareTo) {
