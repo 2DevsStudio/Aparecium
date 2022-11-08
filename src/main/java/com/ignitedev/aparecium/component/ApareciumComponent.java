@@ -5,13 +5,15 @@ import java.util.List;
 import java.util.function.Supplier;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import lombok.Singular;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@Data
+@Setter
+@EqualsAndHashCode
 @Builder
 @AllArgsConstructor
 public class ApareciumComponent {
