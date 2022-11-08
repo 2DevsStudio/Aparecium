@@ -73,9 +73,6 @@ public class SchematicUtility {
       boolean ignoreAirBlocks) {
     File file = new File(aparecium.getDataFolder(), "schematics/" + schematic);
 
-    if (file.mkdirs()) {
-      Bukkit.getLogger().log(Level.INFO, "Created Schematics directory");
-    }
     if (!file.exists()) {
       Bukkit.getLogger()
           .log(
