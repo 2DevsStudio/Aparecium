@@ -2,6 +2,7 @@ package com.ignitedev.aparecium;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.ignitedev.aparecium.config.adapter.InstantAdapter;
 import com.ignitedev.aparecium.item.MagicItem;
 import com.twodevsstudio.simplejsonconfig.def.adapters.ChronoUnitAdapter;
 import com.twodevsstudio.simplejsonconfig.def.adapters.ClassAdapter;
@@ -12,6 +13,7 @@ import com.twodevsstudio.simplejsonconfig.def.adapters.WorldAdapter;
 import com.twodevsstudio.simplejsonconfig.def.strategies.SuperclassExclusionStrategy;
 import java.lang.ref.Reference;
 import java.lang.reflect.Modifier;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import lombok.Data;
 import org.bukkit.World;
@@ -35,6 +37,7 @@ public class ApareciumGsonBuilder {
             .excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC)
             .serializeNulls()
             .registerTypeHierarchyAdapter(Class.class, new ClassAdapter())
+            .registerTypeHierarchyAdapter(Instant.class, new InstantAdapter())
             .registerTypeHierarchyAdapter(ChronoUnit.class, new ChronoUnitAdapter())
             .registerTypeHierarchyAdapter(ItemStack.class, new ItemStackAdapter())
             .registerTypeHierarchyAdapter(World.class, new WorldAdapter())
