@@ -30,6 +30,8 @@ public abstract class Aparecium extends JavaPlugin {
 
   @Getter private static final FactoriesManager factoriesManager = new FactoriesManager();
 
+  @Getter private static final boolean usingPaper = checkPaper();
+
   private final Stopwatch stopwatch = Stopwatch.createUnstarted();
 
   private final HedwigLogger hedwigLogger;
@@ -150,5 +152,14 @@ public abstract class Aparecium extends JavaPlugin {
             + getLastFiveMinuteTPS()
             + "\n Last 10 Minute TPS: "
             + getLastTenMinuteTPS());
+  }
+
+  private static boolean checkPaper() {
+    try {
+      Class.forName("com.destroystokyo.paper.ClientOption");
+      return true;
+    } catch (ClassNotFoundException ignored) {
+    }
+    return false;
   }
 }
