@@ -68,3 +68,21 @@ for commands like /info etc.)
 
 Java 17+
 
+## Dependency
+
+```
+
+<repository>
+  <id>com.2devsstudio</id>
+  <name>2DevsStudio Repository</name>
+  <url>https://repo.2devsstudio.com/latest</url>
+</repository>
+
+<dependency>
+  <groupId>com.ignitedev</groupId>
+  <artifactId>Aparecium</artifactId>
+  <version>1.0.0</version>
+</dependency>
+
+```
+
