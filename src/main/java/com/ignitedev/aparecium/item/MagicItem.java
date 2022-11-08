@@ -16,6 +16,7 @@ import lombok.Singular;
 import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,10 +27,8 @@ import org.jetbrains.annotations.NotNull;
 @SuperBuilder(toBuilder = true)
 public abstract class MagicItem implements Cloneable, Identifiable, Comparable<MagicItem> {
 
-  protected String id;
-
   private final Instant itemSaveInstant = Instant.now();
-
+  protected String id;
   @Builder.Default protected Material material = Material.AIR;
   /**
    * @implNote Item Type useful for sorting and categorizing
@@ -60,6 +59,21 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
    * @return Prepared itemstack with all specified values and methods
    */
   public abstract ItemStack toItemStack(int amount);
+
+  /**
+   * @param player player which will receive item
+   */
+  public void give(Player player){
+    give(player, 1);
+  }
+
+  /**
+   * @param player player which will receive item
+   * @param amount amount of this item that player going to receive
+   */
+  public void give(Player player, int amount){
+    player.getInventory().addItem(toItemStack(amount <= 0 ? 1 : amount));
+  }
 
   @Override
   @SneakyThrows
