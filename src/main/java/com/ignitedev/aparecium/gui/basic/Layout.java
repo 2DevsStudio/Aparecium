@@ -1,12 +1,12 @@
 package com.ignitedev.aparecium.gui.basic;
 
-import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.config.LayerBase;
 import com.ignitedev.aparecium.gui.AbstractLayout;
 import com.ignitedev.aparecium.gui.AbstractLayoutLayer;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
+import com.ignitedev.aparecium.gui.util.LayoutUtility;
 import com.ignitedev.aparecium.item.basic.LayoutItem;
 import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
 import java.util.Collections;
@@ -16,8 +16,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.Nullable;
@@ -31,7 +29,8 @@ public class Layout extends AbstractLayout {
   @Autowired // autowired fields HAS to be STATIC
   private static ItemBase itemBase;
 
-  @Autowired private static LayerBase layerBase;
+  @Autowired // autowired fields HAS to be STATIC
+  private static LayerBase layerBase;
 
   public Layout(
       String id,
@@ -63,8 +62,9 @@ public class Layout extends AbstractLayout {
 
   @Override
   public Inventory createLayout(AbstractLayoutLayer... additionalLayers) {
-    Inventory createdInventory = createProperInventory(this.layoutTitle);
+    Inventory createdInventory = LayoutUtility.createProperInventory(this, this.layoutTitle);
     fill(createdInventory, true, false, additionalLayers);
+    this.setCreatedInventoryInstance(createdInventory);
 
     return createdInventory;
   }
@@ -112,38 +112,6 @@ public class Layout extends AbstractLayout {
   public void fillBackground(Inventory inventory) {
     if (this.layoutBackgroundLayer != null) {
       this.layoutBackgroundLayer.fill(inventory, true);
-    }
-  }
-
-  // // //
-  // // //
-
-  private Inventory createProperInventory(@Nullable ApareciumComponent layoutTitle) {
-    String string = null;
-    Component component = null;
-
-    if (layoutTitle != null) {
-      string = layoutTitle.getAsString();
-      component = layoutTitle.getAsComponent();
-    }
-    if (this.inventoryType == InventoryType.CHEST) {
-      // PAPER CODE
-      if (Aparecium.isUsingPaper()) {
-        if (component != null) {
-          return Bukkit.createInventory(null, this.layoutSize, component);
-        }
-      }
-      // END OF PAPER CODE
-      return Bukkit.createInventory(null, this.layoutSize, string != null ? string : "");
-    } else {
-      // PAPER CODE
-      if (Aparecium.isUsingPaper()) {
-        if (component != null) {
-          return Bukkit.createInventory(null, this.inventoryType, component);
-        }
-      }
-      // END OF PAPER CODE
-      return Bukkit.createInventory(null, this.inventoryType, string != null ? string : "");
     }
   }
 }

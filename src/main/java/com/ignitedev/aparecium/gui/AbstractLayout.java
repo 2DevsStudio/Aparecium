@@ -8,7 +8,6 @@ import com.ignitedev.aparecium.item.basic.LayoutItem;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
@@ -16,6 +15,7 @@ import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,9 +25,10 @@ import org.jetbrains.annotations.Nullable;
  */
 @Data
 @SuperBuilder(toBuilder = true)
-@AllArgsConstructor
 public abstract class AbstractLayout
-    implements Cloneable, Identifiable, Comparable<AbstractLayout> {
+    implements Cloneable, Identifiable, Comparable<AbstractLayout>, InventoryHolder {
+
+  protected transient Inventory createdInventoryInstance;
 
   /**
    * @implNote Item creation Instant
@@ -72,6 +73,18 @@ public abstract class AbstractLayout
     this.inventoryType = inventoryType;
   }
 
+  public AbstractLayout(String id, @Nullable ApareciumComponent layoutTitle, int layoutSize,
+      InventoryType inventoryType,
+      @Nullable LayoutLayer layoutBackgroundLayer, Map<Integer, String> layers, Map<Integer, LayoutItem> contents) {
+    this.id = id;
+    this.layoutTitle = layoutTitle;
+    this.layoutSize = layoutSize;
+    this.inventoryType = inventoryType;
+    this.layoutBackgroundLayer = layoutBackgroundLayer;
+    this.layers = layers;
+    this.contents = contents;
+  }
+
   public abstract void fill(
       Inventory inventory,
       boolean fillBackground,
@@ -81,6 +94,7 @@ public abstract class AbstractLayout
   public abstract void fillBackground(Inventory inventory);
 
   public abstract Inventory createLayout(AbstractLayoutLayer... additionalLayers);
+
 
   @Override
   public int compareTo(@NotNull AbstractLayout compareTo) {
@@ -92,6 +106,11 @@ public abstract class AbstractLayout
       return compare;
     }
     return layoutSaveInstant.getNano() - compareTo.getLayoutSaveInstant().getNano();
+  }
+
+  @Override
+  public @NotNull Inventory getInventory() {
+    return this.createdInventoryInstance;
   }
 
   @Override
