@@ -46,13 +46,6 @@ public class ApareciumComponent {
     this.strings = TextUtility.serializeComponent(List.of(component));
   }
 
-  public ApareciumComponent replace(String from, String to) {
-    this.strings.set(0, this.strings.get(0).replace(from, to));
-    this.components.set(
-        0, this.components.get(0).replaceText((value) -> value.matchLiteral(from).replacement(to)));
-    return this;
-  }
-
   @NotNull
   public static ApareciumComponent of(@NotNull String string) {
     return new ApareciumComponent(string);
@@ -61,6 +54,13 @@ public class ApareciumComponent {
   @NotNull
   public static ApareciumComponent of(@NotNull Component component) {
     return new ApareciumComponent(component);
+  }
+
+  public ApareciumComponent replace(String from, String to) {
+    this.strings.set(0, this.strings.get(0).replace(from, to));
+    this.components.set(
+        0, this.components.get(0).replaceText((value) -> value.matchLiteral(from).replacement(to)));
+    return this;
   }
 
   @Nullable

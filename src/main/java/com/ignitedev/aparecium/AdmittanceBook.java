@@ -25,7 +25,7 @@ public class AdmittanceBook {
 
   @Getter private static final AdmittanceBook admittanceBook = new AdmittanceBook();
 
-  private final HedwigLogger apareciumHedwigLogger = HedwigLogger.getAPARECIUM_HEDWIG_LOGGER();
+  private final HedwigLogger apareciumHedwigLogger = HedwigLogger.getMainLogger();
 
   /**
    * @implNote <Plugin Name, Plugin Instance>

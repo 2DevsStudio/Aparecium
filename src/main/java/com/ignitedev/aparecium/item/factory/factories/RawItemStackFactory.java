@@ -2,11 +2,12 @@
  * Copyright (c) 2022.  Made by 2DevsStudio LLC ( https://2devsstudio.com/ ) using one of our available slaves; IgniteDEV
  */
 
-package com.ignitedev.aparecium.item.factory;
+package com.ignitedev.aparecium.item.factory.factories;
 
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.item.MagicItem;
 import com.ignitedev.aparecium.item.basic.Item;
+import com.ignitedev.aparecium.item.factory.MagicItemFactory;
 import com.ignitedev.aparecium.item.repository.MagicItemRepository;
 import de.tr7zw.nbtapi.NBTItem;
 import java.util.HashMap;

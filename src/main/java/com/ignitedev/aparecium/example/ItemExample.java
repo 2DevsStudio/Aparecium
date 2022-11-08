@@ -1,5 +1,6 @@
 package com.ignitedev.aparecium.example;
 
+import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.enums.ItemType;
@@ -8,6 +9,7 @@ import com.ignitedev.aparecium.item.basic.DropItem;
 import com.ignitedev.aparecium.item.basic.Item;
 import com.ignitedev.aparecium.item.repository.MagicItemRepository;
 import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
+import org.bukkit.Material;
 
 /**
  * @implNote These class has example usages of item api
@@ -37,6 +39,12 @@ public class ItemExample {
             .itemType(ItemType.COMMON)
             .description(new ApareciumComponent("test"))
             .build();
+
+    @Example
+    DropItem dropItemTest2 =
+        Aparecium.getFactoriesManager()
+            .getDropItemFactory()
+            .createItem("dropItemTest2", Material.DIRT);
   }
 
   @Example
@@ -54,7 +62,7 @@ public class ItemExample {
 
   @Example
   public void getItemFromConfig() {
-    @Example MagicItem byId = itemBase.getById("default");
+    @Example MagicItem byId = itemBase.getById("default", Item.class);
   }
 
   @Example

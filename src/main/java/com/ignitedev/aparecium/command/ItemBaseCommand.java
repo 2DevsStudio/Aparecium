@@ -13,6 +13,7 @@ import com.ignitedev.aparecium.Constants;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.item.MagicItem;
+import com.ignitedev.aparecium.item.basic.Item;
 import com.ignitedev.aparecium.util.MessageUtility;
 import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
 import java.util.Map.Entry;
@@ -30,7 +31,9 @@ public class ItemBaseCommand extends BaseCommand {
   @CommandPermission("aparecium.itembase.help")
   public void onHelp(Player player) {
     for (Entry<String, RegisteredCommand> key : this.getSubCommands().entries()) {
-      MessageUtility.send(player, ApareciumComponent.of("<blue>/itembase <purple>" + key.getValue().getSyntaxText()));
+      MessageUtility.send(
+          player,
+          ApareciumComponent.of("<blue>/itembase <purple>" + key.getValue().getSyntaxText()));
     }
   }
 
@@ -68,13 +71,13 @@ public class ItemBaseCommand extends BaseCommand {
   @Subcommand("get")
   @CommandPermission("aparecium.itembase.get")
   public void onGet(Player player, String id, @Optional int amount) {
-    itemBase.getById(id).give(player, amount <= 0 ? 1 : amount);
+    itemBase.getById(id, Item.class).give(player, amount <= 0 ? 1 : amount);
   }
 
   @Subcommand("give")
   @CommandPermission("aparecium.itembase.give")
   public void onGive(
       CommandSender ignoredCommandSender, OnlinePlayer target, String id, @Optional int amount) {
-    itemBase.getById(id).give(target.getPlayer(), amount <= 0 ? 1 : amount);
+    itemBase.getById(id, Item.class).give(target.getPlayer(), amount <= 0 ? 1 : amount);
   }
 }
