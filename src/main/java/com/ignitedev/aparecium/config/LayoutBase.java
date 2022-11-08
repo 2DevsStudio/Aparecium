@@ -24,7 +24,7 @@ public class LayoutBase extends Config {
           .layoutSize(9)
           .inventoryType(InventoryType.CHEST)
           .layoutTitle(ApareciumComponent.of("default"))
-          .content(Map.of(0, new LayoutItem("test", Material.DIRT)))
+          .content(0, new LayoutItem("test", Material.DIRT))
           .build();
 
   /**
@@ -52,7 +52,7 @@ public class LayoutBase extends Config {
             .layoutSize(9)
             .inventoryType(InventoryType.CHEST)
             .layoutTitle(ApareciumComponent.of("default"))
-            .content(Map.of(0, LayoutItem.getCachedLayoutItem("default")))
+            .content(0, LayoutItem.getCachedLayoutItem("default"))
             .build());
   }
 }
