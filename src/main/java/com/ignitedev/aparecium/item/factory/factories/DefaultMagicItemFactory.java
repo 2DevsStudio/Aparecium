@@ -12,6 +12,7 @@ import com.ignitedev.aparecium.item.MagicItem;
 import com.ignitedev.aparecium.item.basic.Item;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -32,6 +33,10 @@ public class DefaultMagicItemFactory<T extends Item> extends RawItemStackFactory
         from.getName(),
         from.getDescription(),
         from.getTags());
+  }
+
+  public T createItem(@NotNull Material material) {
+    return createItem(UUID.randomUUID().toString(), material, null, null, null, null, new HashMap<>());
   }
 
   public T createItem(@NotNull String id, @NotNull Material material) {
