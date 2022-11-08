@@ -1,6 +1,9 @@
+/*
+ * Copyright (c) 2022.  Made by 2DevsStudio LLC ( https://2devsstudio.com/ ) using one of our available slaves; IgniteDEV
+ */
+
 package com.ignitedev.aparecium.util.text;
 
-import com.ignitedev.aparecium.util.text.TextUtility;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;

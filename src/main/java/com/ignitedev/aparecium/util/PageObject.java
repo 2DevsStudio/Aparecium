@@ -1,12 +1,15 @@
-package com.ignitedev.aparecium.util;
+/*
+ * Copyright (c) 2022.  Made by 2DevsStudio LLC ( https://2devsstudio.com/ ) using one of our available slaves; IgniteDEV
+ */
 
-import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.Nullable;
+package com.ignitedev.aparecium.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("unused")
 @RequiredArgsConstructor

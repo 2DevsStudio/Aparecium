@@ -1,19 +1,26 @@
+/*
+ * Copyright (c) 2022.  Made by 2DevsStudio LLC ( https://2devsstudio.com/ ) using one of our available slaves; IgniteDEV
+ */
+
 package com.ignitedev.aparecium.util;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.internal.Primitives;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Function;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.reflect.FieldUtils;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.function.Function;
 
 @SuppressWarnings("unused")
 @UtilityClass
@@ -257,6 +264,17 @@ public class ReflectionUtility {
         String.format("Unable to find method %s (%s).", methodName, Arrays.asList(params)));
   }
 
+  public static Object getPrivateField(Object object, String field)
+      throws SecurityException, NoSuchFieldException, IllegalArgumentException,
+          IllegalAccessException {
+    Class<?> clazz = object.getClass();
+    Field objectField = clazz.getDeclaredField(field);
+    objectField.setAccessible(true);
+    Object result = objectField.get(object);
+    objectField.setAccessible(false);
+    return result;
+  }
+
   public static class PrimitivesCaster {
 
     private static final Map<Class<?>, Function<String, Object>> casters = new HashMap<>();
@@ -308,16 +326,5 @@ public class ReflectionUtility {
 
       return stringObjectFunction.apply(what.toString());
     }
-  }
-
-  public static Object getPrivateField(Object object, String field)
-      throws SecurityException, NoSuchFieldException, IllegalArgumentException,
-          IllegalAccessException {
-    Class<?> clazz = object.getClass();
-    Field objectField = clazz.getDeclaredField(field);
-    objectField.setAccessible(true);
-    Object result = objectField.get(object);
-    objectField.setAccessible(false);
-    return result;
   }
 }

@@ -1,11 +1,14 @@
-package com.ignitedev.aparecium.util.text;
+/*
+ * Copyright (c) 2022.  Made by 2DevsStudio LLC ( https://2devsstudio.com/ ) using one of our available slaves; IgniteDEV
+ */
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+package com.ignitedev.aparecium.util.text;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @SuppressWarnings("unused")
 @AllArgsConstructor
