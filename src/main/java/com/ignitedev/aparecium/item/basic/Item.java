@@ -42,23 +42,14 @@ public class Item extends MagicItem {
       @Nullable ApareciumComponent description,
       @Nullable Map<String, Object> tags) {
     super(id, material, itemType, rarity, name, description, tags);
+
+    if (this.rarity == null) {
+      this.rarity = Rarity.NOT_SPECIFIED;
+    }
+    if (this.itemType == null) {
+      this.itemType = ItemType.getByMaterial(this.material);
+    }
     MagicItemRepository.getInstance().add(this);
-  }
-
-  public Item(@NotNull String id, @NotNull Material material) {
-    super(id, material);
-  }
-
-  public Item(@NotNull String id, @NotNull Material material, ApareciumComponent name) {
-    super(id, material, name);
-  }
-
-  public Item(
-      @NotNull String id,
-      @NotNull Material material,
-      ApareciumComponent name,
-      ApareciumComponent description) {
-    super(id, material, name, description);
   }
 
   @Override
