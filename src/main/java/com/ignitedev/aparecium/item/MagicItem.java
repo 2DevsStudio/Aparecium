@@ -96,6 +96,7 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
   public MagicItem clone() {
     MagicItem clone = (MagicItem) super.clone();
 
+    clone.description = this.description;
     clone.name = this.name;
     clone.material = this.material;
     clone.rarity = this.rarity;

@@ -71,13 +71,13 @@ public class ItemBaseCommand extends BaseCommand {
   @Subcommand("get")
   @CommandPermission("aparecium.itembase.get")
   public void onGet(Player player, String id, @Optional int amount) {
-    itemBase.getById(id, Item.class).give(player, amount <= 0 ? 1 : amount);
+    itemBase.findById(id, Item.class).give(player, amount <= 0 ? 1 : amount);
   }
 
   @Subcommand("give")
   @CommandPermission("aparecium.itembase.give")
   public void onGive(
       CommandSender ignoredCommandSender, OnlinePlayer target, String id, @Optional int amount) {
-    itemBase.getById(id, Item.class).give(target.getPlayer(), amount <= 0 ? 1 : amount);
+    itemBase.findById(id, Item.class).give(target.getPlayer(), amount <= 0 ? 1 : amount);
   }
 }

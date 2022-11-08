@@ -7,7 +7,7 @@ import com.ignitedev.aparecium.enums.ItemType;
 import com.ignitedev.aparecium.item.MagicItem;
 import com.ignitedev.aparecium.item.basic.DropItem;
 import com.ignitedev.aparecium.item.basic.Item;
-import com.ignitedev.aparecium.item.repository.MagicItemRepository;
+import com.ignitedev.aparecium.item.basic.LayoutItem;
 import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
 import org.bukkit.Material;
 
@@ -62,11 +62,14 @@ public class ItemExample {
 
   @Example
   public void getItemFromConfig() {
-    @Example MagicItem byId = itemBase.getById("default", Item.class);
+    @Example MagicItem byId = itemBase.findById("default", Item.class);
   }
 
   @Example
   public void getItemFromRepository() {
-    @Example MagicItem byId = MagicItemRepository.getInstance().findById("default");
+    @Example MagicItem byId = itemBase.findById("default");
+
+    @Example
+    LayoutItem byIdConvertedToSpecificType = itemBase.findById("default", LayoutItem.class);
   }
 }
