@@ -1,5 +1,7 @@
 package com.ignitedev.aparecium.gui.basic;
 
+import com.ignitedev.aparecium.Aparecium;
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.config.LayerBase;
 import com.ignitedev.aparecium.gui.AbstractLayout;
@@ -11,6 +13,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
@@ -29,7 +32,7 @@ public class Layout extends AbstractLayout {
 
   public Layout(
       String id,
-      @Nullable String layoutTitle,
+      @Nullable ApareciumComponent layoutTitle,
       int layoutSize,
       InventoryType inventoryType,
       @Nullable LayoutLayer layoutBackgroundLayer,
@@ -44,7 +47,7 @@ public class Layout extends AbstractLayout {
     this.layoutSize = layoutSize;
   }
 
-  public Layout(String id, @Nullable String layoutTitle, InventoryType inventoryType) {
+  public Layout(String id, @Nullable ApareciumComponent layoutTitle, InventoryType inventoryType) {
     super(id, layoutTitle, inventoryType);
     this.id = id;
     this.layoutTitle = layoutTitle;
@@ -57,16 +60,50 @@ public class Layout extends AbstractLayout {
 
   @Override
   public Inventory createLayout() {
-    Inventory createdInventory;
-    String layoutTitle = this.layoutTitle == null ? "" : this.layoutTitle;
+    Inventory createdInventory = null;
 
-    if (this.inventoryType == InventoryType.CHEST) {
-      createdInventory = Bukkit.createInventory(null, this.layoutSize, layoutTitle);
-    } else {
-      createdInventory = Bukkit.createInventory(null, this.inventoryType, layoutTitle);
+    if (this.layoutTitle != null) {
+      // PAPER CODE
+      if (Aparecium.isUsingPaper()) {
+        Component asComponent = this.layoutTitle.getAsComponent();
+
+        if (asComponent != null) {
+          if (this.inventoryType == InventoryType.CHEST) {
+            createdInventory = Bukkit.createInventory(null, this.layoutSize, asComponent);
+          } else {
+            createdInventory = Bukkit.createInventory(null, this.inventoryType, asComponent);
+          }
+          fill(createdInventory, true, false);
+
+          return createdInventory;
+        }
+      }
+      // END OF PAPER CODE
     }
+    createdInventory = createProperInventory(null, this.layoutTitle.getAsString());
     fill(createdInventory, true, false);
 
+    return createdInventory;
+  }
+
+  private Inventory createProperInventory(@Nullable Component component, @Nullable String string) {
+    Inventory createdInventory;
+
+    if (this.inventoryType == InventoryType.CHEST) {
+      if (component != null) {
+        createdInventory = Bukkit.createInventory(null, this.layoutSize, component);
+      } else {
+        createdInventory =
+            Bukkit.createInventory(null, this.layoutSize, string != null ? string : "");
+      }
+    } else {
+      if (component != null) {
+        createdInventory = Bukkit.createInventory(null, this.inventoryType, component);
+      } else {
+        createdInventory =
+            Bukkit.createInventory(null, this.inventoryType, string != null ? string : "");
+      }
+    }
     return createdInventory;
   }
 

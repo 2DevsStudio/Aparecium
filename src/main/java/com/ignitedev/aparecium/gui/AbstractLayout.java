@@ -1,5 +1,6 @@
 package com.ignitedev.aparecium.gui;
 
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.gui.basic.Layout;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import com.ignitedev.aparecium.interfaces.Identifiable;
@@ -27,7 +28,7 @@ public abstract class AbstractLayout
 
   protected String id;
 
-  @Nullable protected String layoutTitle;
+  @Nullable protected ApareciumComponent layoutTitle;
 
   /**
    * @implNote a multiple of 9 ( only applicable for InventoryType = CHEST )
@@ -54,7 +55,7 @@ public abstract class AbstractLayout
     this.layoutSize = layoutSize;
   }
 
-  public AbstractLayout(String id, @Nullable String layoutTitle, InventoryType inventoryType) {
+  public AbstractLayout(String id, @Nullable ApareciumComponent layoutTitle, InventoryType inventoryType) {
     this.id = id;
     this.layoutTitle = layoutTitle;
     this.inventoryType = inventoryType;
