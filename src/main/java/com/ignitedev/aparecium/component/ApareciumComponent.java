@@ -4,7 +4,9 @@
 
 package com.ignitedev.aparecium.component;
 
+import com.ignitedev.aparecium.ApareciumMain;
 import com.ignitedev.aparecium.interfaces.PaperOnly;
+import com.ignitedev.aparecium.util.PaperUtility;
 import com.ignitedev.aparecium.util.text.TextUtility;
 import java.util.List;
 import java.util.function.Supplier;
@@ -13,6 +15,8 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
 import lombok.Singular;
+import lombok.SneakyThrows;
+import lombok.ToString;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 @EqualsAndHashCode
 @Builder
 @AllArgsConstructor
+@ToString
 public class ApareciumComponent {
 
   @NotNull
@@ -29,26 +34,35 @@ public class ApareciumComponent {
 
   @NotNull
   @Singular(value = "component")
+  @PaperOnly
   private List<Component> components;
 
+  @SneakyThrows
   @PaperOnly
   public ApareciumComponent(ListComponents components) {
+    PaperUtility.checkPaper();
     this.components = components.get();
     this.strings = TextUtility.serializeComponent(components.get());
   }
 
   public ApareciumComponent(ListStrings strings) {
     this.strings = strings.get();
-    this.components = TextUtility.colorizeToComponent(strings.get());
+    if (ApareciumMain.isUsingPaper()) {
+      this.components = TextUtility.colorizeToComponent(strings.get());
+    }
   }
 
   public ApareciumComponent(String string) {
     this.strings = List.of(string);
-    this.components = List.of(TextUtility.colorizeToComponent(string));
+    if (ApareciumMain.isUsingPaper()) {
+      this.components = List.of(TextUtility.colorizeToComponent(string));
+    }
   }
 
+  @SneakyThrows
   @PaperOnly
   public ApareciumComponent(Component component) {
+    PaperUtility.checkPaper();
     this.components = List.of(component);
     this.strings = TextUtility.serializeComponent(List.of(component));
   }
@@ -58,16 +72,21 @@ public class ApareciumComponent {
     return new ApareciumComponent(string);
   }
 
+  @SneakyThrows
   @NotNull
   @PaperOnly
   public static ApareciumComponent of(@NotNull Component component) {
+    PaperUtility.checkPaper();
     return new ApareciumComponent(component);
   }
 
   public ApareciumComponent replace(String from, String to) {
     this.strings.set(0, this.strings.get(0).replace(from, to));
-    this.components.set(
-        0, this.components.get(0).replaceText((value) -> value.matchLiteral(from).replacement(to)));
+    if (ApareciumMain.isUsingPaper()) {
+      this.components.set(
+          0,
+          this.components.get(0).replaceText((value) -> value.matchLiteral(from).replacement(to)));
+    }
     return this;
   }
 
@@ -76,7 +95,9 @@ public class ApareciumComponent {
     if (!strings.isEmpty()) {
       return TextUtility.colorize(strings);
     } else if (!components.isEmpty()) {
-      return TextUtility.serializeComponent(components);
+      if (ApareciumMain.isUsingPaper()) {
+        return TextUtility.serializeComponent(components);
+      }
     }
     return null;
   }
@@ -91,9 +112,11 @@ public class ApareciumComponent {
     return null;
   }
 
+  @SneakyThrows
   @Nullable
   @PaperOnly
   public Component getAsComponent() {
+    PaperUtility.checkPaper();
     List<Component> asComponents = getAsComponents();
 
     if (asComponents != null && !asComponents.isEmpty()) {
@@ -104,7 +127,10 @@ public class ApareciumComponent {
 
   @Nullable
   @PaperOnly
+  @SneakyThrows
   public List<Component> getAsComponents() {
+    PaperUtility.checkPaper();
+
     if (!strings.isEmpty()) {
       return TextUtility.colorizeToComponent(strings);
     } else if (!components.isEmpty()) {

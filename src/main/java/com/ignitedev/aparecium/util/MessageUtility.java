@@ -10,6 +10,7 @@ import com.ignitedev.aparecium.interfaces.PaperOnly;
 import com.ignitedev.aparecium.util.text.Placeholder;
 import com.ignitedev.aparecium.util.text.TextUtility;
 import java.util.List;
+import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.audience.Audience;
@@ -46,13 +47,17 @@ public class MessageUtility {
     }
   }
 
+  @SneakyThrows
   @PaperOnly
   public void send(Audience target, ApareciumComponent text, Placeholder... placeholders) {
+    PaperUtility.checkPaper();
     send(((Player) target), text, placeholders);
   }
 
+  @SneakyThrows
   @PaperOnly
   public void send(Audience target, String text, Placeholder... placeholders) {
+    PaperUtility.checkPaper();
     send(target, ApareciumComponent.of(text), placeholders);
   }
 
@@ -61,7 +66,9 @@ public class MessageUtility {
   }
 
   @PaperOnly
+  @SneakyThrows
   public void send(Audience target, List<String> text, Placeholder... placeholders) {
+    PaperUtility.checkPaper();
     text.forEach(message -> send(target, ApareciumComponent.of(message), placeholders));
   }
 
@@ -69,9 +76,11 @@ public class MessageUtility {
     text.forEach(message -> send(target, ApareciumComponent.of(message), placeholders));
   }
 
+  @SneakyThrows
   @PaperOnly
   public void sendApareciumComponents(
       Audience target, List<ApareciumComponent> text, Placeholder... placeholders) {
+    PaperUtility.checkPaper();
     text.forEach(message -> send(target, message, placeholders));
   }
 
@@ -81,7 +90,10 @@ public class MessageUtility {
   }
 
   @PaperOnly
+  @SneakyThrows
   public void send(Audience target, Component text, Placeholder... placeholders) {
+    PaperUtility.checkPaper();
+
     if (TextUtility.serializeComponent(text).equalsIgnoreCase("{BLANK}")) {
       return;
     }
@@ -99,7 +111,9 @@ public class MessageUtility {
   }
 
   @PaperOnly
+  @SneakyThrows
   public void sendComponents(Audience target, List<Component> text, Placeholder... placeholders) {
+    PaperUtility.checkPaper();
     text.forEach(message -> send(target, message, placeholders));
   }
 
