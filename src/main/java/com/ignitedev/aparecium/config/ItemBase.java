@@ -16,35 +16,43 @@ import org.jetbrains.annotations.NotNull;
 @Configuration("item-base.json")
 public class ItemBase extends Config {
 
-    private Map<String, MagicItem> savedItems = exampleItems();
+  private Map<String, MagicItem> savedItems = exampleItems();
 
-    private Item defaultItem = Item.builder().material(Material.BARRIER).build();
+  /**
+   * @implNote This item is returned if none item with specified id was found
+   */
+  private Item noneItem =
+      Item.builder().material(Material.BARRIER).name("Couldn't find item, check typed id").build();
 
+  /**
+   * @implNote please note that this method save and reload config, if you have any pending changes in your config
+   * file then it might be overridden
+   * @param magicItem item to save
+   */
+  public void saveItem(MagicItem magicItem){
+    savedItems.put(magicItem.getId(), magicItem);
 
-    public void saveItem(MagicItem magicItem){
-        savedItems.put(magicItem.getId(), magicItem);
+    save();
+    reload();
+  }
 
-        save();
-        reload();
-    }
+  @NotNull
+  public MagicItem getById(String itemId) {
+    return ((Item) savedItems.getOrDefault(itemId, this.noneItem.clone().toBuilder().name(itemId).build())).clone();
+  }
 
-    @NotNull
-    public MagicItem getById(String itemId) {
-        return ((Item) savedItems.getOrDefault(itemId, this.defaultItem.clone().toBuilder().name(itemId).build())).clone();
-    }
+  private Map<String, MagicItem> exampleItems() {
+    Map<String, MagicItem> map = new HashMap<>();
 
-    private Map<String, MagicItem> exampleItems() {
-        Map<String, MagicItem> map = new HashMap<>();
+    map.put(
+        "default",
+        Item.builder()
+            .id("default")
+            .material(Material.DIRT)
+            .name("<yellow>DEFAULT")
+            .build());
 
-        map.put(
-            "default",
-            Item.builder()
-                .id("default")
-                .material(Material.DIRT)
-                .name("<yellow>DEFAULT")
-                .build());
-
-        return map;
-    }
+    return map;
+  }
 
 }
