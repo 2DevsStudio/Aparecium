@@ -5,6 +5,7 @@ import com.ignitedev.aparecium.enums.ItemType;
 import com.ignitedev.aparecium.item.MagicItem;
 import com.ignitedev.aparecium.item.basic.DropItem;
 import com.ignitedev.aparecium.item.basic.Item;
+import com.ignitedev.aparecium.item.repository.MagicItemRepository;
 import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
 
 /**
@@ -13,7 +14,7 @@ import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
 @Example
 public class ItemExample {
 
-  @Autowired // autowired fields HAVE to be STATIC
+  @Autowired // autowired fields HAS to be STATIC
   private static ItemBase itemBase;
 
 
@@ -37,9 +38,15 @@ public class ItemExample {
   }
 
   @Example
-  public void getItemFromRepository() {
+  public void getItemFromConfig() {
     @Example
     MagicItem byId = itemBase.getById("default");
+  }
+
+  @Example
+  public void getItemFromRepository() {
+    @Example
+    MagicItem byId = MagicItemRepository.getInstance().findById("default");
   }
 
 
