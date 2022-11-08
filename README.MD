@@ -70,7 +70,7 @@ Java 17+
 
 ## Dependency
 
-```
+```xml
 
 <repository>
   <id>com.2devsstudio</id>
