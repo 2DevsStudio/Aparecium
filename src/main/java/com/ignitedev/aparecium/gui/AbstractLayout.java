@@ -53,6 +53,8 @@ public abstract class AbstractLayout
 
   public abstract void fillBackground(Inventory inventory);
 
+  public abstract Inventory createLayout();
+
   @Override
   public int compareTo(@NotNull AbstractLayout compareTo) {
     // todo
