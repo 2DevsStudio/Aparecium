@@ -11,6 +11,7 @@ package com.ignitedev.aparecium;
  *  ~~Rubeus Hagrid to Vernon Dursley about Harry Potter
  */
 
+import com.ignitedev.aparecium.logging.HedwigLogger;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;

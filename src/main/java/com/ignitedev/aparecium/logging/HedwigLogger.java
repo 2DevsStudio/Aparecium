@@ -2,7 +2,7 @@
  * Copyright (c) 2022. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
-package com.ignitedev.aparecium;
+package com.ignitedev.aparecium.logging;
 
 /*
  * "Very smart ow`l` you've got there."
@@ -10,6 +10,7 @@ package com.ignitedev.aparecium;
  *  ~~ Tom noting Hedwig's impressive intelligence
  */
 
+import com.ignitedev.aparecium.Aparecium;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;

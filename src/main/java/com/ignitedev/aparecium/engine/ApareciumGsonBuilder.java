@@ -2,10 +2,11 @@
  * Copyright (c) 2022. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
-package com.ignitedev.aparecium;
+package com.ignitedev.aparecium.engine;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.config.adapter.ComponentAdapter;
 import com.ignitedev.aparecium.config.adapter.InstantAdapter;
 import com.ignitedev.aparecium.item.MagicItem;

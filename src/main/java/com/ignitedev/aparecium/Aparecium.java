@@ -7,6 +7,7 @@ package com.ignitedev.aparecium;
 import com.google.common.base.Stopwatch;
 import com.ignitedev.aparecium.enums.StartupStage;
 import com.ignitedev.aparecium.factory.FactoriesManager;
+import com.ignitedev.aparecium.logging.HedwigLogger;
 import java.util.concurrent.TimeUnit;
 import lombok.Getter;
 import lombok.SneakyThrows;
