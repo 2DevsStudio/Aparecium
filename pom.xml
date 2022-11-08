@@ -166,7 +166,7 @@
         <groupId>com.intellectualsites.bom</groupId>
         <scope>import</scope>
         <type>pom</type>
-        <version>1.11</version>
+        <version>1.18</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
