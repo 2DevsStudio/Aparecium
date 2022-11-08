@@ -1,7 +1,10 @@
 package com.ignitedev.aparecium.command.custom;
 
+import com.ignitedev.aparecium.component.ApareciumComponent;
+import com.ignitedev.aparecium.config.CustomCommandsBase;
 import com.ignitedev.aparecium.interfaces.Sendable;
 import com.ignitedev.aparecium.util.MessageUtility;
+import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
 import java.util.List;
 import lombok.Data;
 import net.kyori.adventure.audience.Audience;
@@ -15,6 +18,8 @@ import org.jetbrains.annotations.Nullable;
  */
 @Data
 public class CustomCommand implements Sendable<Audience> {
+
+  @Autowired private static CustomCommandsBase customCommandsBase;
 
   @NotNull private final String commandName;
   @NotNull private final List<String> commandAliases;
@@ -38,7 +43,7 @@ public class CustomCommand implements Sendable<Audience> {
       if (audience instanceof Player player) {
         if (this.commandPermission != null && !player.hasPermission(this.commandPermission)) {
           // if player has no permission then we are not executing anything
-          // todo maybe add message (?)
+          MessageUtility.send(audience, customCommandsBase.getNoPermissionMessage());
           break;
         }
         // replacing placeholders
@@ -53,7 +58,7 @@ public class CustomCommand implements Sendable<Audience> {
           player.performCommand(value.substring(1));
         }
       } else {
-        MessageUtility.send(audience, value);
+        MessageUtility.send(audience, ApareciumComponent.of(value));
       }
     }
     return audience;
