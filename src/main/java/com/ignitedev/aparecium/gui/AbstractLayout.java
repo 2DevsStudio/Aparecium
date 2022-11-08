@@ -1,26 +1,23 @@
-package com.ignitedev.aparecium.gui.basic;
+package com.ignitedev.aparecium.gui;
 
-import com.ignitedev.aparecium.component.ApareciumComponent;
+import com.ignitedev.aparecium.gui.basic.Layout;
+import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import com.ignitedev.aparecium.interfaces.Identifiable;
-import com.ignitedev.aparecium.item.MagicItem;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
-import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * @implNote abstraction of Layout, if you want to create your own implementation you can extend
- *     that class look at {@link com.ignitedev.aparecium.gui.Layout} it is simple implementation of
- *     that class
+ *     that class look at {@link Layout} it is simple implementation of that class
  */
-@Getter
+@Data
 @SuperBuilder(toBuilder = true)
 public abstract class AbstractLayout
     implements Cloneable, Identifiable, Comparable<AbstractLayout> {
@@ -36,14 +33,22 @@ public abstract class AbstractLayout
 
   @Builder.Default protected InventoryType inventoryType = InventoryType.CHEST;
 
-  @Nullable protected Material layoutFillMaterial;
+  @Nullable protected LayoutLayer layoutBackgroundLayer;
 
-  @Builder.Default protected Map<Integer, MagicItem> content = new HashMap<>();
+  /**
+   * @implNote <LAYER WEIGHT, LAYER ID>
+   */
+  @Nullable protected Map<Integer, Integer> layers;
+
+  /**
+   * @implNote first applied is {{@link #layers}} then content
+   * @implNote <SLOT NUMBER, MAGIC ITEM ID>
+   */
+  @Builder.Default protected Map<Integer, Integer> content = new HashMap<>();
 
   @Override
   public int compareTo(@NotNull AbstractLayout compareTo) {
     // todo
-    new ApareciumComponent(() -> List.of("test", "test"));
     return 0;
   }
 
