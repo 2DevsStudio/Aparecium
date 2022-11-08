@@ -36,7 +36,7 @@ public abstract class Aparecium extends JavaPlugin {
 
   @Getter private StartupStage startupStage;
 
-  private Aparecium() {
+  public Aparecium() {
     this.hedwigLogger = HedwigLogger.getOrCreate(this);
   }
 

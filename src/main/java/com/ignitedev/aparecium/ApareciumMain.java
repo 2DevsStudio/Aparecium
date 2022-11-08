@@ -11,13 +11,11 @@ package com.ignitedev.aparecium;
  */
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * @implNote Aparecium Main engine, this is implementation of Aparecium, as well it is perfect
  *     example of how to set up Aparecium
  */
-@NoArgsConstructor
 public class ApareciumMain extends Aparecium {
 
   @Getter private static ApareciumMain instance;
