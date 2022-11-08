@@ -5,6 +5,7 @@
 package com.ignitedev.aparecium.util;
 
 import com.ignitedev.aparecium.Aparecium;
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.util.text.Placeholder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,13 +41,15 @@ public class DataUtility {
 
     updatedList.forEach(
         placeholder -> {
-          if (placeholder.getKey().equalsIgnoreCase(dataToUpdate)) {
-            placeholder.setValue(updateValue);
+          String asString = placeholder.getKey().getAsString();
+
+          if (asString != null && asString.equalsIgnoreCase(dataToUpdate)) {
+            placeholder.setValue(ApareciumComponent.of(updateValue));
             isDataFound.set(true);
           }
         });
     if (!isDataFound.get()) {
-      updatedList.add(new Placeholder(dataToUpdate, updateValue));
+      updatedList.add(new Placeholder(ApareciumComponent.of(dataToUpdate), ApareciumComponent.of(updateValue)));
     }
 
     return updatedList;
