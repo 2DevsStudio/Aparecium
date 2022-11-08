@@ -9,6 +9,7 @@ import com.ignitedev.aparecium.enums.StartupStage;
 import com.ignitedev.aparecium.factory.FactoriesManager;
 import java.util.concurrent.TimeUnit;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,26 +35,13 @@ public abstract class Aparecium extends JavaPlugin {
 
   private final Stopwatch stopwatch = Stopwatch.createUnstarted();
 
-  private final HedwigLogger hedwigLogger;
+  @Getter @Setter private HedwigLogger hedwigLogger;
 
   @Getter private StartupStage startupStage;
 
-  public Aparecium() {
-    this.hedwigLogger = HedwigLogger.getOrCreate(this);
-  }
-
   /*
-   * Aparecium logic
+   * JavaPlugin logic
    */
-
-  private static boolean checkPaper() {
-    try {
-      Class.forName("com.destroystokyo.paper.ClientOption");
-      return true;
-    } catch (ClassNotFoundException ignored) {
-    }
-    return false;
-  }
 
   @Override
   public void onLoad() {
@@ -82,10 +70,6 @@ public abstract class Aparecium extends JavaPlugin {
     AdmittanceBook.getAdmittanceBook().cachePlugin(this.getName(), this);
   }
 
-  /*
-   * Plugin Logic
-   */
-
   @Override
   public void onDisable() {
     this.startupStage = StartupStage.DISABLING;
@@ -99,6 +83,10 @@ public abstract class Aparecium extends JavaPlugin {
     // Aparecium logic
     AdmittanceBook.getAdmittanceBook().removePluginCache(this.getName(), this);
   }
+
+  /*
+   * Aparecium logic
+   */
 
   /** LOAD STAGE 1 */
   public abstract void onPreLoad();
@@ -161,5 +149,14 @@ public abstract class Aparecium extends JavaPlugin {
             + getLastFiveMinuteTPS()
             + "\n Last 10 Minute TPS: "
             + getLastTenMinuteTPS());
+  }
+
+  private static boolean checkPaper() {
+    try {
+      Class.forName("com.destroystokyo.paper.ClientOption");
+      return true;
+    } catch (ClassNotFoundException ignored) {
+      return false;
+    }
   }
 }

@@ -19,9 +19,10 @@ public class DefaultMagicItemFactory extends RawItemStackFactory {
   public ItemStack buildLore(MagicItem magicItem, ItemStack itemStack) {
     ItemMeta itemMeta = itemStack.getItemMeta();
 
+    // PAPER CODE
     if (Aparecium.isUsingPaper()) {
       itemMeta.lore(magicItem.getDescription().getAsComponents());
-    } else {
+    } else {  // PAPER CODE END
       itemMeta.setLore(magicItem.getDescription().getAsStrings());
     }
     itemStack.setItemMeta(itemMeta);
@@ -32,9 +33,10 @@ public class DefaultMagicItemFactory extends RawItemStackFactory {
   public ItemStack buildName(MagicItem magicItem, ItemStack itemStack) {
     ItemMeta itemMeta = itemStack.getItemMeta();
 
+    // PAPER CODE
     if (Aparecium.isUsingPaper()) {
       itemMeta.displayName(magicItem.getName().getAsComponent());
-    } else {
+    } else { // PAPER CODE END
       itemMeta.setDisplayName(magicItem.getName().getAsString());
     }
     itemStack.setItemMeta(itemMeta);
