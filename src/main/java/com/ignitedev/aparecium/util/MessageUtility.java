@@ -21,7 +21,7 @@ public class MessageUtility {
     if (text.equalsIgnoreCase("{BLANK}")) {
       return;
     }
-    if(target instanceof OfflinePlayer offlinePlayer){
+    if (target instanceof OfflinePlayer offlinePlayer) {
       text = PlaceholderAPI.setPlaceholders(offlinePlayer, TextUtility.replace(text, placeholders));
     }
     target.sendMessage(TextUtility.parseMiniMessage(TextUtility.colorize(text)));

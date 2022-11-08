@@ -21,7 +21,7 @@ public class CustomCommandsBase extends Config {
    * @return command with given name or null if not found
    */
   @Nullable
-  public CustomCommand getById(String commandName){
+  public CustomCommand getById(String commandName) {
     return savedCommands.get(commandName);
   }
 
@@ -30,11 +30,11 @@ public class CustomCommandsBase extends Config {
    * @return command with given alias or null if not found
    */
   @Nullable
-  public CustomCommand getByAlias(String alias){
+  public CustomCommand getByAlias(String alias) {
     for (CustomCommand value : savedCommands.values()) {
       List<String> commandAliases = value.getCommandAliases();
 
-      if(commandAliases.contains(alias)){
+      if (commandAliases.contains(alias)) {
         return value;
       }
     }
@@ -42,8 +42,12 @@ public class CustomCommandsBase extends Config {
   }
 
   private Map<String, CustomCommand> exampleCommands() {
-    return Map.of("aparecium", new CustomCommand("aparecium", new ArrayList<>(), null,
-        List.of("Hey, this is test CustomCommand by Aparecium")));
+    return Map.of(
+        "aparecium",
+        new CustomCommand(
+            "aparecium",
+            new ArrayList<>(),
+            null,
+            List.of("Hey, this is test CustomCommand by Aparecium")));
   }
-
 }

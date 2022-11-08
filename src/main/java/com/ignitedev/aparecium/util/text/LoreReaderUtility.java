@@ -33,14 +33,19 @@ public record LoreReaderUtility(List<Component> lore) {
   public List<String> getAllValues(@NotNull String key) {
     Predicate<String> containsKey = line -> line.startsWith(key);
     Function<String, String> getValue = line -> line.replace(key, "");
-    return getAsStringList().parallelStream().filter(containsKey).map(getValue)
+    return getAsStringList().parallelStream()
+        .filter(containsKey)
+        .map(getValue)
         .collect(Collectors.toList());
   }
 
   public String getFirstValue(@NotNull String key) {
     Predicate<String> containsKey = line -> line.startsWith(key);
     Function<String, String> getValue = line -> line.replace(key, "");
-    return getAsStringList().parallelStream().filter(containsKey).map(getValue).findFirst()
+    return getAsStringList().parallelStream()
+        .filter(containsKey)
+        .map(getValue)
+        .findFirst()
         .orElse(null);
   }
 
