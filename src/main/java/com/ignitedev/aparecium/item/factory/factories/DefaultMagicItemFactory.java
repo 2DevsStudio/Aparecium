@@ -4,6 +4,7 @@
 
 package com.ignitedev.aparecium.item.factory.factories;
 
+import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.item.MagicItem;
 import com.ignitedev.aparecium.item.factory.RawItemStackFactory;
 import org.bukkit.inventory.ItemStack;
@@ -18,16 +19,12 @@ public class DefaultMagicItemFactory extends RawItemStackFactory {
   public ItemStack buildLore(MagicItem magicItem, ItemStack itemStack) {
     ItemMeta itemMeta = itemStack.getItemMeta();
 
-    // TODO CHECK IF USING PAPER
-
-    itemMeta.lore(magicItem.getDescription().getAsComponents());
-
-    // IF NOT
-
-    itemMeta.setLore(magicItem.getDescription().getAsStrings());
-
+    if (Aparecium.isUsingPaper()) {
+      itemMeta.lore(magicItem.getDescription().getAsComponents());
+    } else {
+      itemMeta.setLore(magicItem.getDescription().getAsStrings());
+    }
     itemStack.setItemMeta(itemMeta);
-
     return itemStack;
   }
 
@@ -35,18 +32,12 @@ public class DefaultMagicItemFactory extends RawItemStackFactory {
   public ItemStack buildName(MagicItem magicItem, ItemStack itemStack) {
     ItemMeta itemMeta = itemStack.getItemMeta();
 
-    // TODO CHECK IF USING PAPER
-
-    itemMeta.displayName(magicItem.getName().getAsComponents().get(0));
-
-    // IF NOT
-
-    itemMeta.setDisplayName(
-        magicItem.getName().getAsStrings().get(0)); // todo add getFirstValue to component
-    // which returns value or empty string
-
+    if (Aparecium.isUsingPaper()) {
+      itemMeta.displayName(magicItem.getName().getAsComponent());
+    } else {
+      itemMeta.setDisplayName(magicItem.getName().getAsString());
+    }
     itemStack.setItemMeta(itemMeta);
-
     return itemStack;
   }
 }
