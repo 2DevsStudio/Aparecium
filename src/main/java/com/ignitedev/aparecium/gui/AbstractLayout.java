@@ -72,7 +72,11 @@ public abstract class AbstractLayout
     this.inventoryType = inventoryType;
   }
 
-  public abstract void fill(Inventory inventory, boolean fillBackground, boolean force);
+  public abstract void fill(
+      Inventory inventory,
+      boolean fillBackground,
+      boolean force,
+      AbstractLayoutLayer... additionalLayers);
 
   public abstract void fillBackground(Inventory inventory);
 
