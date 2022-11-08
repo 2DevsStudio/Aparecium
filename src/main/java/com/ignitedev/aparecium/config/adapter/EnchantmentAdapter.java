@@ -31,6 +31,6 @@ public class EnchantmentAdapter
 
     jsonObject.add("enchantment", context.serialize(src.getKey().getKey()));
 
-    return null;
+    return jsonObject;
   }
 }
