@@ -55,8 +55,8 @@ public class CustomCommandsBase extends Config {
             "aparecium",
             new CustomCommand(
                 "aparecium",
-                new ArrayList<>(),
                 null,
+                new ArrayList<>(),
                 List.of("Hey, this is test CustomCommand by Aparecium"))));
   }
 }
