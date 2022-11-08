@@ -5,6 +5,7 @@
 package com.ignitedev.aparecium.util.text;
 
 import com.google.common.base.Strings;
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -84,21 +85,33 @@ public class TextUtility {
     return colorizedComponents;
   }
 
-  public String replace(String text, Placeholder... placeholders) {
+  public Component replace(Component component, Placeholder... placeholders) {
+    for (Placeholder placeholder : placeholders) {
+      component =
+          component.replaceText(
+              (value) ->
+                  value
+                      .matchLiteral(placeholder.getKey().getAsString())
+                      .replacement(placeholder.getValue().getAsComponent()));
+    }
+    return component;
+  }
+
+  public ApareciumComponent replace(ApareciumComponent text, Placeholder... placeholders) {
     for (Placeholder placeholder : placeholders) {
       text = placeholder.replaceIn(text);
     }
     return text;
   }
 
-  public String replace(String text, List<Placeholder> placeholders) {
+  public ApareciumComponent replace(ApareciumComponent text, List<Placeholder> placeholders) {
     for (Placeholder placeholder : placeholders) {
       text = placeholder.replaceIn(text);
     }
     return text;
   }
 
-  public List<String> replace(List<String> text, Placeholder... placeholders) {
+  public List<ApareciumComponent> replace(List<ApareciumComponent> text, Placeholder... placeholders) {
     for (Placeholder placeholder : placeholders) {
       text = placeholder.replaceIn(text);
     }
