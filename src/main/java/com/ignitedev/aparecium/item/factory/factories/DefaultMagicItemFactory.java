@@ -9,7 +9,11 @@ import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.enums.ItemType;
 import com.ignitedev.aparecium.enums.Rarity;
 import com.ignitedev.aparecium.item.MagicItem;
+import com.ignitedev.aparecium.item.basic.DropItem;
 import com.ignitedev.aparecium.item.basic.Item;
+import com.ignitedev.aparecium.item.basic.LayoutItem;
+import com.ignitedev.aparecium.item.basic.PatternItem;
+import com.ignitedev.aparecium.util.MessageUtility;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -36,7 +40,8 @@ public class DefaultMagicItemFactory<T extends Item> extends RawItemStackFactory
   }
 
   public T createItem(@NotNull Material material) {
-    return createItem(UUID.randomUUID().toString(), material, null, null, null, null, new HashMap<>());
+    return createItem(
+        UUID.randomUUID().toString(), material, null, null, null, null, new HashMap<>());
   }
 
   public T createItem(@NotNull String id, @NotNull Material material) {
@@ -117,5 +122,26 @@ public class DefaultMagicItemFactory<T extends Item> extends RawItemStackFactory
     }
     itemStack.setItemMeta(itemMeta);
     return itemStack;
+  }
+
+  public static DefaultMagicItemFactory<?> getByClass(Class<?> castClass) {
+    DefaultMagicItemFactory<?> factory;
+
+    if (castClass == LayoutItem.class) {
+      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano LayoutItem dla " + castClass));
+      factory = Aparecium.getFactoriesManager().getLayoutItemFactory();
+    } else if (castClass == DropItem.class) {
+      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano DropItem dla " + castClass));
+      factory = Aparecium.getFactoriesManager().getDropItemFactory();
+    } else if (castClass == PatternItem.class) {
+      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano PatternItem dla " + castClass));
+      factory = Aparecium.getFactoriesManager().getPatternItemFactory();
+    } else {
+      MessageUtility.sendConsole(ApareciumComponent.of("Wybrano defult dla " + castClass));
+      factory =
+          (DefaultMagicItemFactory<Item>)
+              Aparecium.getFactoriesManager().getMagicItemFactories().getDefaultFactory();
+    }
+    return factory;
   }
 }

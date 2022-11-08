@@ -1,12 +1,7 @@
 package com.ignitedev.aparecium.config;
 
-import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.component.ApareciumComponent;
-import com.ignitedev.aparecium.item.MagicItem;
-import com.ignitedev.aparecium.item.basic.DropItem;
 import com.ignitedev.aparecium.item.basic.Item;
-import com.ignitedev.aparecium.item.basic.LayoutItem;
-import com.ignitedev.aparecium.item.basic.PatternItem;
 import com.ignitedev.aparecium.item.factory.factories.DefaultMagicItemFactory;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.interfaces.Configuration;
@@ -23,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 @Configuration("item-base.json")
 public class ItemBase extends Config {
 
-  private Map<String, MagicItem> savedItems = exampleItems();
+  private Map<String, Item> savedItems = exampleItems();
 
   /**
    * @implNote This item is returned if none item with specified id was found
@@ -40,7 +35,7 @@ public class ItemBase extends Config {
    *     in your config file then it might be overridden
    * @param item item to save
    */
-  public <T extends MagicItem> void saveItem(T item) {
+  public <T extends Item> void saveItem(T item) {
     savedItems.put(item.getId(), item);
 
     save();
@@ -48,34 +43,23 @@ public class ItemBase extends Config {
   }
 
   @NotNull
-  public <T extends MagicItem> T findById(String itemId, Class<T> castClass) {
-    DefaultMagicItemFactory<?> factory;
+  public <T extends Item> T findById(String itemId, Class<T> castClass) {
+    DefaultMagicItemFactory<?> factory = DefaultMagicItemFactory.getByClass(castClass);
 
-    if (castClass == LayoutItem.class) {
-      factory = Aparecium.getFactoriesManager().getLayoutItemFactory();
-    } else if (castClass == DropItem.class) {
-      factory = Aparecium.getFactoriesManager().getDropItemFactory();
-    } else if (castClass == PatternItem.class) {
-      factory = Aparecium.getFactoriesManager().getPatternItemFactory();
-    } else {
-      factory =
-          (DefaultMagicItemFactory<Item>)
-              Aparecium.getFactoriesManager().getMagicItemFactories().getDefaultFactory();
-    }
     if (savedItems.containsKey(itemId)) {
-      return (T) factory.from((Item) savedItems.get(itemId));
+      return (T) factory.from((T) savedItems.get(itemId));
     } else {
       return (T)
           factory.from(this.noneItem).toBuilder().name(new ApareciumComponent(itemId)).build();
     }
   }
 
-  public MagicItem findById(String itemId) {
-    return findById(itemId, MagicItem.class);
+  public Item findById(String itemId) {
+    return findById(itemId, Item.class);
   }
 
   @Nullable
-  public <T extends MagicItem> T findByItemStack(ItemStack itemStack, Class<T> castClass) {
+  public <T extends Item> T findByItemStack(ItemStack itemStack, Class<T> castClass) {
     NBTItem nbtItem = new NBTItem(itemStack, true);
     String id = nbtItem.getString("id");
 
@@ -83,11 +67,11 @@ public class ItemBase extends Config {
   }
 
   @Nullable
-  public MagicItem findByItemStack(ItemStack itemStack) {
-    return findByItemStack(itemStack, MagicItem.class);
+  public Item findByItemStack(ItemStack itemStack) {
+    return findByItemStack(itemStack, Item.class);
   }
 
-  private Map<String, MagicItem> exampleItems() {
+  private Map<String, Item> exampleItems() {
     return Map.of(
         "defaultMagicItem",
         Item.builder()
