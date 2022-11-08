@@ -87,6 +87,7 @@ commands like /info etc.)
   <groupId>com.ignitedev</groupId>
   <artifactId>Aparecium</artifactId>
   <version>1.0.0</version>
+  <scope>provided</scope>
 </dependency>
 
 ```
