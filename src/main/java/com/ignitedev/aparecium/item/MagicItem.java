@@ -11,6 +11,7 @@ import com.ignitedev.aparecium.enums.SimilarCheck;
 import com.ignitedev.aparecium.interfaces.Identifiable;
 import com.ignitedev.aparecium.item.util.MagicItemConverter;
 import java.time.Instant;
+import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,9 @@ import lombok.Singular;
 import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -68,6 +71,10 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
    * @implNote NBT-TAGS applicable to ItemStack
    */
   @Singular protected Map<String, Object> tags;
+
+  @Singular protected Map<Enchantment, Integer> enchants;
+
+  @Singular protected List<ItemFlag> flags;
 
   /**
    * @param amount amount of itemstack you'd like to get
@@ -130,6 +137,8 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
     clone.material = this.material;
     clone.rarity = this.rarity;
     clone.itemType = this.itemType;
+    clone.enchants = this.enchants;
+    clone.flags = this.flags;
     clone.tags = Map.copyOf(tags);
     clone.id = this.id;
 
