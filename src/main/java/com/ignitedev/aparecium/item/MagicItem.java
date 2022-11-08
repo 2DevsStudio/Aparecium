@@ -27,13 +27,20 @@ import org.jetbrains.annotations.NotNull;
 @SuperBuilder(toBuilder = true)
 public abstract class MagicItem implements Cloneable, Identifiable, Comparable<MagicItem> {
 
+  /**
+   * @implNote Item creation Instant
+   */
   private final Instant itemSaveInstant = Instant.now();
+
   protected String id;
+
   @Builder.Default protected Material material = Material.AIR;
+
   /**
    * @implNote Item Type useful for sorting and categorizing
    */
   @Builder.Default protected ItemType itemType = ItemType.COMMON;
+
   /**
    * @implNote Rarity of item, useful for rarity api, sorting(+filterer) api, or any other RNG you
    *     want to create using it
@@ -52,7 +59,6 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
    * @implNote NBT-TAGS applicable to ItemStack
    */
   @Singular protected Map<String, Object> tags;
-
 
   /**
    * @param amount amount of itemstack you'd like to get
@@ -75,6 +81,9 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
     player.getInventory().addItem(toItemStack(amount <= 0 ? 1 : amount));
   }
 
+  /**
+   * @implNote Please note that item creation Instant will be the same for cloned version
+   */
   @Override
   @SneakyThrows
   public MagicItem clone() {
@@ -89,6 +98,11 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
 
     return clone;
   }
+
+  /**
+   * @implNote this comparable implementation is sorting by order of {{@link #getItemSaveInstant()}}
+   * (item creation order)
+   */
   @Override
   public int compareTo(@NotNull MagicItem compareTo) {
     int compare = Long.compare(itemSaveInstant.getEpochSecond(), compareTo.getItemSaveInstant().getEpochSecond());
