@@ -6,6 +6,7 @@ package com.ignitedev.aparecium.config;
 
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.interfaces.Configuration;
+import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
 
@@ -22,7 +23,7 @@ public class ApareciumConfiguration extends Config {
    * @implNote <Rarity Key Name, Rarity Display Name>
    */
   public Map<String, String> rarityName =
-      Map.of(
+      new HashMap<>(Map.of(
           "not_specified",
           "<black><not_specified>",
           "common",
@@ -36,13 +37,13 @@ public class ApareciumConfiguration extends Config {
           "legendary",
           "<bold><gold> {LEGENDARY}",
           "mythic",
-          "<purple> {MYTHIC}");
+          "<purple> {MYTHIC}"));
 
   public Map<String, String> itemType =
-      Map.of(
+      new HashMap<>(Map.of(
           "common", "<gray> {COMMON}",
           "tool", "<brown> {TOOL}",
           "WEAPON", "<red> {WEAPON}",
           "ARMOR", "<black> {ARMOR}",
-          "POTION", "<pink> {POTION}");
+          "POTION", "<pink> {POTION}"));
 }

@@ -5,6 +5,7 @@ import com.ignitedev.aparecium.gui.basic.Layout;
 import com.ignitedev.aparecium.gui.repository.InventoriesRepository;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.interfaces.Configuration;
+import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
 import org.bukkit.event.inventory.InventoryType;
@@ -55,13 +56,13 @@ public class LayoutBase extends Config {
   }
 
   private Map<String, Layout> exampleLayouts() {
-    return Map.of(
+    return new HashMap<>(Map.of(
         "dadadadadada",
         Layout.builder()
             .id("dadadadadada")
             .layoutSize(9)
             .inventoryType(InventoryType.CHEST)
             .layoutTitle(ApareciumComponent.of("dadadada"))
-            .build());
+            .build()));
   }
 }

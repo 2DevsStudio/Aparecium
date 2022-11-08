@@ -5,6 +5,7 @@ import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.interfaces.Configuration;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.Getter;
@@ -45,12 +46,12 @@ public class CustomCommandsBase extends Config {
   }
 
   private Map<String, CustomCommand> exampleCommands() {
-    return Map.of(
+    return new HashMap<>(Map.of(
         "aparecium",
         new CustomCommand(
             "aparecium",
             new ArrayList<>(),
             null,
-            List.of("Hey, this is test CustomCommand by Aparecium")));
+            List.of("Hey, this is test CustomCommand by Aparecium"))));
   }
 }

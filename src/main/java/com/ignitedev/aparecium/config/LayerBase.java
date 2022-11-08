@@ -3,6 +3,7 @@ package com.ignitedev.aparecium.config;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.interfaces.Configuration;
+import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
 import org.bukkit.event.inventory.InventoryType;
@@ -39,12 +40,12 @@ public class LayerBase extends Config {
   }
 
   private Map<String, LayoutLayer> defaultLayouts() {
-    return Map.of(
+    return new HashMap<>(Map.of(
         "default",
         LayoutLayer.builder()
             .id("default")
             .layoutSize(9)
             .layoutInventoryType(InventoryType.CHEST)
-            .build());
+            .build()));
   }
 }
