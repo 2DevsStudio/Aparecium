@@ -95,4 +95,17 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
         dropChance,
         patterns);
   }
+
+  @Override
+  public PatternItem createItem(
+      @NotNull String id,
+      @NotNull Material material,
+      @Nullable ItemType itemType,
+      @Nullable Rarity rarity,
+      @Nullable ApareciumComponent name,
+      @Nullable ApareciumComponent description,
+      @Nullable Map<String, Object> tags) {
+    return new PatternItem(
+        id, material, itemType, rarity, name, description, tags, 0, 0, new ArrayList<>());
+  }
 }
