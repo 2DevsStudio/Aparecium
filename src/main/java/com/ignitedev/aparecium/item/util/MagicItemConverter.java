@@ -1,6 +1,7 @@
 package com.ignitedev.aparecium.item.util;
 
 import com.ignitedev.aparecium.Aparecium;
+import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.item.MagicItem;
 import com.twodevsstudio.simplejsonconfig.api.Config;
@@ -36,5 +37,23 @@ public class MagicItemConverter {
       }
     }
     return magicItems;
+  }
+
+  public boolean isSimilarComponent(boolean isSimilar, ApareciumComponent componentLore,
+      ApareciumComponent toCheckComponentLore) {
+
+    if (componentLore == null || toCheckComponentLore == null) {
+      return isSimilar;
+    }
+    String componentLoreString = componentLore.getAsString();
+    String toCheckComponentLoreString = toCheckComponentLore.getAsString();
+
+    if (componentLoreString == null || toCheckComponentLoreString == null) {
+      return isSimilar;
+    }
+    if (componentLoreString.equalsIgnoreCase(toCheckComponentLoreString)) {
+      isSimilar = true;
+    }
+    return isSimilar;
   }
 }
