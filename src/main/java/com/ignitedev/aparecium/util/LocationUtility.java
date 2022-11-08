@@ -53,8 +53,8 @@ public class LocationUtility {
   }
 
   @Nullable
-  public Location fromString(String string) {
-    String[] split = string.split(",");
+  public Location fromString(String string, String splitter) {
+    String[] split = string.split(splitter);
     World world = Bukkit.getWorld(split[0]);
 
     if (world == null) {
@@ -72,14 +72,23 @@ public class LocationUtility {
     return new Location(world, Double.parseDouble(x), Double.parseDouble(y), Double.parseDouble(z));
   }
 
-  public String toString(Location location) {
+  @Nullable
+  public Location fromString(String string) {
+    return fromString(string, ",");
+  }
+
+  public String toString(Location location, String splitter) {
     return location.getWorld().getName()
-        + ","
+        + splitter
         + location.getBlockX()
-        + ","
+        + splitter
         + location.getBlockY()
-        + ","
+        + splitter
         + location.getBlockZ();
+  }
+
+  public String toString(Location location) {
+    return toString(location, ",");
   }
 
   public String toFancyString(Location location, boolean withWorld) {
