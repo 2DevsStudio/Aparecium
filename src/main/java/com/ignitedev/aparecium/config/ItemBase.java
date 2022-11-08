@@ -10,10 +10,13 @@ import com.ignitedev.aparecium.item.basic.PatternItem;
 import com.ignitedev.aparecium.item.factory.factories.DefaultMagicItemFactory;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.interfaces.Configuration;
+import de.tr7zw.nbtapi.NBTItem;
 import java.util.Map;
 import lombok.Getter;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("FieldMayBeFinal") // simplejsonconfig is not supporting final fields yet
 @Getter
@@ -45,8 +48,8 @@ public class ItemBase extends Config {
   }
 
   @NotNull
-  public <T extends MagicItem> T getById(String itemId, Class<T> castClass) {
-    DefaultMagicItemFactory factory;
+  public <T extends MagicItem> T findById(String itemId, Class<T> castClass) {
+    DefaultMagicItemFactory<?> factory;
 
     if (castClass == LayoutItem.class) {
       factory = Aparecium.getFactoriesManager().getLayoutItemFactory();
@@ -56,7 +59,7 @@ public class ItemBase extends Config {
       factory = Aparecium.getFactoriesManager().getPatternItemFactory();
     } else {
       factory =
-          (DefaultMagicItemFactory)
+          (DefaultMagicItemFactory<Item>)
               Aparecium.getFactoriesManager().getMagicItemFactories().getDefaultFactory();
     }
     if (savedItems.containsKey(itemId)) {
@@ -65,6 +68,23 @@ public class ItemBase extends Config {
       return (T)
           factory.from(this.noneItem).toBuilder().name(new ApareciumComponent(itemId)).build();
     }
+  }
+
+  public MagicItem findById(String itemId) {
+    return findById(itemId, MagicItem.class);
+  }
+
+  @Nullable
+  public <T extends MagicItem> T findByItemStack(ItemStack itemStack, Class<T> castClass) {
+    NBTItem nbtItem = new NBTItem(itemStack, true);
+    String id = nbtItem.getString("id");
+
+    return findById(id, castClass);
+  }
+
+  @Nullable
+  public MagicItem findByItemStack(ItemStack itemStack) {
+    return findByItemStack(itemStack, MagicItem.class);
   }
 
   private Map<String, MagicItem> exampleItems() {
