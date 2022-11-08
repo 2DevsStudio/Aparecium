@@ -4,9 +4,9 @@
 
 package com.ignitedev.aparecium.interfaces;
 
-import net.kyori.adventure.audience.Audience;
+import org.bukkit.entity.Player;
 
 public interface Resettable<T> {
 
-  T reset(Audience audience);
+  T reset(Player player);
 }

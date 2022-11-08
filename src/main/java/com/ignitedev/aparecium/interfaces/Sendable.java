@@ -4,9 +4,9 @@
 
 package com.ignitedev.aparecium.interfaces;
 
-import net.kyori.adventure.audience.Audience;
+import org.bukkit.entity.Player;
 
 public interface Sendable<T> {
 
-  T send(Audience audience);
+  T send(Player player);
 }

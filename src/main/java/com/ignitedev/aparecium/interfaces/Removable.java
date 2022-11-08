@@ -5,9 +5,9 @@
 package com.ignitedev.aparecium.interfaces;
 
 import java.util.List;
-import net.kyori.adventure.audience.Audience;
+import org.bukkit.entity.Player;
 
-public interface Removable<T, D extends Audience> {
+public interface Removable<T, D extends Player> {
 
   T remove(D d);
 

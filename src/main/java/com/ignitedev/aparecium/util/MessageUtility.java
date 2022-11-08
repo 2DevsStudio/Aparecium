@@ -15,22 +15,19 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 @SuppressWarnings("unused")
 @UtilityClass
 public class MessageUtility {
 
-  public void send(Audience target, ApareciumComponent text, Placeholder... placeholders) {
+  public void send(Player target, ApareciumComponent text, Placeholder... placeholders) {
     String messageString = text.getAsString();
+    String placeholdersString = TextUtility.replace(text, placeholders).getAsString();
 
-    if (target instanceof OfflinePlayer offlinePlayer) {
-      String placeholdersString = TextUtility.replace(text, placeholders).getAsString();
-
-      if (placeholdersString != null) {
-        text =
-            ApareciumComponent.of(
-                PlaceholderAPI.setPlaceholders(offlinePlayer, placeholdersString));
-      }
+    if (placeholdersString != null) {
+      text =
+          ApareciumComponent.of(PlaceholderAPI.setPlaceholders(target, placeholdersString));
     }
     // PAPER CODE
     if (Aparecium.isUsingPaper()) {
@@ -49,7 +46,15 @@ public class MessageUtility {
     }
   }
 
+  public void send(Audience target, ApareciumComponent text, Placeholder... placeholders) {
+    send(((Player) target), text, placeholders);
+  }
+
   public void send(Audience target, String text, Placeholder... placeholders) {
+    send(target, ApareciumComponent.of(text), placeholders);
+  }
+
+  public void send(Player target, String text, Placeholder... placeholders) {
     send(target, ApareciumComponent.of(text), placeholders);
   }
 
@@ -57,8 +62,17 @@ public class MessageUtility {
     text.forEach(message -> send(target, ApareciumComponent.of(message), placeholders));
   }
 
+  public void send(Player target, List<String> text, Placeholder... placeholders) {
+    text.forEach(message -> send(target, ApareciumComponent.of(message), placeholders));
+  }
+
   public void sendApareciumComponents(
       Audience target, List<ApareciumComponent> text, Placeholder... placeholders) {
+    text.forEach(message -> send(target, message, placeholders));
+  }
+
+  public void sendApareciumComponents(
+      Player target, List<ApareciumComponent> text, Placeholder... placeholders) {
     text.forEach(message -> send(target, message, placeholders));
   }
 
