@@ -7,7 +7,9 @@ package com.ignitedev.aparecium.item;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.enums.ItemType;
 import com.ignitedev.aparecium.enums.Rarity;
+import com.ignitedev.aparecium.enums.SimilarCheck;
 import com.ignitedev.aparecium.interfaces.Identifiable;
+import com.ignitedev.aparecium.item.util.MagicItemConverter;
 import java.time.Instant;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -86,6 +88,33 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
    */
   public void give(Player player, int amount) {
     player.getInventory().addItem(toItemStack(amount <= 0 ? 1 : amount));
+  }
+
+  public boolean isSimilar(MagicItem toCheck, SimilarCheck... similarCheck) {
+    boolean isSimilar = false;
+
+    for (SimilarCheck check : similarCheck) {
+      if (check == SimilarCheck.ALL || check == SimilarCheck.ID) {
+        if (this.getId().equalsIgnoreCase(toCheck.getId())) {
+          isSimilar = true;
+        }
+      }
+      if (check == SimilarCheck.ALL || check == SimilarCheck.NAME) {
+        isSimilar =
+            MagicItemConverter.isSimilarComponent(isSimilar, this.getName(), toCheck.getName());
+      }
+      if (check == SimilarCheck.ALL || check == SimilarCheck.LORE) {
+        isSimilar =
+            MagicItemConverter.isSimilarComponent(
+                isSimilar, this.getDescription(), toCheck.getDescription());
+      }
+      if (check == SimilarCheck.ALL || check == SimilarCheck.NBT_TAGS) {
+        if (this.tags.equals(toCheck.getTags())) {
+          isSimilar = true;
+        }
+      }
+    }
+    return isSimilar;
   }
 
   /**
