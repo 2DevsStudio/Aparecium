@@ -5,20 +5,26 @@
 package com.ignitedev.aparecium.item.basic;
 
 import com.ignitedev.aparecium.Aparecium;
-import com.ignitedev.aparecium.item.MagicItem;
+import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 @Data
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class DropItem extends MagicItem {
+public class DropItem extends Item {
 
   private double dropChance;
+
+  /**
+   * @implNote Useful for example for block drop system, different chances per types
+   */
+  private Map<Material, Double> dropChancesForMaterials;
 
   public DropItem(MagicItemBuilder<?, ?> builder) {
     super(builder);
