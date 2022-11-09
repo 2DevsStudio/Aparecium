@@ -94,11 +94,13 @@ public class Layout extends AbstractLayout {
         return;
       }
     }
-    for (int i = 0; i <= Collections.max(this.layers.keySet()); i++) {
-      String layerId = this.layers.get(i);
+    if (this.layers != null && !this.layers.isEmpty()) {
+      for (int i = 0; i <= Collections.max(this.layers.keySet()); i++) {
+        String layerId = this.layers.get(i);
 
-      if (layerId != null) {
-        layerBase.getById(layerId).fill(inventory, force);
+        if (layerId != null) {
+          layerBase.getById(layerId).fill(inventory, force);
+        }
       }
     }
     for (AbstractLayoutLayer additionalLayer : additionalLayers) {

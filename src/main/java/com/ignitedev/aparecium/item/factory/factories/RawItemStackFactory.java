@@ -12,7 +12,10 @@ import com.ignitedev.aparecium.item.factory.MagicItemFactory;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import de.tr7zw.nbtapi.NBTItem;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -36,9 +39,15 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
     itemStack = buildName(magicItem, itemStack);
     itemStack = buildLore(magicItem, itemStack);
 
-    magicItem.getFlags().forEach(itemStack::addItemFlags);
-    magicItem.getEnchants().forEach(itemStack::addUnsafeEnchantment);
+    List<ItemFlag> flags = magicItem.getFlags();
+    Map<Enchantment, Integer> enchants = magicItem.getEnchants();
 
+    if (flags != null && !flags.isEmpty()) {
+      flags.forEach(itemStack::addItemFlags);
+    }
+    if (enchants != null && !enchants.isEmpty()) {
+      enchants.forEach(itemStack::addUnsafeEnchantment);
+    }
     itemStack.setItemMeta(itemMeta);
     itemStack.setAmount(amount);
 
@@ -89,8 +98,11 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
    */
   public void applyTags(MagicItem magicItem, NBTItem nbtItem) {
     nbtItem.setString("id", magicItem.getId());
+    Map<String, Object> tags = magicItem.getTags();
 
-    magicItem.getTags().forEach(nbtItem::setObject);
+    if (tags != null && !tags.isEmpty()) {
+      tags.forEach(nbtItem::setObject);
+    }
   }
 
   /**
