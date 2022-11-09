@@ -90,6 +90,13 @@ public class ItemBase extends Config {
                 .material(Material.DIRT)
                 .enchant(Enchantment.CHANNELING, 1)
                 .name(new ApareciumComponent("<yellow>DEFAULT"))
+                .build(),
+            "defaultMagicItem2",
+            Item.builder()
+                .id("defaultMagicItem2")
+                .material(Material.STONE)
+                .enchant(Enchantment.CHANNELING, 1)
+                .name(new ApareciumComponent("<yellow>DEFAULT"))
                 .build()));
   }
 }
