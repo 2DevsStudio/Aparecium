@@ -9,6 +9,7 @@ import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.enums.ItemType;
 import com.ignitedev.aparecium.enums.Rarity;
 import com.ignitedev.aparecium.item.MagicItem;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import lombok.Data;
@@ -44,9 +45,11 @@ public class Item extends MagicItem {
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
-      @Nullable Map<String, Object> tags, @Nullable Map<Enchantment, Integer> enchantments,
+      @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchantments,
       @Nullable List<ItemFlag> flags) {
     super(id, material, itemType, rarity, name, description, tags, enchantments, flags);
+    this.itemSaveInstant = Instant.now();
 
     if (this.rarity == null) {
       this.rarity = Rarity.NOT_SPECIFIED;
