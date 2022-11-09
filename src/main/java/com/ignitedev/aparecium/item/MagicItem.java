@@ -13,9 +13,9 @@ import com.ignitedev.aparecium.item.util.MagicItemConverter;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Setter;
 import lombok.Singular;
 import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
@@ -34,47 +34,60 @@ import org.jetbrains.annotations.Nullable;
  */
 @Data
 @SuperBuilder(toBuilder = true)
-@AllArgsConstructor
 public abstract class MagicItem implements Cloneable, Identifiable, Comparable<MagicItem> {
 
   /**
    * @implNote Item creation Instant
    */
-  protected final Instant itemSaveInstant = Instant.now();
+  @Nullable @Setter protected Instant itemSaveInstant;
 
   @NotNull protected String id;
-
   @NotNull @Builder.Default protected Material material = Material.AIR;
-
   /**
    * @implNote Item Type useful for sorting and categorizing
    */
   @Builder.Default protected ItemType itemType = ItemType.COMMON;
-
   /**
    * @implNote Rarity of item, useful for rarity api, sorting(+filterer) api, or any other RNG you
    *     want to create using it
    */
   @Builder.Default protected Rarity rarity = Rarity.NOT_SPECIFIED;
-
   /**
    * @implNote name of item applicable to itemstack
    */
   @Nullable protected ApareciumComponent name;
-
   /**
    * @implNote lore applicable to itemstack
    */
   @Nullable protected ApareciumComponent description;
-
   /**
    * @implNote NBT-TAGS applicable to ItemStack
    */
-  @Singular protected Map<String, Object> tags;
+  @Nullable @Singular protected Map<String, Object> tags;
 
-  @Singular protected Map<Enchantment, Integer> enchants;
+  @Nullable @Singular protected Map<Enchantment, Integer> enchants;
+  @Nullable @Singular protected List<ItemFlag> flags;
 
-  @Singular protected List<ItemFlag> flags;
+  public MagicItem(
+      @NotNull String id,
+      @NotNull Material material,
+      ItemType itemType,
+      Rarity rarity,
+      @Nullable ApareciumComponent name,
+      @Nullable ApareciumComponent description,
+      @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable List<ItemFlag> flags) {
+    this.id = id;
+    this.material = material;
+    this.itemType = itemType;
+    this.rarity = rarity;
+    this.name = name;
+    this.description = description;
+    this.tags = tags;
+    this.enchants = enchants;
+    this.flags = flags;
+  }
 
   /**
    * @param amount amount of itemstack you'd like to get
