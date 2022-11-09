@@ -25,11 +25,21 @@ public class LayoutItemFactory extends DefaultMagicItemFactory<LayoutItem> {
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
-      @Nullable Map<String, Object> tags, @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
       @Nullable List<ItemFlag> flags,
       double layoutItemInteractionId) {
     return new LayoutItem(
-        id, material, itemType, rarity, name, description, tags, enchants, flags, layoutItemInteractionId);
+        id,
+        material,
+        itemType,
+        rarity,
+        name,
+        description,
+        tags,
+        enchants,
+        flags,
+        layoutItemInteractionId);
   }
 
   @Override
@@ -40,8 +50,10 @@ public class LayoutItemFactory extends DefaultMagicItemFactory<LayoutItem> {
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
-      @Nullable Map<String, Object> tags, @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
       @Nullable List<ItemFlag> flags) {
-    return new LayoutItem(id, material, itemType, rarity, name, description, tags, enchants, flags, 0);
+    return new LayoutItem(
+        id, material, itemType, rarity, name, description, tags, enchants, flags, 0);
   }
 }

@@ -35,7 +35,8 @@ public class LayoutItem extends Item {
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
-      @Nullable Map<String, Object> tags, @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
       @Nullable List<ItemFlag> flags,
       double layoutItemInteractionId) {
     super(id, material, itemType, rarity, name, description, tags, enchants, flags);

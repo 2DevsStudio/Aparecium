@@ -36,6 +36,7 @@ public abstract class AbstractLayout
    * @implNote Item creation Instant
    */
   protected final Instant layoutSaveInstant = Instant.now();
+
   protected transient Inventory createdInventoryInstance;
   protected String id;
 

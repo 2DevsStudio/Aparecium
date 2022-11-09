@@ -147,11 +147,11 @@ public class ApareciumComponent {
   @PaperOnly
   public void fetch() {
     // paper code
-    if(ApareciumMain.isUsingPaper()){
-      if(this.components.isEmpty() && !this.strings.isEmpty()){
+    if (ApareciumMain.isUsingPaper()) {
+      if (this.components.isEmpty() && !this.strings.isEmpty()) {
         this.components = TextUtility.colorizeToComponent(this.strings);
       }
-      if(this.strings.isEmpty() && !this.components.isEmpty()){
+      if (this.strings.isEmpty() && !this.components.isEmpty()) {
         this.strings = TextUtility.serializeComponent(this.components);
       }
     }
