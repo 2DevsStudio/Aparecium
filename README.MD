@@ -92,3 +92,10 @@ commands like /info etc.)
 
 ```
 
+Don't forget to add `depend` in your plugin.yml in order to make sure that Aparecium is loaded before your plugin.
+
+```yaml
+
+depend: [ Aparecium ]
+
+```
