@@ -10,6 +10,7 @@ package com.ignitedev.aparecium.engine;
  *  ~~ Hermione using the spell on Tom Riddle's diary
  */
 
+import com.google.gson.Gson;
 import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.command.custom.CustomCommand;
 import com.ignitedev.aparecium.command.custom.CustomCommandProcessor;
@@ -34,6 +35,8 @@ public class ApareciumMain extends Aparecium {
 
   @Getter private static ApareciumMain instance;
 
+  @Getter private Gson apareciumGson;
+
   @Override
   public void onPreLoad() {}
 
@@ -46,8 +49,9 @@ public class ApareciumMain extends Aparecium {
   @Override
   public void onEnabling() {
     instance = this;
+    this.apareciumGson = new ApareciumGsonBuilder().build();
 
-    Serializer.getInst().setGson(new ApareciumGsonBuilder().build());
+    Serializer.getInst().setGson(this.apareciumGson);
     SimpleJSONConfig.INSTANCE.register(this);
 
     registerCustomCommands();

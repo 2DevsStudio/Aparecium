@@ -8,8 +8,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.config.adapter.ComponentAdapter;
-import com.ignitedev.aparecium.config.adapter.EnchantmentAdapter;
 import com.ignitedev.aparecium.config.adapter.InstantAdapter;
+import com.ignitedev.aparecium.config.adapter.MagicItemAdapter;
 import com.ignitedev.aparecium.item.MagicItem;
 import com.twodevsstudio.simplejsonconfig.def.adapters.ChronoUnitAdapter;
 import com.twodevsstudio.simplejsonconfig.def.adapters.ClassAdapter;
@@ -26,7 +26,6 @@ import lombok.Data;
 import net.kyori.adventure.text.Component;
 import org.bukkit.World;
 import org.bukkit.block.BlockState;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -54,14 +53,13 @@ public class ApareciumGsonBuilder {
     }
     this.gsonBuilder =
         this.gsonBuilder
-            .registerTypeHierarchyAdapter(Enchantment.class, new EnchantmentAdapter())
             .registerTypeHierarchyAdapter(ItemStack.class, new ItemStackAdapter())
             .registerTypeHierarchyAdapter(World.class, new WorldAdapter())
             .registerTypeHierarchyAdapter(Reference.class, new ReferenceAdapter())
             .registerTypeAdapter(BlockState.class, new InterfaceAdapter())
             .addDeserializationExclusionStrategy(new SuperclassExclusionStrategy())
             .addSerializationExclusionStrategy(new SuperclassExclusionStrategy())
-            .registerTypeAdapter(MagicItem.class, new InterfaceAdapter());
+            .registerTypeAdapter(MagicItem.class, new MagicItemAdapter());
   }
 
   public Gson build() {
