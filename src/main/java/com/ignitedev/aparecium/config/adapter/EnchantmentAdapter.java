@@ -21,15 +21,14 @@ public class EnchantmentAdapter
   @Override
   public Enchantment deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
       throws JsonParseException {
-    return Enchantment.getByKey(
-        NamespacedKey.minecraft(json.getAsJsonObject().get("enchantment").getAsString()));
+    return Enchantment.getByKey(NamespacedKey.fromString( json.getAsString()));
   }
 
   @Override
   public JsonElement serialize(Enchantment src, Type typeOfSrc, JsonSerializationContext context) {
     JsonObject jsonObject = new JsonObject();
 
-    jsonObject.add("enchantment", context.serialize(src.getKey().getKey()));
+    jsonObject.add("enchantment", context.serialize(src.key()));
 
     return jsonObject;
   }

@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -87,6 +88,7 @@ public class ItemBase extends Config {
             Item.builder()
                 .id("defaultMagicItem")
                 .material(Material.DIRT)
+                .enchant(Enchantment.CHANNELING, 1)
                 .name(new ApareciumComponent("<yellow>DEFAULT"))
                 .build()));
   }
