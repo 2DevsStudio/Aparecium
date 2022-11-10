@@ -102,23 +102,9 @@ two locations.
 </repository>
 
 <dependency>
-  <groupId>com.ignitedev</groupId>
-  <artifactId>Aparecium</artifactId>
-  <version>1.0.0</version>
-  <scope>provided</scope>
-</dependency>
-
-<!--If you want to use holograms, currently we are working on our own hologram system-->
-
-<repository>
-    <id>codemc-repo</id>
-    <url>https://repo.codemc.io/repository/maven-public/</url>
-</repository>
-
-<dependency>
-    <groupId>com.gmail.filoghost.holographicdisplays</groupId>
-    <artifactId>holographicdisplays-api</artifactId>
-    <version>2.4.9</version>
+    <groupId>com.ignitedev</groupId>
+    <artifactId>Aparecium</artifactId>
+    <version>1.0.0</version>
     <scope>provided</scope>
 </dependency>
 
@@ -132,3 +118,10 @@ before your plugin.
 depend: [ Aparecium ]
 
 ```
+
+If you want to use Holograms you need to download HolographicDisplays and add it to your plugins folder.
+Currently, we are working on our own hologram system but for now you have to use HolographicDisplays :()
+
+here you can download the latest version of HolographicDisplays ( for 1.19, 3.0.1 is dev build )
+
+https://ci.codemc.io/job/filoghost/job/HolographicDisplays/
