@@ -5,10 +5,10 @@
 package com.ignitedev.aparecium.gui;
 
 import com.ignitedev.aparecium.component.ApareciumComponent;
+import com.ignitedev.aparecium.config.wrapper.MagicItemWrapper;
 import com.ignitedev.aparecium.gui.basic.Layout;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import com.ignitedev.aparecium.interfaces.Identifiable;
-import com.ignitedev.aparecium.item.basic.LayoutItem;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +62,7 @@ public abstract class AbstractLayout
    * @implNote <SLOT NUMBER, LayoutItem>
    */
   @Singular("content")
-  protected Map<Integer, LayoutItem> contents = new HashMap<>();
+  protected Map<Integer, MagicItemWrapper> contents = new HashMap<>();
 
   public AbstractLayout(String id, int layoutSize) {
     this.id = id;
@@ -83,7 +83,7 @@ public abstract class AbstractLayout
       InventoryType inventoryType,
       @Nullable LayoutLayer layoutBackgroundLayer,
       Map<Integer, String> layers,
-      Map<Integer, LayoutItem> contents) {
+      Map<Integer, MagicItemWrapper> contents) {
     this.id = id;
     this.layoutTitle = layoutTitle;
     this.layoutSize = layoutSize;

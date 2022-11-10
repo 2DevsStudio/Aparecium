@@ -4,8 +4,8 @@
 
 package com.ignitedev.aparecium.gui;
 
+import com.ignitedev.aparecium.config.wrapper.MagicItemWrapper;
 import com.ignitedev.aparecium.interfaces.Identifiable;
-import com.ignitedev.aparecium.item.basic.LayoutItem;
 import java.time.Instant;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -35,7 +35,7 @@ public abstract class AbstractLayoutLayer
    * @implNote <SLOT NUMBER, MAGIC ITEM ID>
    */
   @Singular("content")
-  protected Map<Integer, ? extends LayoutItem> contents;
+  protected Map<Integer, MagicItemWrapper> contents;
 
   /**
    * @implNote InventoryType to match layouts
@@ -57,8 +57,7 @@ public abstract class AbstractLayoutLayer
     this.layoutSize = layoutSize;
   }
 
-  public AbstractLayoutLayer(
-      String id, Map<Integer, ? extends LayoutItem> contents, int layoutSize) {
+  public AbstractLayoutLayer(String id, Map<Integer, MagicItemWrapper> contents, int layoutSize) {
     this.id = id;
     this.contents = contents;
     this.layoutSize = layoutSize;

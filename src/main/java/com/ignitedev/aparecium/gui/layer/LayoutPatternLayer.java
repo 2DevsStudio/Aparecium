@@ -5,7 +5,9 @@
 package com.ignitedev.aparecium.gui.layer;
 
 import com.ignitedev.aparecium.config.ItemBase;
+import com.ignitedev.aparecium.config.wrapper.MagicItemWrapper;
 import com.ignitedev.aparecium.gui.AbstractLayoutLayer;
+import com.ignitedev.aparecium.item.MagicItem;
 import com.ignitedev.aparecium.item.basic.PatternItem;
 import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
 import java.util.Map;
@@ -36,7 +38,7 @@ public class LayoutPatternLayer extends AbstractLayoutLayer {
 
   public LayoutPatternLayer(
       String id,
-      Map<Integer, PatternItem> content,
+      Map<Integer, MagicItemWrapper> content,
       InventoryType layoutInventoryType,
       int layoutSize) {
     super(id, content, layoutInventoryType, layoutSize);
@@ -66,6 +68,12 @@ public class LayoutPatternLayer extends AbstractLayoutLayer {
     refreshPattern();
 
     this.contents.forEach(
-        (slot, magicItemID) -> inventory.setItem(slot, magicItemID.toItemStack(1)));
+        (slot, magicItemID) -> {
+          MagicItem availableMagicItem = magicItemID.getAvailableMagicItem();
+
+          if (availableMagicItem != null) {
+            inventory.setItem(slot, availableMagicItem.toItemStack(1));
+          }
+        });
   }
 }

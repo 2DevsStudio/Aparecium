@@ -7,11 +7,12 @@ package com.ignitedev.aparecium.gui.basic;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.config.LayerBase;
+import com.ignitedev.aparecium.config.wrapper.MagicItemWrapper;
 import com.ignitedev.aparecium.gui.AbstractLayout;
 import com.ignitedev.aparecium.gui.AbstractLayoutLayer;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import com.ignitedev.aparecium.gui.util.LayoutUtility;
-import com.ignitedev.aparecium.item.basic.LayoutItem;
+import com.ignitedev.aparecium.item.MagicItem;
 import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
 import java.util.Collections;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class Layout extends AbstractLayout {
       InventoryType inventoryType,
       @Nullable LayoutLayer layoutBackgroundLayer,
       @Nullable Map<Integer, String> layers,
-      Map<Integer, LayoutItem> content) {
+      Map<Integer, MagicItemWrapper> content) {
     super(id, layoutTitle, layoutSize, inventoryType, layoutBackgroundLayer, layers, content);
   }
 
@@ -106,8 +107,12 @@ public class Layout extends AbstractLayout {
     for (AbstractLayoutLayer additionalLayer : additionalLayers) {
       additionalLayer.fill(inventory, force);
     }
-    for (Entry<Integer, LayoutItem> entry : this.contents.entrySet()) {
-      inventory.setItem(entry.getKey(), entry.getValue().toItemStack(1));
+    for (Entry<Integer, MagicItemWrapper> entry : this.contents.entrySet()) {
+      MagicItem availableMagicItem = entry.getValue().getAvailableMagicItem();
+
+      if (availableMagicItem != null) {
+        inventory.setItem(entry.getKey(), availableMagicItem.toItemStack(1));
+      }
     }
     if (fillBackground) {
       fillBackground(inventory);

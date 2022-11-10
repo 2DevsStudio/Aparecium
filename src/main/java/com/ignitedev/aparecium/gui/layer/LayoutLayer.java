@@ -4,8 +4,9 @@
 
 package com.ignitedev.aparecium.gui.layer;
 
+import com.ignitedev.aparecium.config.wrapper.MagicItemWrapper;
 import com.ignitedev.aparecium.gui.AbstractLayoutLayer;
-import com.ignitedev.aparecium.item.basic.LayoutItem;
+import com.ignitedev.aparecium.item.MagicItem;
 import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,7 +27,7 @@ public class LayoutLayer extends AbstractLayoutLayer {
 
   public LayoutLayer(
       String id,
-      Map<Integer, LayoutItem> content,
+      Map<Integer, MagicItemWrapper> content,
       InventoryType layoutInventoryType,
       int layoutSize) {
     super(id, content, layoutInventoryType, layoutSize);
@@ -44,6 +45,12 @@ public class LayoutLayer extends AbstractLayoutLayer {
       }
     }
     this.contents.forEach(
-        (slot, magicItemID) -> inventory.setItem(slot, magicItemID.toItemStack(1)));
+        (slot, magicItemID) -> {
+          MagicItem availableMagicItem = magicItemID.getAvailableMagicItem();
+
+          if (availableMagicItem != null) {
+            inventory.setItem(slot, availableMagicItem.toItemStack(1));
+          }
+        });
   }
 }
