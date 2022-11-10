@@ -63,10 +63,9 @@
     <!-- Integrations  -->
 
     <dependency>
+      <groupId>me.filoghost.holographicdisplays</groupId>
       <artifactId>holographicdisplays-api</artifactId>
-      <groupId>com.gmail.filoghost.holographicdisplays</groupId>
-      <scope>provided</scope>
-      <version>2.4.9</version>
+      <version>3.0.1-SNAPSHOT</version>
     </dependency>
 
     <dependency>
@@ -105,7 +104,7 @@
 
     <dependency>
       <artifactId>SimpleJSONConfig</artifactId>
-      <groupId>com.github.2DevsStudio</groupId>
+      <groupId>com.twodevsstudio</groupId>
       <scope>provided</scope>
       <version>1.2</version>
     </dependency>
@@ -216,8 +215,14 @@
       <url>https://oss.sonatype.org/content/groups/public/</url>
     </repository>
     <repository>
-      <id>jitpack.io</id>
-      <url>https://jitpack.io</url>
+      <id>com.2devsstudio-snapshots</id>
+      <name>2DevsStudio Repository</name>
+      <url>https://repo.2devsstudio.com/snapshots</url>
+    </repository>
+    <repository>
+      <id>com.2devsstudio-latest</id>
+      <name>2DevsStudio Repository</name>
+      <url>https://repo.2devsstudio.com/latest</url>
     </repository>
     <repository>
       <id>aikar</id>
