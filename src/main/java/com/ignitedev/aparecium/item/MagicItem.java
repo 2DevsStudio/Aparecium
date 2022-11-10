@@ -5,6 +5,7 @@
 package com.ignitedev.aparecium.item;
 
 import com.ignitedev.aparecium.component.ApareciumComponent;
+import com.ignitedev.aparecium.config.wrapper.MagicItemWrapper;
 import com.ignitedev.aparecium.enums.ItemType;
 import com.ignitedev.aparecium.enums.Rarity;
 import com.ignitedev.aparecium.enums.SimilarCheck;
@@ -129,12 +130,18 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
                 isSimilar, this.getDescription(), toCheck.getDescription());
       }
       if (check == SimilarCheck.ALL || check == SimilarCheck.NBT_TAGS) {
-        if (this.tags.equals(toCheck.getTags())) {
-          isSimilar = true;
+        if (this.tags != null) {
+          if (this.tags.equals(toCheck.getTags())) {
+            isSimilar = true;
+          }
         }
       }
     }
     return isSimilar;
+  }
+
+  public MagicItemWrapper toWrapper(){
+    return new MagicItemWrapper(null, this);
   }
 
   /**
@@ -152,7 +159,9 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
     clone.itemType = this.itemType;
     clone.enchants = this.enchants;
     clone.flags = this.flags;
-    clone.tags = Map.copyOf(tags);
+    if (tags != null) {
+      clone.tags = Map.copyOf(tags);
+    }
     clone.id = this.id;
 
     return clone;
@@ -164,13 +173,19 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
    */
   @Override
   public int compareTo(@NotNull MagicItem compareTo) {
-    int compare =
-        Long.compare(
-            itemSaveInstant.getEpochSecond(), compareTo.getItemSaveInstant().getEpochSecond());
+    int compare = 0;
 
+    if (itemSaveInstant != null && compareTo.getItemSaveInstant() != null) {
+      compare =
+          Long.compare(
+              itemSaveInstant.getEpochSecond(), compareTo.getItemSaveInstant().getEpochSecond());
+    }
     if (compare != 0) {
       return compare;
     }
-    return itemSaveInstant.getNano() - compareTo.getItemSaveInstant().getNano();
+    if (itemSaveInstant != null && compareTo.getItemSaveInstant() != null) {
+      return itemSaveInstant.getNano() - compareTo.getItemSaveInstant().getNano();
+    }
+    return compare;
   }
 }
