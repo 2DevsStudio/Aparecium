@@ -86,7 +86,7 @@ two locations.
 
 > 1.12.2 <-> 1.19
 ---
-> Spigot and Paper API
+> Spigot and Paper API ( Paper Currently is most stable, WIP.)
 ---
 > Java 17+
 ---
@@ -106,6 +106,20 @@ two locations.
   <artifactId>Aparecium</artifactId>
   <version>1.0.0</version>
   <scope>provided</scope>
+</dependency>
+
+<!--If you want to use holograms, currently we are working on our own hologram system-->
+
+<repository>
+    <id>codemc-repo</id>
+    <url>https://repo.codemc.io/repository/maven-public/</url>
+</repository>
+
+<dependency>
+    <groupId>com.gmail.filoghost.holographicdisplays</groupId>
+    <artifactId>holographicdisplays-api</artifactId>
+    <version>2.4.9</version>
+    <scope>provided</scope>
 </dependency>
 
 ```
