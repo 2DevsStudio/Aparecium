@@ -112,7 +112,7 @@ public class MagicItemAdapter implements JsonSerializer<MagicItem>, JsonDeserial
       rarity = Rarity.valueOf(rarityElement.getAsString());
     }
     @Nullable JsonElement saveDateElement = jsonObject.get(SAVE_DATE);
-    long saveDate = Instant.now().toEpochMilli();
+    long saveDate = Instant.now().getEpochSecond();
 
     if (saveDateElement != null) {
       saveDate = saveDateElement.getAsLong();
