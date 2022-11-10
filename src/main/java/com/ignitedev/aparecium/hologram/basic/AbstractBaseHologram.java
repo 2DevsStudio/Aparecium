@@ -4,7 +4,6 @@
 
 package com.ignitedev.aparecium.hologram.basic;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.hologram.data.HologramEntry;
@@ -18,6 +17,7 @@ import lombok.Getter;
 import lombok.Singular;
 import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
+import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
