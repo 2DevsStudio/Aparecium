@@ -1,24 +1,21 @@
-# Description
+![Aparecium](https://www.2devsstudio.com/resources/aparecium/title.png)
 
-Powerful Library that helps you with creating everything you can imagine with Minecraft.
+Aparecium is a powerful Library that helps you with creating everything you can imagine with Minecraft.
 
 We are aiming for the best performance and easy-to-use API which has a powerful configuration for
-everything.
+everything. One of our goal is to make it as easy as possible to work from the Developer side and the Configurator
+side.
+
+We support **PAPER** functionalities but as well we support plain **Spigot**, so you'll be able to
+run Aparecium everywhere you would like to, as long you are using at least **java 17**.
 
 The library is still in development, and we are working hard to make it better and better.
 
-Our goal is to make it as easy as possible to work from the Developer side and the Configurator
-side.
+![Functionalities](https://www.2devsstudio.com/resources/separators/functionalities.png)
 
-The whole library is supporting factory patterns and builder patterns :)
+[+] Supports builder and factory patters
 
-We are supporting PAPER functionalities but as well we support plain Spigot, so you'll be able to
-run Aparecium
-everywhere you would like to, as long you are using at least java 17.
-
-# Functionalities
-
-[+] 30+ Utility Classes
+[+] Over 30 Utility Classes
 
 [+] Sorting System (SortingHat)
 
@@ -72,7 +69,7 @@ two locations.
 
 --- 
 
-### Planned:
+![Planned](https://www.2devsstudio.com/resources/separators/planned.png)
 
 [-] Advanced Command System
 
@@ -82,7 +79,7 @@ two locations.
 
 [-] Chat System
 
-# Supported Versions
+![Compatibility](https://www.2devsstudio.com/resources/separators/compatibility.png)
 
 > 1.12.2 <-> 1.19
 ---
@@ -91,7 +88,8 @@ two locations.
 > Java 17+
 ---
 
-# Dependency
+![Dependency](https://www.2devsstudio.com/resources/separators/dependency.png)
+
 
 ```xml
 
@@ -119,9 +117,11 @@ depend: [ Aparecium ]
 
 ```
 
-If you want to use Holograms you need to download HolographicDisplays and add it to your plugins folder.
-Currently, we are working on our own hologram system but for now you have to use HolographicDisplays :()
+![Requirements](https://www.2devsstudio.com/resources/separators/requirements.png)
 
-here you can download the latest version of HolographicDisplays ( for 1.19, 3.0.1 is dev build )
+### Holographic Displays
+If you want to use Holograms you need to download **HolographicDisplays** and add it to your plugins folder.
+Currently, we are working on our own hologram system but for now you have to use HolographicDisplays :(
 
-https://ci.codemc.io/job/filoghost/job/HolographicDisplays/
+[Here](https://ci.codemc.io/job/filoghost/job/HolographicDisplays/) you can download the latest version of HolographicDisplays ( for 1.19, 3.0.1 is dev build )
+
