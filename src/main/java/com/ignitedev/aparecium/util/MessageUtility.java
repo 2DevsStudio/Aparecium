@@ -36,6 +36,7 @@ public class MessageUtility {
 
       if (asComponents != null) {
         target.sendMessage(asComponents);
+        return;
       }
     }
     // END OF PAPER CODE
