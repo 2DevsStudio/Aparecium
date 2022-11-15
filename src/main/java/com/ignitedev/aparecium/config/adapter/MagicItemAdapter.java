@@ -112,7 +112,7 @@ public class MagicItemAdapter implements JsonSerializer<MagicItem>, JsonDeserial
       rarity = Rarity.valueOf(rarityElement.getAsString());
     }
     @Nullable JsonElement saveDateElement = jsonObject.get(SAVE_DATE);
-    long saveDate = Instant.now().getEpochSecond();
+    long saveDate = Instant.now().toEpochMilli();
 
     if (saveDateElement != null) {
       saveDate = saveDateElement.getAsLong();
@@ -126,7 +126,7 @@ public class MagicItemAdapter implements JsonSerializer<MagicItem>, JsonDeserial
         defaultFactory.createItem(
             id, material, itemType, rarity, name, description, tags, enchantments, flags);
 
-    item.setItemSaveInstant(Instant.ofEpochSecond(saveDate));
+    item.setItemSaveInstant(Instant.ofEpochMilli(saveDate));
 
     if (clazz == DropItem.class) {
       // drop item data
