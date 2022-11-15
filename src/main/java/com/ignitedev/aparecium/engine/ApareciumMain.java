@@ -19,7 +19,9 @@ import com.ignitedev.aparecium.util.ReflectionUtility;
 import com.twodevsstudio.simplejsonconfig.SimpleJSONConfig;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.def.Serializer;
+import java.io.File;
 import java.lang.reflect.Field;
+import java.util.logging.Level;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
@@ -53,10 +55,19 @@ public class ApareciumMain extends Aparecium {
     SimpleJSONConfig.INSTANCE.register(this);
 
     registerCustomCommands();
+    initializeDirectories();
   }
 
   @Override
   public void onDisabling() {}
+
+  private void initializeDirectories() {
+    File file = new File(getDataFolder(), "schematics/");
+
+    if (file.mkdirs()) {
+      Bukkit.getLogger().log(Level.INFO, "Created Schematics directory");
+    }
+  }
 
   @SneakyThrows
   private void registerCustomCommands() {
