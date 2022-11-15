@@ -7,6 +7,12 @@
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>Aparecium</artifactId>
+  <groupId>com.ignitedev</groupId>
+  <modelVersion>4.0.0</modelVersion>
+  <version>1.0.0</version>
+  <name>Aparecium</name>
+  <packaging>jar</packaging>
+  <url>2DevsStudio.com</url>
 
   <build>
     <plugins>
@@ -171,6 +177,7 @@
     </dependency>
 
   </dependencies>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -193,12 +200,6 @@
       <url>https://repo.2devsstudio.com/latest</url>
     </repository>
   </distributionManagement>
-
-  <groupId>com.ignitedev</groupId>
-
-  <modelVersion>4.0.0</modelVersion>
-  <name>Aparecium</name>
-  <packaging>jar</packaging>
 
   <properties>
     <java.version>17</java.version>
@@ -245,8 +246,4 @@
       <url>https://maven.enginehub.org/repo/</url>
     </repository>
   </repositories>
-
-  <url>2DevsStudio.com</url>
-
-  <version>1.0.0</version>
 </project>

@@ -14,6 +14,7 @@ import com.ignitedev.aparecium.item.util.MagicItemConverter;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Setter;
@@ -35,6 +36,7 @@ import org.jetbrains.annotations.Nullable;
  */
 @Data
 @SuperBuilder(toBuilder = true)
+@AllArgsConstructor
 public abstract class MagicItem implements Cloneable, Identifiable, Comparable<MagicItem> {
 
   /**
