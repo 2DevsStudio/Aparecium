@@ -17,7 +17,6 @@ import java.util.Map;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /** Raw ItemStack Factory without implemented text assets; lore and name */
@@ -31,13 +30,10 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
   @Override
   public ItemStack toItemStack(MagicItem magicItem, int amount) {
     ItemStack itemStack = new ItemStack(magicItem.getMaterial());
+    ItemMeta itemMeta = itemStack.getItemMeta();
 
-    applyTags(magicItem, new NBTItem(itemStack, true));
-
-    Damageable itemMeta = (Damageable) itemStack.getItemMeta();
-
-    itemStack = buildName(magicItem, itemStack);
-    itemStack = buildLore(magicItem, itemStack);
+    buildLore(magicItem, itemMeta);
+    buildName(magicItem, itemMeta);
 
     List<ItemFlag> flags = magicItem.getFlags();
     Map<Enchantment, Integer> enchants = magicItem.getEnchants();
@@ -48,8 +44,11 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
     if (enchants != null && !enchants.isEmpty()) {
       enchants.forEach(itemStack::addUnsafeEnchantment);
     }
+    itemMeta = itemStack.getItemMeta(); // refresh enchants and flags for item meta
+
     itemStack.setItemMeta(itemMeta);
     itemStack.setAmount(amount);
+    itemStack = applyTags(magicItem, new NBTItem(itemStack, true));
 
     return itemStack;
   }
@@ -84,10 +83,10 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
    * @param itemStack itemstack to apply changes
    */
   public void updateItemStack(MagicItem magicItem, ItemStack itemStack) {
-    Damageable itemMeta = (Damageable) itemStack.getItemMeta();
+    ItemMeta itemMeta = itemStack.getItemMeta();
 
-    itemStack = buildName(magicItem, itemStack);
-    itemStack = buildLore(magicItem, itemStack);
+    buildName(magicItem, itemMeta);
+    buildLore(magicItem, itemMeta);
 
     itemStack.setItemMeta(itemMeta);
   }
@@ -96,24 +95,25 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
    * @param magicItem MagicItem instance for applying NBT-TAGS
    * @param nbtItem item to apply nbt changes
    */
-  public void applyTags(MagicItem magicItem, NBTItem nbtItem) {
+  public ItemStack applyTags(MagicItem magicItem, NBTItem nbtItem) {
     nbtItem.setString("id", magicItem.getId());
     Map<String, Object> tags = magicItem.getTags();
 
     if (tags != null && !tags.isEmpty()) {
       tags.forEach(nbtItem::setObject);
     }
+    return nbtItem.getItem();
   }
 
   /**
    * @param magicItem MagicItem instance to apply changes
    * @return built lore with specific implementation
    */
-  public abstract ItemStack buildLore(MagicItem magicItem, ItemStack itemStack);
+  public abstract void buildLore(MagicItem magicItem, ItemMeta itemMeta);
 
   /**
    * @param magicItem MagicItem instance to apply changes
    * @return built name with specific implementation
    */
-  public abstract ItemStack buildName(MagicItem magicItem, ItemStack itemStack);
+  public abstract void buildName(MagicItem magicItem, ItemMeta itemMeta);
 }

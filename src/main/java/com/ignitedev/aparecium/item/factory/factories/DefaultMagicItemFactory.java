@@ -20,7 +20,6 @@ import java.util.UUID;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -137,8 +136,7 @@ public class DefaultMagicItemFactory<T extends Item> extends RawItemStackFactory
   }
 
   @Override
-  public ItemStack buildLore(MagicItem magicItem, ItemStack itemStack) {
-    ItemMeta itemMeta = itemStack.getItemMeta();
+  public void buildLore(MagicItem magicItem, ItemMeta itemMeta) {
     ApareciumComponent description = magicItem.getDescription();
 
     if (description != null) {
@@ -149,13 +147,10 @@ public class DefaultMagicItemFactory<T extends Item> extends RawItemStackFactory
         itemMeta.setLore(description.getAsStrings());
       }
     }
-    itemStack.setItemMeta(itemMeta);
-    return itemStack;
   }
 
   @Override
-  public ItemStack buildName(MagicItem magicItem, ItemStack itemStack) {
-    ItemMeta itemMeta = itemStack.getItemMeta();
+  public void buildName(MagicItem magicItem, ItemMeta itemMeta) {
     ApareciumComponent name = magicItem.getName();
 
     if (name != null) {
@@ -166,7 +161,5 @@ public class DefaultMagicItemFactory<T extends Item> extends RawItemStackFactory
         itemMeta.setDisplayName(name.getAsString());
       }
     }
-    itemStack.setItemMeta(itemMeta);
-    return itemStack;
   }
 }
