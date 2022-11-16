@@ -10,7 +10,6 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.HelpCommand;
-import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import com.ignitedev.aparecium.Constants;
@@ -74,14 +73,13 @@ public class ItemBaseCommand extends BaseCommand {
 
   @Subcommand("get")
   @CommandPermission("aparecium.itembase.get")
-  public void onGet(Player player, String id, @Optional int amount) {
-    itemBase.findById(id, Item.class).give(player, amount <= 0 ? 1 : amount);
+  public void onGet(Player player, String id) {
+    itemBase.findById(id, Item.class).give(player);
   }
 
   @Subcommand("give")
   @CommandPermission("aparecium.itembase.give")
-  public void onGive(
-      CommandSender ignoredCommandSender, OnlinePlayer target, String id, @Optional int amount) {
-    itemBase.findById(id, Item.class).give(target.getPlayer(), amount <= 0 ? 1 : amount);
+  public void onGive(CommandSender ignoredCommandSender, OnlinePlayer target, String id) {
+    itemBase.findById(id, Item.class).give(target.getPlayer());
   }
 }

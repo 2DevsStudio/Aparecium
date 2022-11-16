@@ -111,7 +111,7 @@ public class Layout extends AbstractLayout {
       MagicItem availableMagicItem = entry.getValue().getAvailableMagicItem();
 
       if (availableMagicItem != null) {
-        inventory.setItem(entry.getKey(), availableMagicItem.toItemStack(1));
+        inventory.setItem(entry.getKey(), availableMagicItem.toItemStack());
       }
     }
     if (fillBackground) {

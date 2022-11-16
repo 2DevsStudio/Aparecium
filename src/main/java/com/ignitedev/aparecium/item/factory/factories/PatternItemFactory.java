@@ -22,6 +22,7 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
   public PatternItem createItem(
       @NotNull String id,
       @NotNull Material material,
+      int amount,
       @Nullable ItemType itemType,
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
@@ -33,6 +34,7 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
     return new PatternItem(
         id,
         material,
+        amount,
         itemType,
         rarity,
         name,
@@ -48,6 +50,7 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
   public PatternItem createItem(
       @NotNull String id,
       @NotNull Material material,
+      int amount,
       @Nullable ItemType itemType,
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
@@ -60,6 +63,7 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
     return new PatternItem(
         id,
         material,
+        amount,
         itemType,
         rarity,
         name,
@@ -75,6 +79,7 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
   public PatternItem createItem(
       @NotNull String id,
       @NotNull Material material,
+      int amount,
       @Nullable ItemType itemType,
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
@@ -87,6 +92,7 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
     return new PatternItem(
         id,
         material,
+        amount,
         itemType,
         rarity,
         name,
@@ -102,6 +108,7 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
   public PatternItem createItem(
       @NotNull String id,
       @NotNull Material material,
+      int amount,
       @Nullable ItemType itemType,
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
@@ -115,6 +122,7 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
     return new PatternItem(
         id,
         material,
+        amount,
         itemType,
         rarity,
         name,
@@ -131,6 +139,7 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
   public PatternItem createItem(
       @NotNull String id,
       @NotNull Material material,
+      int amount,
       @Nullable ItemType itemType,
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
@@ -141,6 +150,7 @@ public class PatternItemFactory extends DefaultMagicItemFactory<PatternItem> {
     return new PatternItem(
         id,
         material,
+        amount,
         itemType,
         rarity,
         name,

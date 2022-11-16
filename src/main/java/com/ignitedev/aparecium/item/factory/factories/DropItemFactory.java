@@ -22,6 +22,7 @@ public class DropItemFactory extends DefaultMagicItemFactory<DropItem> {
   public DropItem createItem(
       @NotNull String id,
       @NotNull Material material,
+      int amount,
       @Nullable ItemType itemType,
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
@@ -33,6 +34,7 @@ public class DropItemFactory extends DefaultMagicItemFactory<DropItem> {
     return new DropItem(
         id,
         material,
+        amount,
         itemType,
         rarity,
         name,
@@ -47,6 +49,7 @@ public class DropItemFactory extends DefaultMagicItemFactory<DropItem> {
   public DropItem createItem(
       @NotNull String id,
       @NotNull Material material,
+      int amount,
       @Nullable ItemType itemType,
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
@@ -59,6 +62,7 @@ public class DropItemFactory extends DefaultMagicItemFactory<DropItem> {
     return new DropItem(
         id,
         material,
+        amount,
         itemType,
         rarity,
         name,
@@ -74,6 +78,7 @@ public class DropItemFactory extends DefaultMagicItemFactory<DropItem> {
   public DropItem createItem(
       @NotNull String id,
       @NotNull Material material,
+      int amount,
       @Nullable ItemType itemType,
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
@@ -84,6 +89,7 @@ public class DropItemFactory extends DefaultMagicItemFactory<DropItem> {
     return new DropItem(
         id,
         material,
+        amount,
         itemType,
         rarity,
         name,

@@ -21,6 +21,7 @@ public class LayoutItemFactory extends DefaultMagicItemFactory<LayoutItem> {
   public LayoutItem createItem(
       @NotNull String id,
       @NotNull Material material,
+      int amount,
       @Nullable ItemType itemType,
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
@@ -32,6 +33,7 @@ public class LayoutItemFactory extends DefaultMagicItemFactory<LayoutItem> {
     return new LayoutItem(
         id,
         material,
+        amount,
         itemType,
         rarity,
         name,
@@ -46,6 +48,7 @@ public class LayoutItemFactory extends DefaultMagicItemFactory<LayoutItem> {
   public LayoutItem createItem(
       @NotNull String id,
       @NotNull Material material,
+      int amount,
       @Nullable ItemType itemType,
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
@@ -54,6 +57,6 @@ public class LayoutItemFactory extends DefaultMagicItemFactory<LayoutItem> {
       @Nullable Map<Enchantment, Integer> enchants,
       @Nullable List<ItemFlag> flags) {
     return new LayoutItem(
-        id, material, itemType, rarity, name, description, tags, enchants, flags, 0);
+        id, material, amount, itemType, rarity, name, description, tags, enchants, flags, 0);
   }
 }

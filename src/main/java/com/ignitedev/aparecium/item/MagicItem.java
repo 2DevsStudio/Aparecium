@@ -46,6 +46,9 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
 
   @NotNull protected String id;
   @NotNull @Builder.Default protected Material material = Material.AIR;
+
+  @Builder.Default
+  protected int amount = 1;
   /**
    * @implNote Item Type useful for sorting and categorizing
    */
@@ -74,6 +77,7 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
   public MagicItem(
       @NotNull String id,
       @NotNull Material material,
+      int amount,
       ItemType itemType,
       Rarity rarity,
       @Nullable ApareciumComponent name,
@@ -83,6 +87,7 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
       @Nullable List<ItemFlag> flags) {
     this.id = id;
     this.material = material;
+    this.amount = amount;
     this.itemType = itemType;
     this.rarity = rarity;
     this.name = name;
@@ -93,25 +98,17 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
   }
 
   /**
-   * @param amount amount of itemstack you'd like to get
    * @return Prepared itemstack with all specified values and methods
    */
-  public abstract ItemStack toItemStack(int amount);
+  public abstract ItemStack toItemStack();
 
   /**
    * @param player player which will receive item
    */
   public void give(Player player) {
-    give(player, 1);
+    player.getInventory().addItem(toItemStack());
   }
 
-  /**
-   * @param player player which will receive item
-   * @param amount amount of this item that player going to receive
-   */
-  public void give(Player player, int amount) {
-    player.getInventory().addItem(toItemStack(amount <= 0 ? 1 : amount));
-  }
 
   public boolean isSimilar(MagicItem toCheck, SimilarCheck... similarCheck) {
     boolean isSimilar = false;

@@ -24,11 +24,10 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
 
   /**
    * @param magicItem item to convert
-   * @param amount itemstack quantity
    * @return built itemstack with all values in MagicItem
    */
   @Override
-  public ItemStack toItemStack(MagicItem magicItem, int amount) {
+  public ItemStack toItemStack(MagicItem magicItem) {
     ItemStack itemStack = new ItemStack(magicItem.getMaterial());
     ItemMeta itemMeta = itemStack.getItemMeta();
 
@@ -47,7 +46,7 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
     itemMeta = itemStack.getItemMeta(); // refresh enchants and flags for item meta
 
     itemStack.setItemMeta(itemMeta);
-    itemStack.setAmount(amount);
+    itemStack.setAmount(magicItem.getAmount());
     itemStack = applyTags(magicItem, new NBTItem(itemStack, true));
 
     return itemStack;
@@ -107,13 +106,11 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
 
   /**
    * @param magicItem MagicItem instance to apply changes
-   * @return built lore with specific implementation
    */
   public abstract void buildLore(MagicItem magicItem, ItemMeta itemMeta);
 
   /**
    * @param magicItem MagicItem instance to apply changes
-   * @return built name with specific implementation
    */
   public abstract void buildName(MagicItem magicItem, ItemMeta itemMeta);
 }

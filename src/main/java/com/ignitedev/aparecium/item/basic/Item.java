@@ -41,6 +41,7 @@ public class Item extends MagicItem {
   public Item(
       @NotNull String id,
       @NotNull Material material,
+      int amount,
       @Nullable ItemType itemType,
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
@@ -48,7 +49,7 @@ public class Item extends MagicItem {
       @Nullable Map<String, Object> tags,
       @Nullable Map<Enchantment, Integer> enchantments,
       @Nullable List<ItemFlag> flags) {
-    super(id, material, itemType, rarity, name, description, tags, enchantments, flags);
+    super(id, material, amount, itemType, rarity, name, description, tags, enchantments, flags);
     this.itemSaveInstant = Instant.now();
 
     if (this.rarity == null) {
@@ -60,11 +61,11 @@ public class Item extends MagicItem {
   }
 
   @Override
-  public ItemStack toItemStack(int amount) {
+  public ItemStack toItemStack() {
     return Aparecium.getFactoriesManager()
         .getMagicItemFactories()
         .getDefaultFactory()
-        .toItemStack(this, amount);
+        .toItemStack(this);
   }
 
   @Override

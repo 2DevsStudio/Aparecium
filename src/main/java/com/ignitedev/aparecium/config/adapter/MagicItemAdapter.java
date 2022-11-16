@@ -40,6 +40,8 @@ public class MagicItemAdapter implements JsonSerializer<MagicItem>, JsonDeserial
   private static final String SAVE_DATE = "saveDate";
   private static final String ID = "id";
   private static final String MATERIAL = "material";
+
+  private static final String AMOUNT = "amount";
   private static final String TYPE = "type";
   private static final String RARITY = "rarity";
   private static final String NAME = "name";
@@ -63,6 +65,7 @@ public class MagicItemAdapter implements JsonSerializer<MagicItem>, JsonDeserial
 
     String id = jsonObject.get(ID).getAsString();
     Material material = Material.matchMaterial(jsonObject.get(MATERIAL).getAsString());
+    int amount = jsonObject.get(AMOUNT).getAsInt();
 
     if (material == null) {
       throw new IllegalArgumentException("Material is null");
@@ -124,7 +127,7 @@ public class MagicItemAdapter implements JsonSerializer<MagicItem>, JsonDeserial
     }
     Item item =
         defaultFactory.createItem(
-            id, material, itemType, rarity, name, description, tags, enchantments, flags);
+            id, material,amount, itemType, rarity, name, description, tags, enchantments, flags);
 
     item.setItemSaveInstant(Instant.ofEpochMilli(saveDate));
 
@@ -139,6 +142,7 @@ public class MagicItemAdapter implements JsonSerializer<MagicItem>, JsonDeserial
           .createItem(
               id,
               material,
+              amount,
               itemType,
               rarity,
               name,
@@ -157,6 +161,7 @@ public class MagicItemAdapter implements JsonSerializer<MagicItem>, JsonDeserial
           .createItem(
               id,
               material,
+              amount,
               itemType,
               rarity,
               name,
@@ -175,6 +180,7 @@ public class MagicItemAdapter implements JsonSerializer<MagicItem>, JsonDeserial
           .createItem(
               id,
               material,
+              amount,
               itemType,
               rarity,
               name,
@@ -201,6 +207,7 @@ public class MagicItemAdapter implements JsonSerializer<MagicItem>, JsonDeserial
 
     jsonObject.addProperty(ID, src.getId());
     jsonObject.addProperty(MATERIAL, src.getMaterial().name());
+    jsonObject.addProperty(AMOUNT, src.getAmount());
     jsonObject.add(NAME, context.serialize(src.getName()));
 
     if (description != null) {

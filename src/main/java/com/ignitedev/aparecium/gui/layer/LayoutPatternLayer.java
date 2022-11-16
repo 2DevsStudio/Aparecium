@@ -72,7 +72,7 @@ public class LayoutPatternLayer extends AbstractLayoutLayer {
           MagicItem availableMagicItem = magicItemID.getAvailableMagicItem();
 
           if (availableMagicItem != null) {
-            inventory.setItem(slot, availableMagicItem.toItemStack(1));
+            inventory.setItem(slot, availableMagicItem.toItemStack());
           }
         });
   }

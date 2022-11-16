@@ -31,6 +31,7 @@ public class LayoutItem extends Item {
   public LayoutItem(
       @NotNull String id,
       @NotNull Material material,
+      int amount,
       @Nullable ItemType itemType,
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
@@ -39,7 +40,7 @@ public class LayoutItem extends Item {
       @Nullable Map<Enchantment, Integer> enchants,
       @Nullable List<ItemFlag> flags,
       double layoutItemInteractionId) {
-    super(id, material, itemType, rarity, name, description, tags, enchants, flags);
+    super(id, material, amount, itemType, rarity, name, description, tags, enchants, flags);
     this.layoutItemInteractionId = layoutItemInteractionId;
   }
 

@@ -41,6 +41,7 @@ public class DropItem extends Item {
   public DropItem(
       @NotNull String id,
       @NotNull Material material,
+      int amount,
       @Nullable ItemType itemType,
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
@@ -50,7 +51,7 @@ public class DropItem extends Item {
       @Nullable List<ItemFlag> flags,
       double dropChance,
       Map<Material, Double> dropChancesForMaterials) {
-    super(id, material, itemType, rarity, name, description, tags, enchants, flags);
+    super(id, material, amount, itemType, rarity, name, description, tags, enchants, flags);
     this.dropChance = dropChance;
     this.dropChancesForMaterials = dropChancesForMaterials;
 
