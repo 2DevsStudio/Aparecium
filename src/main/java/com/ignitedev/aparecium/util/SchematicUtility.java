@@ -40,14 +40,31 @@ public class SchematicUtility {
       String schematic,
       Location location,
       Consumer<Void> callback,
-      Aparecium aparecium,
+      boolean copyBiomes,
+      boolean copyEntities,
+      boolean ignoreAirBlocks) {
+    asyncPaste(
+        schematic,
+        location,
+        callback,
+        ApareciumMain.getInstance(),
+        copyBiomes,
+        copyEntities,
+        ignoreAirBlocks);
+  }
+
+  public void asyncPaste(
+      String schematic,
+      Location location,
+      Consumer<Void> callback,
+      Aparecium yourPlugin,
       boolean copyBiomes,
       boolean copyEntities,
       boolean ignoreAirBlocks) {
     new BukkitRunnable() {
       @Override
       public void run() {
-        paste(schematic, location, aparecium, copyBiomes, copyEntities, ignoreAirBlocks);
+        paste(schematic, location, yourPlugin, copyBiomes, copyEntities, ignoreAirBlocks);
 
         if (callback == null) {
           return;
@@ -58,9 +75,9 @@ public class SchematicUtility {
           public void run() {
             callback.accept(null);
           }
-        }.runTask(aparecium);
+        }.runTask(yourPlugin);
       }
-    }.runTaskLaterAsynchronously(aparecium, 20);
+    }.runTaskLaterAsynchronously(yourPlugin, 20);
   }
 
   @Nullable
