@@ -6,6 +6,7 @@ package com.ignitedev.aparecium.util;
 
 import com.fastasyncworldedit.core.FaweAPI;
 import com.ignitedev.aparecium.Aparecium;
+import com.ignitedev.aparecium.engine.ApareciumMain;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.WorldEditException;
@@ -62,16 +63,32 @@ public class SchematicUtility {
     }.runTaskLaterAsynchronously(aparecium, 20);
   }
 
+  @Nullable
+  public BlockVector3 paste(
+      String schematic,
+      Location location,
+      boolean copyBiomes,
+      boolean copyEntities,
+      boolean ignoreAirBlocks) {
+    return paste(
+        schematic,
+        location,
+        ApareciumMain.getInstance(),
+        copyBiomes,
+        copyEntities,
+        ignoreAirBlocks);
+  }
+
   @SneakyThrows
   @Nullable
   public BlockVector3 paste(
       String schematic,
       Location location,
-      Aparecium aparecium,
+      Aparecium yourPlugin,
       boolean copyBiomes,
       boolean copyEntities,
       boolean ignoreAirBlocks) {
-    File file = new File(aparecium.getDataFolder(), "schematics/" + schematic);
+    File file = new File(yourPlugin.getDataFolder(), "schematics/" + schematic);
 
     if (file.mkdirs()) {
       Bukkit.getLogger().log(Level.INFO, "Created Schematics directory");

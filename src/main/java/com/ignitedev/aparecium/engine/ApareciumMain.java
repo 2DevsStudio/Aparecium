@@ -62,7 +62,7 @@ public class ApareciumMain extends Aparecium {
   public void onDisabling() {}
 
   private void initializeDirectories() {
-    File file = new File(getDataFolder(), "schematics/");
+    File file = new File(getDataFolder(), "schematics");
 
     if (file.mkdirs()) {
       Bukkit.getLogger().log(Level.INFO, "Created Schematics directory");
