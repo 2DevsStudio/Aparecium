@@ -8,15 +8,17 @@ import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.hologram.basic.BaseHologram;
 import com.ignitedev.aparecium.hologram.data.HologramEntry;
-import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
+import me.filoghost.holographicdisplays.api.internal.HolographicDisplaysAPIProvider;
 import org.bukkit.inventory.ItemStack;
 
 public class DefaultHologramFactory implements HologramFactory {
   @Override
   public Hologram createHologram(BaseHologram baseHologram, Aparecium apareciumInstance) {
     Hologram hologram =
-        HolographicDisplaysAPI.get(apareciumInstance).createHologram(baseHologram.getLocation());
+        HolographicDisplaysAPIProvider.getImplementation()
+            .getHolographicDisplaysAPI(apareciumInstance)
+            .createHologram(baseHologram.getLocation());
 
     for (HologramEntry line : baseHologram.getLines()) {
       if (line.getMaterial() != null) {
