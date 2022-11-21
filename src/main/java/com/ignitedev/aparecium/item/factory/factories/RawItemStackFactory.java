@@ -34,6 +34,8 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
     buildLore(magicItem, itemMeta);
     buildName(magicItem, itemMeta);
 
+    itemStack.setItemMeta(itemMeta);
+
     List<ItemFlag> flags = magicItem.getFlags();
     Map<Enchantment, Integer> enchants = magicItem.getEnchants();
 
