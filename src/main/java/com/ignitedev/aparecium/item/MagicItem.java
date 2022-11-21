@@ -47,8 +47,7 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
   @NotNull protected String id;
   @NotNull @Builder.Default protected Material material = Material.AIR;
 
-  @Builder.Default
-  protected int amount = 1;
+  @Builder.Default protected int amount = 1;
   /**
    * @implNote Item Type useful for sorting and categorizing
    */
@@ -109,7 +108,6 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
     player.getInventory().addItem(toItemStack());
   }
 
-
   public boolean isSimilar(MagicItem toCheck, SimilarCheck... similarCheck) {
     boolean isSimilar = false;
 
@@ -139,7 +137,7 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
     return isSimilar;
   }
 
-  public MagicItemWrapper toWrapper(){
+  public MagicItemWrapper toWrapper() {
     return new MagicItemWrapper(null, this);
   }
 

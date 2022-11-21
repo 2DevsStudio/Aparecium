@@ -90,7 +90,6 @@ two locations.
 
 ![Dependency](https://www.2devsstudio.com/resources/separators/dependency.png)
 
-
 ```xml
 
 <repository>
@@ -120,8 +119,10 @@ depend: [ Aparecium ]
 ![Requirements](https://www.2devsstudio.com/resources/separators/requirements.png)
 
 ### Holographic Displays
+
 If you want to use Holograms you need to download **HolographicDisplays** and add it to your plugins folder.
 Currently, we are working on our own hologram system but for now you have to use HolographicDisplays :(
 
-[Here](https://ci.codemc.io/job/filoghost/job/HolographicDisplays/) you can download the latest version of HolographicDisplays ( for 1.19, 3.0.1 is dev build )
+[Here](https://ci.codemc.io/job/filoghost/job/HolographicDisplays/) you can download the latest version of
+HolographicDisplays ( for 1.19, 3.0.1 is dev build )
 

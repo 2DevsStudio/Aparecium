@@ -127,7 +127,7 @@ public class MagicItemAdapter implements JsonSerializer<MagicItem>, JsonDeserial
     }
     Item item =
         defaultFactory.createItem(
-            id, material,amount, itemType, rarity, name, description, tags, enchantments, flags);
+            id, material, amount, itemType, rarity, name, description, tags, enchantments, flags);
 
     item.setItemSaveInstant(Instant.ofEpochMilli(saveDate));
 

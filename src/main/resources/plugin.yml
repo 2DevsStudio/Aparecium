@@ -7,4 +7,4 @@ description: "The Revealing Charm will reveal invisible ink and messages hidden 
  Simply tap a book or parchment with your wand and any hidden message will be revealed. 
  This spell is more than sufficient to overcome the basic concealing charms and so is a favourite of parents and teachers alike."
 website: 2DevsStudio.com
-softdepend: [HolographicDisplays]
+softdepend: [ HolographicDisplays ]

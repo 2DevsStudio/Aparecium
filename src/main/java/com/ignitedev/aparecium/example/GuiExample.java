@@ -30,7 +30,9 @@ public class GuiExample {
             .id("backgroundLayer")
             .layoutSize(18)
             .layoutInventoryType(InventoryType.CHEST)
-            .content(0, new MagicItemWrapper(null, layoutItemFactory.createItem("itemId", Material.DIRT)))
+            .content(
+                0,
+                new MagicItemWrapper(null, layoutItemFactory.createItem("itemId", Material.DIRT)))
             .build();
 
     Layout layout =

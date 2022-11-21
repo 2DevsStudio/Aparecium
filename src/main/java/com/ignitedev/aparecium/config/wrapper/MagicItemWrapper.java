@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 @Data
 @Builder
 @AllArgsConstructor
-public class  MagicItemWrapper {
+public class MagicItemWrapper {
 
   @Autowired private static ItemBase itemBase;
 

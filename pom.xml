@@ -7,13 +7,6 @@
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>Aparecium</artifactId>
-  <groupId>com.ignitedev</groupId>
-  <modelVersion>4.0.0</modelVersion>
-  <version>1.0.0</version>
-  <name>Aparecium</name>
-  <packaging>jar</packaging>
-  <url>2DevsStudio.com</url>
-
   <build>
     <plugins>
       <plugin>
@@ -57,7 +50,6 @@
       </resource>
     </resources>
   </build>
-
   <dependencies>
     <dependency>
       <artifactId>paper-api</artifactId>
@@ -69,8 +61,8 @@
     <!-- Integrations  -->
 
     <dependency>
-      <groupId>me.filoghost.holographicdisplays</groupId>
       <artifactId>holographicdisplays-api</artifactId>
+      <groupId>me.filoghost.holographicdisplays</groupId>
       <version>3.0.1-SNAPSHOT</version>
     </dependency>
 
@@ -177,7 +169,6 @@
     </dependency>
 
   </dependencies>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -200,12 +191,17 @@
       <url>https://repo.2devsstudio.com/latest</url>
     </repository>
   </distributionManagement>
+  <groupId>com.ignitedev</groupId>
 
+  <modelVersion>4.0.0</modelVersion>
+
+  <name>Aparecium</name>
+
+  <packaging>jar</packaging>
   <properties>
     <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-
   <repositories>
     <repository>
       <id>papermc-repo</id>
@@ -246,4 +242,8 @@
       <url>https://maven.enginehub.org/repo/</url>
     </repository>
   </repositories>
+
+  <url>2DevsStudio.com</url>
+
+  <version>1.0.0</version>
 </project>
