@@ -10,8 +10,10 @@ package com.ignitedev.aparecium.engine;
  *  ~~ Hermione using the spell on Tom Riddle's diary
  */
 
+import co.aikar.commands.PaperCommandManager;
 import com.google.gson.Gson;
 import com.ignitedev.aparecium.Aparecium;
+import com.ignitedev.aparecium.command.ItemBaseCommand;
 import com.ignitedev.aparecium.command.custom.CustomCommand;
 import com.ignitedev.aparecium.command.custom.CustomCommandProcessor;
 import com.ignitedev.aparecium.config.CustomCommandsBase;
@@ -54,6 +56,7 @@ public class ApareciumMain extends Aparecium {
     Serializer.getInst().setGson(this.apareciumGson);
     SimpleJSONConfig.INSTANCE.register(this);
 
+    registerCommands();
     registerCustomCommands();
     initializeDirectories();
   }
@@ -67,6 +70,12 @@ public class ApareciumMain extends Aparecium {
     if (file.mkdirs()) {
       Bukkit.getLogger().log(Level.INFO, "Created Schematics directory");
     }
+  }
+
+  private void registerCommands(){
+    PaperCommandManager paperCommandManager = new PaperCommandManager(this);
+
+    paperCommandManager.registerCommand(new ItemBaseCommand());
   }
 
   @SneakyThrows
