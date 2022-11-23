@@ -57,6 +57,6 @@ public class WeightCollection<E> {
   }
 
   public void set(TreeMap<Double, E> treeMap) {
-    this.map.putAll(treeMap);
+    treeMap.forEach(this::add);
   }
 }
