@@ -126,3 +126,9 @@ Currently, we are working on our own hologram system but for now you have to use
 [Here](https://ci.codemc.io/job/filoghost/job/HolographicDisplays/) you can download the latest version of
 HolographicDisplays ( for 1.19, 3.0.1 is dev build )
 
+## PlaceholderAPI
+
+Aparecium base many things on PlaceholderAPI so that plugin is definitely **REQUIRED**.
+
+[here](https://www.spigotmc.org/resources/placeholderapi.6245/) you can download the latest version of PlaceholderAPI
+
