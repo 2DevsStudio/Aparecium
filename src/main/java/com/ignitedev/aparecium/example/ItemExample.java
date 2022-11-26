@@ -45,6 +45,7 @@ public class ItemExample {
             .description(new ApareciumComponent("test"))
             .build();
 
+
     @Example
     DropItem dropItemTest2 =
         Aparecium.getFactoriesManager()

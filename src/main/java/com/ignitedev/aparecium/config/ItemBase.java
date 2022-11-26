@@ -38,6 +38,10 @@ public class ItemBase extends Config {
           .name(new ApareciumComponent("Couldn't find item, check typed id"))
           .build();
 
+  public boolean exists(String id) {
+    return savedItems.containsKey(id);
+  }
+
   /**
    * @implNote please note that this method save and reload config, if you have any pending changes
    *     in your config file then it might be overridden
@@ -64,6 +68,7 @@ public class ItemBase extends Config {
     }
   }
 
+  @NotNull
   public MagicItem findById(String itemId) {
     return findById(itemId, Item.class);
   }
