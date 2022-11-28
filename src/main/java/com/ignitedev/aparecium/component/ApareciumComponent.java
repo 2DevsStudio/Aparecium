@@ -9,6 +9,7 @@ import com.ignitedev.aparecium.interfaces.PaperOnly;
 import com.ignitedev.aparecium.util.PaperUtility;
 import com.ignitedev.aparecium.util.text.TextUtility;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Supplier;
 import lombok.AllArgsConstructor;
@@ -82,11 +83,19 @@ public class ApareciumComponent {
   }
 
   public ApareciumComponent replace(String from, String to) {
-    this.strings.set(0, this.strings.get(0).replace(from, to));
+    List<String> replacedStrings = new LinkedList<>();
+
+    this.strings.forEach(string -> replacedStrings.add(string.replace(from, to)));
+    this.strings = replacedStrings;
+
     if (ApareciumMain.isUsingPaper()) {
-      this.components.set(
-          0,
-          this.components.get(0).replaceText((value) -> value.matchLiteral(from).replacement(to)));
+      List<Component> replacedComponents = new LinkedList<>();
+
+      this.components.forEach(
+          component ->
+              replacedComponents.add(
+                  component.replaceText((value) -> value.matchLiteral(from).replacement(to))));
+      this.components = replacedComponents;
     }
     return this;
   }
