@@ -41,7 +41,7 @@ public class InventoriesRepository {
     List<Inventory> inventoriesByLayout = getInventoriesByLayout(value);
 
     if (inventoriesByLayout.isEmpty()) {
-      this.cachedInventories.replace(value, List.of(inventory));
+      this.cachedInventories.replace(value, new ArrayList<>(List.of(inventory)));
     } else {
       inventoriesByLayout.add(inventory);
       this.cachedInventories.replace(value, inventoriesByLayout);

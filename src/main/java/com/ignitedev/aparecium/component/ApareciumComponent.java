@@ -8,6 +8,7 @@ import com.ignitedev.aparecium.engine.ApareciumMain;
 import com.ignitedev.aparecium.interfaces.PaperOnly;
 import com.ignitedev.aparecium.util.PaperUtility;
 import com.ignitedev.aparecium.util.text.TextUtility;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 import lombok.AllArgsConstructor;
@@ -53,9 +54,9 @@ public class ApareciumComponent {
   }
 
   public ApareciumComponent(String string) {
-    this.strings = List.of(string);
+    this.strings = new ArrayList<>(List.of(string));
     if (ApareciumMain.isUsingPaper()) {
-      this.components = List.of(TextUtility.colorizeToComponent(string));
+      this.components = new ArrayList<>(List.of(TextUtility.colorizeToComponent(string)));
     }
   }
 
@@ -63,8 +64,8 @@ public class ApareciumComponent {
   @PaperOnly
   public ApareciumComponent(Component component) {
     PaperUtility.checkPaper();
-    this.components = List.of(component);
-    this.strings = TextUtility.serializeComponent(List.of(component));
+    this.components = new ArrayList<>(List.of(component));
+    this.strings = TextUtility.serializeComponent(new ArrayList<>(List.of(component)));
   }
 
   @NotNull
