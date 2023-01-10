@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
+ * Copyright (c) 2022-2023. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
 package com.ignitedev.aparecium.config.adapter;
@@ -74,14 +74,18 @@ public class MagicItemAdapter implements JsonSerializer<MagicItem>, JsonDeserial
     ApareciumComponent name = null;
 
     if (nameElement != null) {
-      name = context.deserialize(nameElement.getAsJsonObject(), ApareciumComponent.class);
+      if (!nameElement.isJsonNull()) {
+        name = context.deserialize(nameElement.getAsJsonObject(), ApareciumComponent.class);
+      }
     }
     @Nullable JsonElement descriptionElement = jsonObject.get(DESCRIPTION);
     ApareciumComponent description = null;
 
     if (descriptionElement != null) {
-      description =
-          context.deserialize(descriptionElement.getAsJsonObject(), ApareciumComponent.class);
+      if (!descriptionElement.isJsonNull()) {
+        description =
+            context.deserialize(descriptionElement.getAsJsonObject(), ApareciumComponent.class);
+      }
     }
     @Nullable JsonElement enchantElement = jsonObject.get(ENCHANTMENTS);
     HashMap<String, Double> enchantmentsString = null;
