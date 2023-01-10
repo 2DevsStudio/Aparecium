@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2022. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
+  ~ Copyright (c) 2022-2023. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
   -->
 
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -127,7 +127,7 @@
       <artifactId>SimpleJSONConfig</artifactId>
       <groupId>com.twodevsstudio</groupId>
       <scope>provided</scope>
-      <version>1.2</version>
+      <version>1.3.2</version>
     </dependency>
 
     <!-- MISC  -->
@@ -156,7 +156,7 @@
       <artifactId>annotations</artifactId>
       <groupId>org.jetbrains</groupId>
       <scope>provided</scope>
-      <version>23.0.0</version>
+      <version>23.1.0</version>
     </dependency>
 
     <dependency>
@@ -265,5 +265,5 @@
 
   <url>2DevsStudio.com</url>
 
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </project>
