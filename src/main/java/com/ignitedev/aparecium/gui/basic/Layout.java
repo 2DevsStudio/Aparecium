@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
+ * Copyright (c) 2022-2023. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
 package com.ignitedev.aparecium.gui.basic;
@@ -87,6 +87,9 @@ public class Layout extends AbstractLayout {
       boolean fillBackground,
       boolean force,
       AbstractLayoutLayer... additionalLayers) {
+    if (fillBackground) {
+      fillBackground(inventory);
+    }
     if (!force) {
       if (inventory.getType() != this.inventoryType) {
         return;
@@ -113,9 +116,6 @@ public class Layout extends AbstractLayout {
       if (availableMagicItem != null) {
         inventory.setItem(entry.getKey(), availableMagicItem.toItemStack());
       }
-    }
-    if (fillBackground) {
-      fillBackground(inventory);
     }
   }
 
