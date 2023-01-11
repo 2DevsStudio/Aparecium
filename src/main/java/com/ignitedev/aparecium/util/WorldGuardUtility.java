@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
+ * Copyright (c) 2022-2023. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
 package com.ignitedev.aparecium.util;
@@ -35,7 +35,6 @@ public class WorldGuardUtility {
   private static final RegionContainer container =
       WorldGuard.getInstance().getPlatform().getRegionContainer();
 
-
   /**
    * @implNote get applicable region at location
    */
@@ -46,10 +45,13 @@ public class WorldGuardUtility {
     if (regionManager == null) {
       return null;
     }
-    return regionManager.getApplicableRegions(BlockVector3.at(location.getX(), location.getY(), location.getZ()))
-        .getRegions().stream().findFirst().orElse(null);
+    return regionManager
+        .getApplicableRegions(BlockVector3.at(location.getX(), location.getY(), location.getZ()))
+        .getRegions()
+        .stream()
+        .findFirst()
+        .orElse(null);
   }
-
 
   /**
    * Gets the regions a player is currently in.
