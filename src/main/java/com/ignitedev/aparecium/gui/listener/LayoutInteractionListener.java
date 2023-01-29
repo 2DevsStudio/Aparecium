@@ -20,10 +20,10 @@ public class LayoutInteractionListener implements Listener {
   public void onDrag(InventoryDragEvent event) {
     Layout byInventory = InventoriesRepository.getInstance().findByInventory(event.getInventory());
 
-    if(byInventory == null){
+    if (byInventory == null) {
       return;
     }
-    if(!byInventory.getLayoutInteractions().isInventoryDrag()){
+    if (!byInventory.getLayoutInteractions().isInventoryDrag()) {
       event.setResult(Result.DENY);
       event.setCancelled(true);
     }
@@ -36,13 +36,13 @@ public class LayoutInteractionListener implements Listener {
     Layout byInventoryDestination = instance.findByInventory(event.getDestination());
     Layout byInventorySource = instance.findByInventory(event.getSource());
 
-    if(byInventoryDestination != null){
-      if(!byInventoryDestination.getLayoutInteractions().isInventoryMoveItem()){
+    if (byInventoryDestination != null) {
+      if (!byInventoryDestination.getLayoutInteractions().isInventoryMoveItem()) {
         event.setCancelled(true);
       }
     }
-    if(byInventorySource != null){
-      if(!byInventorySource.getLayoutInteractions().isInventoryMoveItem()){
+    if (byInventorySource != null) {
+      if (!byInventorySource.getLayoutInteractions().isInventoryMoveItem()) {
         event.setCancelled(true);
       }
     }
@@ -52,10 +52,10 @@ public class LayoutInteractionListener implements Listener {
   public void onClick(InventoryClickEvent event) {
     Layout byInventory = InventoriesRepository.getInstance().findByInventory(event.getInventory());
 
-    if(byInventory == null){
+    if (byInventory == null) {
       return;
     }
-    if(!byInventory.getLayoutInteractions().isInventoryClick()){
+    if (!byInventory.getLayoutInteractions().isInventoryClick()) {
       event.setResult(Result.DENY);
       event.setCancelled(true);
     }
@@ -65,10 +65,10 @@ public class LayoutInteractionListener implements Listener {
   public void onClose(InventoryCloseEvent event) {
     Layout byInventory = InventoriesRepository.getInstance().findByInventory(event.getInventory());
 
-    if(byInventory == null){
+    if (byInventory == null) {
       return;
     }
-    if(!byInventory.getLayoutInteractions().isInventoryClose()){
+    if (!byInventory.getLayoutInteractions().isInventoryClose()) {
       event.getPlayer().openInventory(byInventory.getInventory());
     }
   }

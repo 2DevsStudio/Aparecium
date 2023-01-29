@@ -7,8 +7,6 @@
 
 [-] add clone() in missing classes like layers,layouts
 
-[-] add Layout blocking interactions etc
-
 [-] onClick
 
 [-] onEnable

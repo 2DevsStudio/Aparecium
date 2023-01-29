@@ -94,7 +94,7 @@ public class ApareciumMain extends Aparecium {
     paperCommandManager.registerCommand(new ItemBaseCommand());
   }
 
-  private void registerListeners(PluginManager pluginManager){
+  private void registerListeners(PluginManager pluginManager) {
     pluginManager.registerEvents(new LayoutInteractionListener(), this);
   }
 
