@@ -125,4 +125,16 @@ public class Layout extends AbstractLayout {
       this.layoutBackgroundLayer.fill(inventory, true);
     }
   }
+
+  @Override
+  public void fillAll(Inventory inventory, MagicItem magicItem, boolean force) {
+    for (int i = 0; i < inventory.getSize(); i++) {
+      if (!force) {
+        if (inventory.getItem(i) != null) {
+          continue;
+        }
+      }
+      inventory.setItem(i, magicItem.toItemStack());
+    }
+  }
 }

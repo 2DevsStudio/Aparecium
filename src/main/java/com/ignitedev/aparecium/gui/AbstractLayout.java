@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
+ * Copyright (c) 2022-2023. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
 package com.ignitedev.aparecium.gui;
@@ -9,6 +9,7 @@ import com.ignitedev.aparecium.config.wrapper.MagicItemWrapper;
 import com.ignitedev.aparecium.gui.basic.Layout;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import com.ignitedev.aparecium.interfaces.Identifiable;
+import com.ignitedev.aparecium.item.MagicItem;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
@@ -100,6 +101,12 @@ public abstract class AbstractLayout
       AbstractLayoutLayer... additionalLayers);
 
   public abstract void fillBackground(Inventory inventory);
+
+  /**
+   * @param inventory inventory to fill
+   * @param force if true, will override existing items
+   */
+  public abstract void fillAll(Inventory inventory, MagicItem magicItem, boolean force);
 
   public abstract Inventory createLayout(AbstractLayoutLayer... additionalLayers);
 
