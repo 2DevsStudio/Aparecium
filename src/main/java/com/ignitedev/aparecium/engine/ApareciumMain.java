@@ -19,6 +19,7 @@ import com.ignitedev.aparecium.config.CustomCommandsBase;
 import com.ignitedev.aparecium.config.adapter.ComponentAdapter;
 import com.ignitedev.aparecium.config.adapter.InstantAdapter;
 import com.ignitedev.aparecium.config.adapter.MagicItemAdapter;
+import com.ignitedev.aparecium.gui.listener.LayoutInteractionListener;
 import com.ignitedev.aparecium.item.MagicItem;
 import com.ignitedev.aparecium.util.ReflectionUtility;
 import com.twodevsstudio.simplejsonconfig.SimpleJSONConfig;
@@ -46,6 +47,7 @@ import org.bukkit.World;
 import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandMap;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.PluginManager;
 
 /**
  * @implNote Aparecium Main engine, this is implementation of Aparecium, as well it is perfect
@@ -71,7 +73,8 @@ public class ApareciumMain extends Aparecium {
     registerGson(Serializer.getInst().toBuilder());
     SimpleJSONConfig.INSTANCE.register(this);
 
-    registerCommands();
+    registerCommands(new PaperCommandManager(this));
+    registerListeners(Bukkit.getPluginManager());
     registerCustomCommands();
     initializeDirectories();
   }
@@ -87,10 +90,12 @@ public class ApareciumMain extends Aparecium {
     }
   }
 
-  private void registerCommands() {
-    PaperCommandManager paperCommandManager = new PaperCommandManager(this);
-
+  private void registerCommands(PaperCommandManager paperCommandManager) {
     paperCommandManager.registerCommand(new ItemBaseCommand());
+  }
+
+  private void registerListeners(PluginManager pluginManager){
+    pluginManager.registerEvents(new LayoutInteractionListener(), this);
   }
 
   @SneakyThrows

@@ -7,6 +7,7 @@ package com.ignitedev.aparecium.gui;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.config.wrapper.MagicItemWrapper;
 import com.ignitedev.aparecium.gui.basic.Layout;
+import com.ignitedev.aparecium.gui.interaction.LayoutInteractions;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import com.ignitedev.aparecium.interfaces.Identifiable;
 import com.ignitedev.aparecium.item.MagicItem;
@@ -64,6 +65,9 @@ public abstract class AbstractLayout
    */
   @Singular("content")
   protected Map<Integer, MagicItemWrapper> contents = new HashMap<>();
+
+  @Builder.Default
+  protected LayoutInteractions layoutInteractions = LayoutInteractions.builder().build();
 
   public AbstractLayout(String id, int layoutSize) {
     this.id = id;
