@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
+ * Copyright (c) 2022-2023. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
 package com.ignitedev.aparecium.gui.util;
@@ -17,7 +17,8 @@ import org.jetbrains.annotations.Nullable;
 @UtilityClass
 public class LayoutUtility {
 
-  public Inventory createProperInventory(AbstractLayout abstractLayout, @Nullable ApareciumComponent layoutTitle) {
+  public Inventory createProperInventory(
+      AbstractLayout abstractLayout, @Nullable ApareciumComponent layoutTitle) {
     String string = null;
     Component component = null;
 
@@ -25,25 +26,33 @@ public class LayoutUtility {
       string = layoutTitle.getAsString();
       component = layoutTitle.getAsComponent();
     }
-    if (abstractLayout.getInventoryType() == InventoryType.CHEST) {
+    InventoryType inventoryType = abstractLayout.getInventoryType();
+    int layoutSize = abstractLayout.getLayoutSize();
+
+    if (inventoryType == null) {
+      inventoryType = InventoryType.CHEST;
+    }
+    if (layoutSize == 0) {
+      layoutSize = 27;
+    }
+    if (inventoryType == InventoryType.CHEST) {
       // PAPER CODE
       if (Aparecium.isUsingPaper()) {
         if (component != null) {
-          return Bukkit.createInventory(abstractLayout, abstractLayout.getLayoutSize(), component);
+          return Bukkit.createInventory(abstractLayout, layoutSize, component);
         }
       }
       // END OF PAPER CODE
-      return Bukkit.createInventory(abstractLayout, abstractLayout.getLayoutSize(), string != null ? string : "");
+      return Bukkit.createInventory(abstractLayout, layoutSize, string != null ? string : "");
     } else {
       // PAPER CODE
       if (Aparecium.isUsingPaper()) {
         if (component != null) {
-          return Bukkit.createInventory(abstractLayout, abstractLayout.getInventoryType(), component);
+          return Bukkit.createInventory(abstractLayout, inventoryType, component);
         }
       }
       // END OF PAPER CODE
-      return Bukkit.createInventory(abstractLayout, abstractLayout.getInventoryType(), string != null ? string : "");
+      return Bukkit.createInventory(abstractLayout, inventoryType, string != null ? string : "");
     }
   }
-
 }

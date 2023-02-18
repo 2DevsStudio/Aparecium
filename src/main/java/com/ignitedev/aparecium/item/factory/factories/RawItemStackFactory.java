@@ -12,10 +12,11 @@ import com.ignitedev.aparecium.item.factory.MagicItemFactory;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import de.tr7zw.nbtapi.NBTItem;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /** Raw ItemStack Factory without implemented text assets; lore and name */
@@ -23,24 +24,32 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
 
   /**
    * @param magicItem item to convert
-   * @param amount itemstack quantity
    * @return built itemstack with all values in MagicItem
    */
   @Override
-  public ItemStack toItemStack(MagicItem magicItem, int amount) {
+  public ItemStack toItemStack(MagicItem magicItem) {
     ItemStack itemStack = new ItemStack(magicItem.getMaterial());
+    ItemMeta itemMeta = itemStack.getItemMeta();
 
-    applyTags(magicItem, new NBTItem(itemStack, true));
-
-    Damageable itemMeta = (Damageable) itemStack.getItemMeta();
-
-    itemStack = buildName(magicItem, itemStack);
-    itemStack = buildLore(magicItem, itemStack);
-
-    itemMeta.addItemFlags(ItemFlag.values());
+    buildLore(magicItem, itemMeta);
+    buildName(magicItem, itemMeta);
 
     itemStack.setItemMeta(itemMeta);
-    itemStack.setAmount(amount);
+
+    List<ItemFlag> flags = magicItem.getFlags();
+    Map<Enchantment, Integer> enchants = magicItem.getEnchants();
+
+    if (flags != null && !flags.isEmpty()) {
+      flags.forEach(itemStack::addItemFlags);
+    }
+    if (enchants != null && !enchants.isEmpty()) {
+      enchants.forEach(itemStack::addUnsafeEnchantment);
+    }
+    itemMeta = itemStack.getItemMeta(); // refresh enchants and flags for item meta
+
+    itemStack.setItemMeta(itemMeta);
+    itemStack.setAmount(magicItem.getAmount());
+    itemStack = applyTags(magicItem, new NBTItem(itemStack, true));
 
     return itemStack;
   }
@@ -65,6 +74,8 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
         .name(new ApareciumComponent(itemMeta.displayName()))
         .description(new ApareciumComponent(() -> itemMeta.lore()))
         .tags(tags)
+        .enchants(itemStack.getEnchantments())
+        .flags(itemStack.getItemFlags())
         .build();
   }
 
@@ -73,10 +84,10 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
    * @param itemStack itemstack to apply changes
    */
   public void updateItemStack(MagicItem magicItem, ItemStack itemStack) {
-    Damageable itemMeta = (Damageable) itemStack.getItemMeta();
+    ItemMeta itemMeta = itemStack.getItemMeta();
 
-    itemStack = buildName(magicItem, itemStack);
-    itemStack = buildLore(magicItem, itemStack);
+    buildName(magicItem, itemMeta);
+    buildLore(magicItem, itemMeta);
 
     itemStack.setItemMeta(itemMeta);
   }
@@ -85,21 +96,23 @@ public abstract class RawItemStackFactory implements MagicItemFactory {
    * @param magicItem MagicItem instance for applying NBT-TAGS
    * @param nbtItem item to apply nbt changes
    */
-  public void applyTags(MagicItem magicItem, NBTItem nbtItem) {
+  public ItemStack applyTags(MagicItem magicItem, NBTItem nbtItem) {
     nbtItem.setString("id", magicItem.getId());
+    Map<String, Object> tags = magicItem.getTags();
 
-    magicItem.getTags().forEach(nbtItem::setObject);
+    if (tags != null && !tags.isEmpty()) {
+      tags.forEach(nbtItem::setObject);
+    }
+    return nbtItem.getItem();
   }
 
   /**
    * @param magicItem MagicItem instance to apply changes
-   * @return built lore with specific implementation
    */
-  public abstract ItemStack buildLore(MagicItem magicItem, ItemStack itemStack);
+  public abstract void buildLore(MagicItem magicItem, ItemMeta itemMeta);
 
   /**
    * @param magicItem MagicItem instance to apply changes
-   * @return built name with specific implementation
    */
-  public abstract ItemStack buildName(MagicItem magicItem, ItemStack itemStack);
+  public abstract void buildName(MagicItem magicItem, ItemMeta itemMeta);
 }

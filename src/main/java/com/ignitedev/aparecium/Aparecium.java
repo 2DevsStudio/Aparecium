@@ -8,6 +8,7 @@ import com.google.common.base.Stopwatch;
 import com.ignitedev.aparecium.enums.StartupStage;
 import com.ignitedev.aparecium.factory.FactoriesManager;
 import com.ignitedev.aparecium.logging.HedwigLogger;
+import com.ignitedev.aparecium.util.PaperUtility;
 import java.util.concurrent.TimeUnit;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -31,7 +32,7 @@ public abstract class Aparecium extends JavaPlugin {
 
   @Getter private static final FactoriesManager factoriesManager = new FactoriesManager();
 
-  @Getter private static final boolean usingPaper = checkPaper();
+  @Getter private static final boolean usingPaper = PaperUtility.checkPaperClass();
 
   private final Stopwatch stopwatch = Stopwatch.createUnstarted();
 
@@ -40,15 +41,6 @@ public abstract class Aparecium extends JavaPlugin {
   /*
    * JavaPlugin logic
    */
-
-  private static boolean checkPaper() {
-    try {
-      Class.forName("com.destroystokyo.paper.ClientOption");
-      return true;
-    } catch (ClassNotFoundException ignored) {
-      return false;
-    }
-  }
 
   @Override
   public void onLoad() {

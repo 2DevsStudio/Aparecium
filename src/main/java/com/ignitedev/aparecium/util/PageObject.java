@@ -26,7 +26,10 @@ public class PageObject<P> {
     this.objects.addAll(objects);
   }
 
-  private void loadPages() {
+  /**
+   * @implNote you need to call that method in order to load all your pages
+   */
+  public void loadPages() {
     pages.clear();
 
     int counter = 0;

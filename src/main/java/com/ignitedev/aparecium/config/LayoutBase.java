@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
+ * Copyright (c) 2022-2023. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
 package com.ignitedev.aparecium.config;
@@ -59,14 +59,19 @@ public class LayoutBase extends Config {
     return InventoriesRepository.getInstance().findByInventory(inventory);
   }
 
+  public boolean exists(String id) {
+    return savedLayouts.containsKey(id);
+  }
+
   private Map<String, Layout> exampleLayouts() {
-    return new HashMap<>(Map.of(
-        "dadadadadada",
-        Layout.builder()
-            .id("dadadadadada")
-            .layoutSize(9)
-            .inventoryType(InventoryType.CHEST)
-            .layoutTitle(ApareciumComponent.of("dadadada"))
-            .build()));
+    return new HashMap<>(
+        Map.of(
+            "dadadadadada",
+            Layout.builder()
+                .id("dadadadadada")
+                .layoutSize(9)
+                .inventoryType(InventoryType.CHEST)
+                .layoutTitle(ApareciumComponent.of("dadadada"))
+                .build()));
   }
 }

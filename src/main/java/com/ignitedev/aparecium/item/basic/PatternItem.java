@@ -17,6 +17,8 @@ import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,15 +39,29 @@ public class PatternItem extends LayoutItem {
   public PatternItem(
       @NotNull String id,
       @NotNull Material material,
+      int amount,
       @Nullable ItemType itemType,
       @Nullable Rarity rarity,
       @Nullable ApareciumComponent name,
       @Nullable ApareciumComponent description,
       @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable List<ItemFlag> flags,
       double layoutItemInteractionId,
       double dropChance,
       List<PatternItem> patterns) {
-    super(id, material, itemType, rarity, name, description, tags, layoutItemInteractionId);
+    super(
+        id,
+        material,
+        amount,
+        itemType,
+        rarity,
+        name,
+        description,
+        tags,
+        enchants,
+        flags,
+        layoutItemInteractionId);
     this.dropChance = dropChance;
     this.patterns = patterns;
   }
@@ -71,6 +87,7 @@ public class PatternItem extends LayoutItem {
       PatternItem clone = pattern.clone();
 
       if (pattern.tryLuck()) {
+        this.setAmount(clone.getAmount());
         this.setMaterial(clone.getMaterial());
         this.setId(clone.getId());
         this.setName(clone.getName());
@@ -78,6 +95,8 @@ public class PatternItem extends LayoutItem {
         this.setRarity(clone.getRarity());
         this.setDropChance(clone.getDropChance());
         this.setTags(clone.getTags());
+        this.setEnchants(clone.getEnchants());
+        this.setFlags(clone.getFlags());
         break;
       }
     }

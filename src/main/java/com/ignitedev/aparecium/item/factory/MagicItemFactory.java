@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 public interface MagicItemFactory extends Factory {
 
-  ItemStack toItemStack(MagicItem magicItem, int amount);
+  ItemStack toItemStack(MagicItem magicItem);
 
   MagicItem fromItemStack(ItemStack itemStack);
 }

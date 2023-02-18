@@ -23,27 +23,29 @@ public class ApareciumConfiguration extends Config {
    * @implNote <Rarity Key Name, Rarity Display Name>
    */
   public Map<String, String> rarityName =
-      new HashMap<>(Map.of(
-          "not_specified",
-          "<black><not_specified>",
-          "common",
-          "<gray> {COMMON}",
-          "uncommon",
-          "<yellow> {UNCOMMON}",
-          "rare",
-          "<orange> {RARE}",
-          "epic",
-          "<green> {EPIC}",
-          "legendary",
-          "<bold><gold> {LEGENDARY}",
-          "mythic",
-          "<purple> {MYTHIC}"));
+      new HashMap<>(
+          Map.of(
+              "not_specified",
+              "<black><not_specified>",
+              "common",
+              "<gray> {COMMON}",
+              "uncommon",
+              "<yellow> {UNCOMMON}",
+              "rare",
+              "<orange> {RARE}",
+              "epic",
+              "<green> {EPIC}",
+              "legendary",
+              "<bold><gold> {LEGENDARY}",
+              "mythic",
+              "<purple> {MYTHIC}"));
 
   public Map<String, String> itemType =
-      new HashMap<>(Map.of(
-          "common", "<gray> {COMMON}",
-          "tool", "<brown> {TOOL}",
-          "WEAPON", "<red> {WEAPON}",
-          "ARMOR", "<black> {ARMOR}",
-          "POTION", "<pink> {POTION}"));
+      new HashMap<>(
+          Map.of(
+              "common", "<gray> {COMMON}",
+              "tool", "<brown> {TOOL}",
+              "WEAPON", "<red> {WEAPON}",
+              "ARMOR", "<black> {ARMOR}",
+              "POTION", "<pink> {POTION}"));
 }

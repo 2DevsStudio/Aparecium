@@ -6,6 +6,7 @@ package com.ignitedev.aparecium.util;
 
 import com.fastasyncworldedit.core.FaweAPI;
 import com.ignitedev.aparecium.Aparecium;
+import com.ignitedev.aparecium.engine.ApareciumMain;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.WorldEditException;
@@ -39,14 +40,31 @@ public class SchematicUtility {
       String schematic,
       Location location,
       Consumer<Void> callback,
-      Aparecium aparecium,
+      boolean copyBiomes,
+      boolean copyEntities,
+      boolean ignoreAirBlocks) {
+    asyncPaste(
+        schematic,
+        location,
+        callback,
+        ApareciumMain.getInstance(),
+        copyBiomes,
+        copyEntities,
+        ignoreAirBlocks);
+  }
+
+  public void asyncPaste(
+      String schematic,
+      Location location,
+      Consumer<Void> callback,
+      Aparecium yourPlugin,
       boolean copyBiomes,
       boolean copyEntities,
       boolean ignoreAirBlocks) {
     new BukkitRunnable() {
       @Override
       public void run() {
-        paste(schematic, location, aparecium, copyBiomes, copyEntities, ignoreAirBlocks);
+        paste(schematic, location, yourPlugin, copyBiomes, copyEntities, ignoreAirBlocks);
 
         if (callback == null) {
           return;
@@ -57,9 +75,25 @@ public class SchematicUtility {
           public void run() {
             callback.accept(null);
           }
-        }.runTask(aparecium);
+        }.runTask(yourPlugin);
       }
-    }.runTaskLaterAsynchronously(aparecium, 20);
+    }.runTaskLaterAsynchronously(yourPlugin, 20);
+  }
+
+  @Nullable
+  public BlockVector3 paste(
+      String schematic,
+      Location location,
+      boolean copyBiomes,
+      boolean copyEntities,
+      boolean ignoreAirBlocks) {
+    return paste(
+        schematic,
+        location,
+        ApareciumMain.getInstance(),
+        copyBiomes,
+        copyEntities,
+        ignoreAirBlocks);
   }
 
   @SneakyThrows
@@ -67,11 +101,11 @@ public class SchematicUtility {
   public BlockVector3 paste(
       String schematic,
       Location location,
-      Aparecium aparecium,
+      Aparecium yourPlugin,
       boolean copyBiomes,
       boolean copyEntities,
       boolean ignoreAirBlocks) {
-    File file = new File(aparecium.getDataFolder(), "schematics/" + schematic);
+    File file = new File(yourPlugin.getDataFolder(), "schematics/" + schematic);
 
     if (file.mkdirs()) {
       Bukkit.getLogger().log(Level.INFO, "Created Schematics directory");

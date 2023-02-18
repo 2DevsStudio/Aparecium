@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -36,6 +37,10 @@ public class ItemBase extends Config {
           .material(Material.BARRIER)
           .name(new ApareciumComponent("Couldn't find item, check typed id"))
           .build();
+
+  public boolean exists(String id) {
+    return savedItems.containsKey(id);
+  }
 
   /**
    * @implNote please note that this method save and reload config, if you have any pending changes
@@ -63,6 +68,7 @@ public class ItemBase extends Config {
     }
   }
 
+  @NotNull
   public MagicItem findById(String itemId) {
     return findById(itemId, Item.class);
   }
@@ -87,6 +93,14 @@ public class ItemBase extends Config {
             Item.builder()
                 .id("defaultMagicItem")
                 .material(Material.DIRT)
+                .enchant(Enchantment.CHANNELING, 1)
+                .name(new ApareciumComponent("<yellow>DEFAULT"))
+                .build(),
+            "defaultMagicItem2",
+            Item.builder()
+                .id("defaultMagicItem2")
+                .material(Material.STONE)
+                .enchant(Enchantment.CHANNELING, 1)
                 .name(new ApareciumComponent("<yellow>DEFAULT"))
                 .build()));
   }

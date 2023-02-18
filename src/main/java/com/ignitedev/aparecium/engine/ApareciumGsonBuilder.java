@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.config.adapter.ComponentAdapter;
 import com.ignitedev.aparecium.config.adapter.InstantAdapter;
+import com.ignitedev.aparecium.config.adapter.MagicItemAdapter;
 import com.ignitedev.aparecium.item.MagicItem;
 import com.twodevsstudio.simplejsonconfig.def.adapters.ChronoUnitAdapter;
 import com.twodevsstudio.simplejsonconfig.def.adapters.ClassAdapter;
@@ -58,7 +59,7 @@ public class ApareciumGsonBuilder {
             .registerTypeAdapter(BlockState.class, new InterfaceAdapter())
             .addDeserializationExclusionStrategy(new SuperclassExclusionStrategy())
             .addSerializationExclusionStrategy(new SuperclassExclusionStrategy())
-            .registerTypeAdapter(MagicItem.class, new InterfaceAdapter());
+            .registerTypeAdapter(MagicItem.class, new MagicItemAdapter());
   }
 
   public Gson build() {

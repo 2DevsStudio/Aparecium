@@ -1,14 +1,16 @@
 /*
- * Copyright (c) 2022. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
+ * Copyright (c) 2022-2023. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
 package com.ignitedev.aparecium.gui;
 
 import com.ignitedev.aparecium.component.ApareciumComponent;
+import com.ignitedev.aparecium.config.wrapper.MagicItemWrapper;
 import com.ignitedev.aparecium.gui.basic.Layout;
+import com.ignitedev.aparecium.gui.interaction.LayoutInteractions;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import com.ignitedev.aparecium.interfaces.Identifiable;
-import com.ignitedev.aparecium.item.basic.LayoutItem;
+import com.ignitedev.aparecium.item.MagicItem;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,13 +34,12 @@ import org.jetbrains.annotations.Nullable;
 public abstract class AbstractLayout
     implements Cloneable, Identifiable, Comparable<AbstractLayout>, InventoryHolder {
 
-  protected transient Inventory createdInventoryInstance;
-
   /**
    * @implNote Item creation Instant
    */
   protected final Instant layoutSaveInstant = Instant.now();
 
+  protected transient Inventory createdInventoryInstance;
   protected String id;
 
   @Nullable protected ApareciumComponent layoutTitle;
@@ -63,7 +64,10 @@ public abstract class AbstractLayout
    * @implNote <SLOT NUMBER, LayoutItem>
    */
   @Singular("content")
-  protected Map<Integer, LayoutItem> contents = new HashMap<>();
+  protected Map<Integer, MagicItemWrapper> contents = new HashMap<>();
+
+  @Builder.Default
+  protected LayoutInteractions layoutInteractions = LayoutInteractions.builder().build();
 
   public AbstractLayout(String id, int layoutSize) {
     this.id = id;
@@ -77,9 +81,14 @@ public abstract class AbstractLayout
     this.inventoryType = inventoryType;
   }
 
-  public AbstractLayout(String id, @Nullable ApareciumComponent layoutTitle, int layoutSize,
+  public AbstractLayout(
+      String id,
+      @Nullable ApareciumComponent layoutTitle,
+      int layoutSize,
       InventoryType inventoryType,
-      @Nullable LayoutLayer layoutBackgroundLayer, Map<Integer, String> layers, Map<Integer, LayoutItem> contents) {
+      @Nullable LayoutLayer layoutBackgroundLayer,
+      Map<Integer, String> layers,
+      Map<Integer, MagicItemWrapper> contents) {
     this.id = id;
     this.layoutTitle = layoutTitle;
     this.layoutSize = layoutSize;
@@ -97,8 +106,13 @@ public abstract class AbstractLayout
 
   public abstract void fillBackground(Inventory inventory);
 
-  public abstract Inventory createLayout(AbstractLayoutLayer... additionalLayers);
+  /**
+   * @param inventory inventory to fill
+   * @param force if true, will override existing items
+   */
+  public abstract void fillAll(Inventory inventory, MagicItem magicItem, boolean force);
 
+  public abstract Inventory createLayout(AbstractLayoutLayer... additionalLayers);
 
   @Override
   public int compareTo(@NotNull AbstractLayout compareTo) {

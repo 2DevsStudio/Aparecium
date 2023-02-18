@@ -5,21 +5,26 @@
 package com.ignitedev.aparecium.item;
 
 import com.ignitedev.aparecium.component.ApareciumComponent;
+import com.ignitedev.aparecium.config.wrapper.MagicItemWrapper;
 import com.ignitedev.aparecium.enums.ItemType;
 import com.ignitedev.aparecium.enums.Rarity;
 import com.ignitedev.aparecium.enums.SimilarCheck;
 import com.ignitedev.aparecium.interfaces.Identifiable;
 import com.ignitedev.aparecium.item.util.MagicItemConverter;
 import java.time.Instant;
+import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Setter;
 import lombok.Singular;
 import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,57 +42,70 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
   /**
    * @implNote Item creation Instant
    */
-  protected final Instant itemSaveInstant = Instant.now();
+  @Nullable @Setter protected Instant itemSaveInstant;
 
   @NotNull protected String id;
-
   @NotNull @Builder.Default protected Material material = Material.AIR;
 
+  @Builder.Default protected int amount = 1;
   /**
    * @implNote Item Type useful for sorting and categorizing
    */
   @Builder.Default protected ItemType itemType = ItemType.COMMON;
-
   /**
    * @implNote Rarity of item, useful for rarity api, sorting(+filterer) api, or any other RNG you
    *     want to create using it
    */
   @Builder.Default protected Rarity rarity = Rarity.NOT_SPECIFIED;
-
   /**
    * @implNote name of item applicable to itemstack
    */
   @Nullable protected ApareciumComponent name;
-
   /**
    * @implNote lore applicable to itemstack
    */
   @Nullable protected ApareciumComponent description;
-
   /**
    * @implNote NBT-TAGS applicable to ItemStack
    */
-  @Singular protected Map<String, Object> tags;
+  @Nullable @Singular protected Map<String, Object> tags;
+
+  @Nullable @Singular protected Map<Enchantment, Integer> enchants;
+  @Nullable @Singular protected List<ItemFlag> flags;
+
+  public MagicItem(
+      @NotNull String id,
+      @NotNull Material material,
+      int amount,
+      ItemType itemType,
+      Rarity rarity,
+      @Nullable ApareciumComponent name,
+      @Nullable ApareciumComponent description,
+      @Nullable Map<String, Object> tags,
+      @Nullable Map<Enchantment, Integer> enchants,
+      @Nullable List<ItemFlag> flags) {
+    this.id = id;
+    this.material = material;
+    this.amount = amount;
+    this.itemType = itemType;
+    this.rarity = rarity;
+    this.name = name;
+    this.description = description;
+    this.tags = tags;
+    this.enchants = enchants;
+    this.flags = flags;
+  }
 
   /**
-   * @param amount amount of itemstack you'd like to get
    * @return Prepared itemstack with all specified values and methods
    */
-  public abstract ItemStack toItemStack(int amount);
+  public abstract ItemStack toItemStack();
 
   /**
    * @param player player which will receive item
    */
   public void give(Player player) {
-    give(player, 1);
-  }
-
-  /**
-   * @param player player which will receive item
-   * @param amount amount of this item that player going to receive
-   */
-  public void give(Player player, int amount) {
-    player.getInventory().addItem(toItemStack(amount <= 0 ? 1 : amount));
+    player.getInventory().addItem(toItemStack());
   }
 
   public boolean isSimilar(MagicItem toCheck, SimilarCheck... similarCheck) {
@@ -109,12 +127,18 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
                 isSimilar, this.getDescription(), toCheck.getDescription());
       }
       if (check == SimilarCheck.ALL || check == SimilarCheck.NBT_TAGS) {
-        if (this.tags.equals(toCheck.getTags())) {
-          isSimilar = true;
+        if (this.tags != null) {
+          if (this.tags.equals(toCheck.getTags())) {
+            isSimilar = true;
+          }
         }
       }
     }
     return isSimilar;
+  }
+
+  public MagicItemWrapper toWrapper() {
+    return new MagicItemWrapper(null, this);
   }
 
   /**
@@ -130,7 +154,11 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
     clone.material = this.material;
     clone.rarity = this.rarity;
     clone.itemType = this.itemType;
-    clone.tags = Map.copyOf(tags);
+    clone.enchants = this.enchants;
+    clone.flags = this.flags;
+    if (tags != null) {
+      clone.tags = Map.copyOf(tags);
+    }
     clone.id = this.id;
 
     return clone;
@@ -142,13 +170,19 @@ public abstract class MagicItem implements Cloneable, Identifiable, Comparable<M
    */
   @Override
   public int compareTo(@NotNull MagicItem compareTo) {
-    int compare =
-        Long.compare(
-            itemSaveInstant.getEpochSecond(), compareTo.getItemSaveInstant().getEpochSecond());
+    int compare = 0;
 
+    if (itemSaveInstant != null && compareTo.getItemSaveInstant() != null) {
+      compare =
+          Long.compare(
+              itemSaveInstant.getEpochSecond(), compareTo.getItemSaveInstant().getEpochSecond());
+    }
     if (compare != 0) {
       return compare;
     }
-    return itemSaveInstant.getNano() - compareTo.getItemSaveInstant().getNano();
+    if (itemSaveInstant != null && compareTo.getItemSaveInstant() != null) {
+      return itemSaveInstant.getNano() - compareTo.getItemSaveInstant().getNano();
+    }
+    return compare;
   }
 }

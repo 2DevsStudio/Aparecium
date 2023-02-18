@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
+ * Copyright (c) 2022-2023. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
 package com.ignitedev.aparecium.gui.basic;
@@ -7,11 +7,12 @@ package com.ignitedev.aparecium.gui.basic;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.config.LayerBase;
+import com.ignitedev.aparecium.config.wrapper.MagicItemWrapper;
 import com.ignitedev.aparecium.gui.AbstractLayout;
 import com.ignitedev.aparecium.gui.AbstractLayoutLayer;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import com.ignitedev.aparecium.gui.util.LayoutUtility;
-import com.ignitedev.aparecium.item.basic.LayoutItem;
+import com.ignitedev.aparecium.item.MagicItem;
 import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
 import java.util.Collections;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class Layout extends AbstractLayout {
       InventoryType inventoryType,
       @Nullable LayoutLayer layoutBackgroundLayer,
       @Nullable Map<Integer, String> layers,
-      Map<Integer, LayoutItem> content) {
+      Map<Integer, MagicItemWrapper> content) {
     super(id, layoutTitle, layoutSize, inventoryType, layoutBackgroundLayer, layers, content);
   }
 
@@ -86,6 +87,9 @@ public class Layout extends AbstractLayout {
       boolean fillBackground,
       boolean force,
       AbstractLayoutLayer... additionalLayers) {
+    if (fillBackground) {
+      fillBackground(inventory);
+    }
     if (!force) {
       if (inventory.getType() != this.inventoryType) {
         return;
@@ -94,21 +98,24 @@ public class Layout extends AbstractLayout {
         return;
       }
     }
-    for (int i = 0; i <= Collections.max(this.layers.keySet()); i++) {
-      String layerId = this.layers.get(i);
+    if (this.layers != null && !this.layers.isEmpty()) {
+      for (int i = 0; i <= Collections.max(this.layers.keySet()); i++) {
+        String layerId = this.layers.get(i);
 
-      if (layerId != null) {
-        layerBase.getById(layerId).fill(inventory, force);
+        if (layerId != null) {
+          layerBase.getById(layerId).fill(inventory, force);
+        }
       }
     }
     for (AbstractLayoutLayer additionalLayer : additionalLayers) {
       additionalLayer.fill(inventory, force);
     }
-    for (Entry<Integer, LayoutItem> entry : this.contents.entrySet()) {
-      inventory.setItem(entry.getKey(), entry.getValue().toItemStack(1));
-    }
-    if (fillBackground) {
-      fillBackground(inventory);
+    for (Entry<Integer, MagicItemWrapper> entry : this.contents.entrySet()) {
+      MagicItem availableMagicItem = entry.getValue().getAvailableMagicItem();
+
+      if (availableMagicItem != null) {
+        inventory.setItem(entry.getKey(), availableMagicItem.toItemStack());
+      }
     }
   }
 
@@ -116,6 +123,18 @@ public class Layout extends AbstractLayout {
   public void fillBackground(Inventory inventory) {
     if (this.layoutBackgroundLayer != null) {
       this.layoutBackgroundLayer.fill(inventory, true);
+    }
+  }
+
+  @Override
+  public void fillAll(Inventory inventory, MagicItem magicItem, boolean force) {
+    for (int i = 0; i < inventory.getSize(); i++) {
+      if (!force) {
+        if (inventory.getItem(i) != null) {
+          continue;
+        }
+      }
+      inventory.setItem(i, magicItem.toItemStack());
     }
   }
 }
