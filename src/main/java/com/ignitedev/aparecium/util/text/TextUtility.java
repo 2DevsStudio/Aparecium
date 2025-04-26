@@ -16,7 +16,6 @@ import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.bukkit.ChatColor;
@@ -240,7 +239,7 @@ public class TextUtility {
   }
 
   public String removeQuotesAndUnescape(String uncleanJson) {
-    return StringEscapeUtils.unescapeJava(uncleanJson.replaceAll("^\"|\"$", ""));
+    return org.apache.commons.lang3.StringEscapeUtils.unescapeJava(uncleanJson.replaceAll("^\"|\"$", ""));
   }
 
   public static String toPercentage(float number, int digits) {

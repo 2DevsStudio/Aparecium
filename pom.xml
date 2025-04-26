@@ -83,6 +83,20 @@
     <!-- Integrations  -->
 
     <dependency>
+      <groupId>io.papermc.paper</groupId>
+      <artifactId>paper-api</artifactId>
+      <version>1.21.5-R0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>me.clip</groupId>
+      <artifactId>placeholderapi</artifactId>
+      <version>2.11.6</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
       <artifactId>holographicdisplays-api</artifactId>
       <groupId>me.filoghost.holographicdisplays</groupId>
       <version>3.0.1-SNAPSHOT</version>
@@ -124,13 +138,6 @@
       <groupId>com.comphenix.protocol</groupId>
       <scope>provided</scope>
       <version>4.7.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.spigotmc</groupId>
-      <artifactId>spigot-api</artifactId>
-      <version>1.21.5-R0.1-SNAPSHOT</version>
-      <scope>provided</scope>
     </dependency>
 
     <!-- IO  -->
@@ -213,11 +220,6 @@
   </distributionManagement>
 
   <repositories>
-
-    <repository>
-      <id>spigot-repo</id>
-      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-    </repository>
 
     <repository>
       <id>papermc</id>
