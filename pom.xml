@@ -7,6 +7,23 @@
          xmlns = "http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation = "http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>Aparecium</artifactId>
+  <groupId>com.ignitedev</groupId>
+  <version>1.0.3</version>
+  <url>https://github.com/IM-IgniteDEV</url>
+  <name>Aparecium</name>
+  <description>"The Revealing Charm will reveal invisible ink and messages hidden by magical means.
+    Simply tap a book or parchment with your wand and any hidden message will be revealed. This
+    spell is more than sufficient to overcome the basic concealing charms and so is a favourite of
+    parents and teachers alike."
+  </description>
+
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>jar</packaging>
+  <properties>
+    <java.version>21</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <build>
     <plugins>
       <plugin>
@@ -59,7 +76,6 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
     <resources>
       <resource>
@@ -69,58 +85,42 @@
     </resources>
   </build>
 
-  <groupId>com.ignitedev</groupId>
-  <modelVersion>4.0.0</modelVersion>
-  <name>Aparecium</name>
-  <packaging>jar</packaging>
-  <properties>
-    <java.version>21</java.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-
 
   <dependencies>
     <!-- Integrations  -->
-
     <dependency>
       <groupId>io.papermc.paper</groupId>
       <artifactId>paper-api</artifactId>
       <version>1.21.5-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>me.clip</groupId>
       <artifactId>placeholderapi</artifactId>
       <version>2.11.6</version>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <artifactId>holographicdisplays-api</artifactId>
       <groupId>me.filoghost.holographicdisplays</groupId>
       <version>3.0.1-SNAPSHOT</version>
     </dependency>
-
     <dependency>
       <groupId>net.kyori</groupId>
       <artifactId>adventure-api</artifactId>
       <version>4.20.0</version>
     </dependency>
-
     <dependency>
       <artifactId>worldguard-bukkit</artifactId>
       <groupId>com.sk89q.worldguard</groupId>
       <scope>provided</scope>
       <version>7.0.7-SNAPSHOT</version>
     </dependency>
-
     <dependency>
       <groupId>com.fastasyncworldedit</groupId>
       <artifactId>FastAsyncWorldEdit-Core</artifactId>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>com.fastasyncworldedit</groupId>
       <artifactId>FastAsyncWorldEdit-Bukkit</artifactId>
@@ -132,70 +132,59 @@
         </exclusion>
       </exclusions>
     </dependency>
-
     <dependency>
       <artifactId>ProtocolLib</artifactId>
       <groupId>com.comphenix.protocol</groupId>
       <scope>provided</scope>
       <version>4.7.0</version>
     </dependency>
-
     <!-- IO  -->
-
     <dependency>
       <groupId>com.github.2DevsStudio</groupId>
       <artifactId>SimpleJSONConfig</artifactId>
-      <version>407a7b7696</version>
+      <version>1.4.0</version>
     </dependency>
-
     <!-- MISC  -->
-
     <dependency>
       <artifactId>item-nbt-api-plugin</artifactId>
       <groupId>de.tr7zw</groupId>
       <scope>compile</scope>
       <version>2.10.0</version>
     </dependency>
-
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>33.4.8-jre</version>
     </dependency>
-
     <dependency>
       <artifactId>lombok</artifactId>
       <groupId>org.projectlombok</groupId>
       <scope>provided</scope>
       <version>1.18.24</version>
     </dependency>
-
     <dependency>
       <artifactId>annotations</artifactId>
       <groupId>org.jetbrains</groupId>
       <scope>provided</scope>
       <version>23.1.0</version>
     </dependency>
-
     <dependency>
       <artifactId>commons-lang3</artifactId>
       <groupId>org.apache.commons</groupId>
       <version>3.12.0</version>
     </dependency>
-
     <dependency>
       <artifactId>acf-paper</artifactId>
       <groupId>co.aikar</groupId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
-
     <dependency>
       <artifactId>google-java-format</artifactId>
       <groupId>com.google.googlejavaformat</groupId>
       <version>1.15.0</version>
     </dependency>
-
   </dependencies>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -207,68 +196,43 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  <description>"The Revealing Charm will reveal invisible ink and messages hidden by magical means.
-    Simply tap a book or parchment with your wand and any hidden message will be revealed. This
-    spell is more than sufficient to overcome the basic concealing charms and so is a favourite of
-    parents and teachers alike."
-  </description>
-  <distributionManagement>
-    <repository>
-      <id>com.2devsstudio</id>
-      <url>https://repo.2devsstudio.com/latest</url>
-    </repository>
-  </distributionManagement>
 
   <repositories>
-
     <repository>
       <id>papermc</id>
       <url>https://repo.papermc.io/repository/maven-public/</url>
     </repository>
-
     <repository>
       <id>enginehub</id>
       <url>https://maven.enginehub.org/repo/</url>
     </repository>
-
     <repository>
       <id>sonatype</id>
       <url>https://oss.sonatype.org/content/groups/public/</url>
     </repository>
-
     <repository>
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>
     </repository>
-
     <repository>
       <id>aikar</id>
       <url>https://repo.aikar.co/content/groups/aikar/</url>
     </repository>
-
     <repository>
       <id>dmulloy2-repo</id>
       <url>https://repo.dmulloy2.net/repository/public/</url>
     </repository>
-
     <repository>
       <id>codemc-repo</id>
       <url>https://repo.codemc.io/repository/maven-public/</url>
     </repository>
-
     <repository>
       <id>placeholderapi</id>
       <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
     </repository>
-
     <repository>
       <id>sk89q-repo</id>
       <url>https://maven.enginehub.org/repo/</url>
     </repository>
-
   </repositories>
-
-  <url>2DevsStudio.com</url>
-
-  <version>1.0.2</version>
 </project>
