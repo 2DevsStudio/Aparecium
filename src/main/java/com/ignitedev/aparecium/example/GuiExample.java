@@ -8,6 +8,7 @@ import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.config.wrapper.MagicItemWrapper;
 import com.ignitedev.aparecium.gui.basic.Layout;
+import com.ignitedev.aparecium.gui.interaction.LayoutInteractions;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import com.ignitedev.aparecium.interfaces.Example;
 import com.ignitedev.aparecium.item.factory.factories.LayoutItemFactory;
@@ -41,6 +42,12 @@ public class GuiExample {
             .layoutSize(18)
             .layoutTitle(ApareciumComponent.of("2Devs on FIRE"))
             .inventoryType(InventoryType.CHEST)
+            .layoutInteractions(
+                LayoutInteractions.builder()
+                    .inventoryClick(false)
+                    .inventoryDrag(false)
+                    .inventoryMoveItem(false)
+                    .build())
             .contents(
                 Map.of(
                     0,
@@ -67,6 +74,13 @@ public class GuiExample {
                 1,
                 layoutItemFactory.createItem("itemId", Material.DIRT).toWrapper()));
 
+    layoutAnother.setLayoutInteractions(
+        LayoutInteractions.builder()
+            .inventoryClick(false)
+            .inventoryDrag(false)
+            .inventoryMoveItem(false)
+            .build());
+
     Inventory inventoryFromAnotherLayout = layoutAnother.createLayout();
 
     // another
@@ -81,6 +95,13 @@ public class GuiExample {
             layoutItemFactory.createItem("itemId", Material.DIRT).toWrapper(),
             1,
             layoutItemFactory.createItem("itemId", Material.DIRT).toWrapper()));
+
+    layoutAnother.setLayoutInteractions(
+        LayoutInteractions.builder()
+            .inventoryClick(false)
+            .inventoryDrag(false)
+            .inventoryMoveItem(false)
+            .build());
 
     // this Inventory contains all specified data
     Inventory createdInventory = layout.createLayout();

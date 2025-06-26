@@ -2,7 +2,7 @@
  * Copyright (c) 2022-2023. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
-package com.ignitedev.aparecium.gui.listener;
+package com.ignitedev.aparecium.gui.interaction.listener;
 
 import com.ignitedev.aparecium.gui.basic.Layout;
 import com.ignitedev.aparecium.gui.repository.InventoriesRepository;

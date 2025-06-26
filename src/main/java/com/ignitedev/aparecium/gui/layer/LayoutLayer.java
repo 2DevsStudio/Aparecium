@@ -4,6 +4,7 @@
 
 package com.ignitedev.aparecium.gui.layer;
 
+import com.ignitedev.aparecium.config.wrapper.LayerWrapper;
 import com.ignitedev.aparecium.config.wrapper.MagicItemWrapper;
 import com.ignitedev.aparecium.gui.AbstractLayoutLayer;
 import com.ignitedev.aparecium.item.MagicItem;
@@ -31,6 +32,10 @@ public class LayoutLayer extends AbstractLayoutLayer {
       InventoryType layoutInventoryType,
       int layoutSize) {
     super(id, content, layoutInventoryType, layoutSize);
+  }
+
+  public LayerWrapper toWrapper(){
+    return new LayerWrapper(this.id, this);
   }
 
   @Override

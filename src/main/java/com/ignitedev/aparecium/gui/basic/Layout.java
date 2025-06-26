@@ -7,6 +7,7 @@ package com.ignitedev.aparecium.gui.basic;
 import com.ignitedev.aparecium.component.ApareciumComponent;
 import com.ignitedev.aparecium.config.ItemBase;
 import com.ignitedev.aparecium.config.LayerBase;
+import com.ignitedev.aparecium.config.wrapper.LayoutWrapper;
 import com.ignitedev.aparecium.config.wrapper.MagicItemWrapper;
 import com.ignitedev.aparecium.gui.AbstractLayout;
 import com.ignitedev.aparecium.gui.AbstractLayoutLayer;
@@ -64,6 +65,11 @@ public class Layout extends AbstractLayout {
   public Layout(AbstractLayoutBuilder<?, ?> builder) {
     super(builder);
   }
+
+  public LayoutWrapper toWrapper(){
+    return new LayoutWrapper(this.id, this);
+  }
+
 
   @Override
   public Inventory createLayout(AbstractLayoutLayer... additionalLayers) {
