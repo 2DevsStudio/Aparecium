@@ -19,8 +19,9 @@ import com.ignitedev.aparecium.config.CustomCommandsBase;
 import com.ignitedev.aparecium.config.adapter.ComponentAdapter;
 import com.ignitedev.aparecium.config.adapter.InstantAdapter;
 import com.ignitedev.aparecium.config.adapter.MagicItemAdapter;
-import com.ignitedev.aparecium.gui.listener.LayoutInteractionListener;
 import com.ignitedev.aparecium.item.MagicItem;
+import com.ignitedev.aparecium.item.interaction.listener.ItemInteractionListener;
+import com.ignitedev.aparecium.logging.HedwigLogger;
 import com.ignitedev.aparecium.util.ReflectionUtility;
 import com.twodevsstudio.simplejsonconfig.SimpleJSONConfig;
 import com.twodevsstudio.simplejsonconfig.api.Config;
@@ -38,7 +39,6 @@ import java.lang.ref.Reference;
 import java.lang.reflect.Field;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.logging.Level;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
@@ -86,7 +86,7 @@ public class ApareciumMain extends Aparecium {
     File file = new File(getDataFolder(), "schematics");
 
     if (file.mkdirs()) {
-      Bukkit.getLogger().log(Level.INFO, "Created Schematics directory");
+      HedwigLogger.getMainLogger().info("Created Schematics directory");
     }
   }
 
@@ -95,7 +95,7 @@ public class ApareciumMain extends Aparecium {
   }
 
   private void registerListeners(PluginManager pluginManager) {
-    pluginManager.registerEvents(new LayoutInteractionListener(), this);
+    pluginManager.registerEvents(new ItemInteractionListener(), this);
   }
 
   @SneakyThrows
