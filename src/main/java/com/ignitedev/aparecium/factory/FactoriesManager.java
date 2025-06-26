@@ -7,6 +7,7 @@ package com.ignitedev.aparecium.factory;
 import com.ignitedev.aparecium.hologram.factory.DefaultHologramFactory;
 import com.ignitedev.aparecium.hologram.factory.HologramFactories;
 import com.ignitedev.aparecium.item.factory.MagicItemFactories;
+import com.ignitedev.aparecium.item.factory.factories.ClickableItemFactory;
 import com.ignitedev.aparecium.item.factory.factories.DefaultMagicItemFactory;
 import com.ignitedev.aparecium.item.factory.factories.DropItemFactory;
 import com.ignitedev.aparecium.item.factory.factories.LayoutItemFactory;
@@ -27,6 +28,8 @@ public class FactoriesManager {
   private DropItemFactory dropItemFactory;
   private PatternItemFactory patternItemFactory;
 
+  private ClickableItemFactory clickableItemFactory;
+
   /**
    * @implNote creating factories instances, this method should be only called on runtime
    */
@@ -40,6 +43,7 @@ public class FactoriesManager {
     this.layoutItemFactory = new LayoutItemFactory();
     this.dropItemFactory = new DropItemFactory();
     this.patternItemFactory = new PatternItemFactory();
+    this.clickableItemFactory = new ClickableItemFactory();
 
     this.magicItemFactories.registerFactory("LAYOUT_DEFAULT", layoutItemFactory);
     this.magicItemFactories.registerFactory("DROP_DEFAULT", dropItemFactory);
