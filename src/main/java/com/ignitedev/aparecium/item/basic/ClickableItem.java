@@ -31,6 +31,12 @@ public class ClickableItem extends Item {
 
   private Consumer<Player> onRightClickInventory;
 
+  private Consumer<Player> onRightShiftClickInventory;
+
+  private Consumer<Player> onLeftShiftClickInventory;
+
+  private Consumer<Player> onMiddleClickInventory;
+
   public ClickableItem(
       @NotNull String id,
       @NotNull Material material,
@@ -45,12 +51,18 @@ public class ClickableItem extends Item {
       Consumer<Player> onRightClick,
       Consumer<Player> onLeftClick,
       Consumer<Player> onLeftClickInventory,
-      Consumer<Player> onRightClickInventory) {
+      Consumer<Player> onRightClickInventory,
+      Consumer<Player> onRightShiftClickInventory,
+      Consumer<Player> onLeftShiftClickInventory,
+      Consumer<Player> onMiddleClickInventory) {
     super(id, material, amount, itemType, rarity, name, description, tags, enchantments, flags);
     this.onRightClick = onRightClick;
     this.onLeftClick = onLeftClick;
     this.onLeftClickInventory = onLeftClickInventory;
     this.onRightClickInventory = onRightClickInventory;
+    this.onRightShiftClickInventory = onRightShiftClickInventory;
+    this.onLeftShiftClickInventory = onLeftShiftClickInventory;
+    this.onMiddleClickInventory = onMiddleClickInventory;
   }
 
   @Override
@@ -61,6 +73,9 @@ public class ClickableItem extends Item {
     clone.onRightClick = this.onRightClick;
     clone.onRightClickInventory = this.onRightClickInventory;
     clone.onLeftClickInventory = this.onLeftClickInventory;
+    clone.onRightShiftClickInventory = this.onRightShiftClickInventory;
+    clone.onLeftShiftClickInventory = this.onLeftShiftClickInventory;
+    clone.onMiddleClickInventory = this.onMiddleClickInventory;
 
     return clone;
   }

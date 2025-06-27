@@ -30,7 +30,10 @@ public class ClickableItemFactory extends DefaultMagicItemFactory<ClickableItem>
       Consumer<Player> onLeftClick,
       Consumer<Player> onRightClick,
       Consumer<Player> onLeftClickInventory,
-      Consumer<Player> onRightClickInventory) {
+      Consumer<Player> onRightClickInventory,
+      Consumer<Player> onRightShiftClickInventory,
+      Consumer<Player> onLeftShiftClickInventory,
+      Consumer<Player> onMiddleClickInventory) {
     return new ClickableItem(
         id,
         material,
@@ -45,6 +48,6 @@ public class ClickableItemFactory extends DefaultMagicItemFactory<ClickableItem>
         onRightClick,
         onLeftClick,
         onLeftClickInventory,
-        onRightClickInventory);
+        onRightClickInventory, onRightShiftClickInventory, onLeftShiftClickInventory, onMiddleClickInventory);
   }
 }

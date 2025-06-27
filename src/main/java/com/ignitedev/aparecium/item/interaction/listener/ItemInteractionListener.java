@@ -11,51 +11,57 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class ItemInteractionListener implements Listener {
 
-  @Autowired
-  private static ItemBase itemBase;
-  
+  @Autowired private static ItemBase itemBase;
+
   @EventHandler
-  public void onInteract(PlayerInteractEvent event){
+  public void onInteract(@NotNull PlayerInteractEvent event) {
     Action action = event.getAction();
     Player player = event.getPlayer();
     ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
 
-    if(itemInMainHand.isEmpty()){
+    if (itemInMainHand.isEmpty()) {
       return;
     }
     ClickableItem clickableItem = itemBase.findByItemStack(itemInMainHand, ClickableItem.class);
-    
-    if(clickableItem == null){
+
+    if (clickableItem == null) {
       return;
     }
-    if(action.isLeftClick()){
+    if (action.isLeftClick()) {
       clickableItem.getOnLeftClick().accept(player);
-    } else if(action.isRightClick()){
+    } else if (action.isRightClick()) {
       clickableItem.getOnRightClick().accept(player);
     }
   }
 
   @EventHandler
-  public void onInventoryClick(InventoryClickEvent event){
+  public void onInventoryClick(InventoryClickEvent event) {
     ClickType click = event.getClick();
     Player player = (Player) event.getWhoClicked();
     ItemStack clickedItem = event.getCurrentItem();
 
-    if(clickedItem == null){
+    if (clickedItem == null) {
       return;
     }
     ClickableItem clickableItem = itemBase.findByItemStack(clickedItem, ClickableItem.class);
 
-    if(clickableItem == null){
+    if (clickableItem == null) {
       return;
     }
-    if(click.isRightClick()){
-      clickableItem.getOnRightClick().accept(player);
-    } else if(click.isLeftClick()){
-      clickableItem.getOnLeftClick().accept(player);
+    if (click == ClickType.RIGHT) {
+      clickableItem.getOnRightClickInventory().accept(player);
+    } else if (click == ClickType.LEFT) {
+      clickableItem.getOnLeftClickInventory().accept(player);
+    } else if (click == ClickType.SHIFT_RIGHT) {
+      clickableItem.getOnRightShiftClickInventory().accept(player);
+    } else if (click == ClickType.SHIFT_LEFT) {
+      clickableItem.getOnLeftShiftClickInventory().accept(player);
+    } else if (click == ClickType.MIDDLE) {
+      clickableItem.getOnMiddleClickInventory().accept(player);
     }
   }
 }
