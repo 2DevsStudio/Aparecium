@@ -1,0 +1,826 @@
+# Aparecium Components
+
+
+---
+
+# Custom-Configurable reply commands 
+
+#### Accessing CustomCommandsBase.class allows you to create custom commands that can be configured in the Aparecium command-base.json configuration, This allows you to create simple reply commands that can be used on your server without having to write any code.
+#### These simple commands support permissions and aliases.
+
+---
+
+# Data Store Service
+
+#### Aparecium provides a data store for Items, Layers and Layouts, you can create similar data stores, but these are here to avoid code duplication and complexity in configuration. Think of it as a main storage.
+#### Accessing the data can be done using @Autowired annotation for specific data store, or just by simple #getConfig, here is an example of how to access the data store:
+
+```java
+
+import com.ignitedev.aparecium.config.ItemBase;
+import com.twodevsstudio.simplejsonconfig.api.Config;
+
+@Autowired
+private static ItemBase itemBase;
+
+// or
+private static Layerbase layerbase = Config.getConfig(Layerbase.class);
+// or
+private static LayoutBase layoutBase = Config.getConfig(LayoutBase.class);
+```
+#### To access data from the data store, you can use the following methods:
+
+```java
+
+import com.ignitedev.aparecium.config.LayerBase;
+import com.twodevsstudio.simplejsonconfig.api.Config;
+import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
+
+@Autowired
+private static LayerBase layerBase;
+
+public void test() {
+    layerBase.getById("testLayerId"); // Get Layer by ID
+    layerBase.getLayers(); // Get all Layers
+}
+```
+### Data Store Classes:
+- [ItemBase](src/main/java/com/ignitedev/aparecium/config/ItemBase.java): Data store for items
+- [LayoutBase](src/main/java/com/ignitedev/aparecium/config/LayoutBase.java): Data store for inventory layouts
+- [LayerBase](src/main/java/com/ignitedev/aparecium/config/LayerBase.java): Data store for inventory layers
+
+---
+# Gui System
+
+#### System that allows you to create complex GUIs with ease, saving you time with a serializable system, thanks to Clickable items you'll be able to create advanced configurable clickable inventories.
+#### The Whole idea is that we have a base class "Layout" that is used to create a GUI, and we have "LayoutLayer" which is a repeatable part of guis to avoid code duplication and complexity in configuration.
+#### Creating simple GUI:
+```java
+
+Layout layout = Layout.builder()
+                .id("exampleLayout") // Unique ID of the layout
+                .layoutSize(18) // Size of the layout, can be 9, 18, 27, 36, 45, 54
+                .layoutTitle(ApareciumComponent.of("2Devs on FIRE")) // Title of the layout, can be a string or ApareciumComponent
+                .inventoryType(InventoryType.CHEST) // Type of the inventory, can be CHEST, PLAYER, ANVIL, etc.
+                .layoutInteractions(
+                        LayoutInteractions.builder()
+                                .inventoryClick(false) // Disable inventory click interactions
+                                .inventoryDrag(false) // Disable inventory drag interactions
+                                .inventoryMoveItem(false) // Disable inventory move item interactions
+                                .build())
+                .contents(
+                        Map.of(
+                                0, // Slot number in the inventory
+                                layoutItemFactory.createItem("itemId", Material.DIRT).toWrapper(),
+                                1,
+                                layoutItemFactory.createItem("itemId", Material.DIRT).toWrapper()))
+                .layers(Map.of(0, "LayerID5", 1, "LayerID3", 2, "LayerID8")) // Layers of the layout, can be used to create complex GUIs with multiple layers, the keys are the layer weight (LOWER = HIGHER PRIORITY)
+                .layoutBackgroundLayer(backgroundLayer)
+                .build();
+
+```
+
+Full example of GUI creation can be found in the [Aparecium GUI Example](src/main/java/com/ignitedev/aparecium/example/GuiExample.java)
+
+---
+# Item system
+
+#### Default Item system implementation is [Item](src/main/java/com/ignitedev/aparecium/item/basic/Item.java), other useful implementations are: 
+* [ClickableItem](src/main/java/com/ignitedev/aparecium/item/basic/ClickableItem.java) - Item with interactions, can be used in the layout
+* [LayoutItem](src/main/java/com/ignitedev/aparecium/item/basic/LayoutItem.java) - Item that can be used in the layout
+* [DropItem](src/main/java/com/ignitedev/aparecium/item/basic/DropItem.java) - Item that has a drop chance
+* [PatternItem](src/main/java/com/ignitedev/aparecium/item/basic/PatternItem.java) - Item implementation useful in rolling systems, it has a pattern and a chance to drop
+
+---
+# Utility Classes
+
+---
+
+## WorldGuardUtility
+
+Utility class for interacting with WorldGuard regions in Minecraft.  
+It provides methods to query, check, and create regions, as well as to determine if a player is inside specific regions.
+
+### Key Features
+
+- **Get region at a location:** Retrieve the first WorldGuard region at a given `Location`.
+- **Get player regions:** List all regions a player is currently inside.
+- **Check player presence:** Check if a player is in any or all of a set of regions.
+- **Create regions:** Create a new cuboid region with optional flags.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.WorldGuardUtility;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+
+// Get the region at a specific location
+ProtectedRegion region = WorldGuardUtility.getRegionByLocation(location);
+
+// Get all regions a player is currently in
+Set<ProtectedRegion> playerRegions = WorldGuardUtility.getRegions(player.getUniqueId());
+
+// Get names of all regions a player is in
+Set<String> regionNames = WorldGuardUtility.getRegionsNames(player.getUniqueId());
+
+// Check if a player is in all specified regions
+boolean inAll = WorldGuardUtility.isPlayerInAllRegions(player.getUniqueId(), "spawn", "market");
+
+// Check if a player is in any of the specified regions
+boolean inAny = WorldGuardUtility.isPlayerInAnyRegion(player.getUniqueId(), "arena", "lobby");
+
+// Create a new region from a Cuboid
+WorldGuardUtility.createRegion("myRegion", cuboid, null);
+```
+
+**Note:**
+- `Cuboid` is a custom class representing a 3D area (with min/max corners).
+- You can pass WorldGuard flags as a map to `createRegion` to set region properties.
+---
+
+## SerializationUtility
+
+Utility class for serializing and deserializing common data types to and from GSON `JsonObject`.  
+Provides helper methods for handling lists, integers, doubles, and booleans in JSON structures.
+
+### Key Features
+
+- **Deserialize String List:** Extract a list of strings from a JSON object.
+- **Deserialize Primitives:** Read integer, double, or boolean values from a JSON object.
+- **Serialize String List:** Add a list of strings to a JSON object using a serialization context.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.SerializationUtility;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import java.util.List;
+
+// Deserialize a list of strings from JSON
+List<String> names = SerializationUtility.deserializeStringList(jsonObject, "names");
+
+// Deserialize an integer from JSON
+int age = SerializationUtility.deserializeInt(jsonObject, "age");
+
+// Deserialize a double from JSON
+double price = SerializationUtility.deserializeDouble(jsonObject, "price");
+
+// Deserialize a boolean from JSON
+boolean enabled = SerializationUtility.deserializeBoolean(jsonObject, "enabled");
+
+// Serialize a list of strings into JSON
+SerializationUtility.serializeStringList(jsonObject, context, List.of("A", "B", "C"), "letters");
+```
+---
+
+## SchematicUtility
+
+Utility class for handling schematic operations in Minecraft using WorldEdit and FastAsyncWorldEdit (FAWE).  
+Provides methods for asynchronously pasting schematics, checking if a location is empty before pasting, and caching loaded schematics for performance.
+
+### Key Features
+
+- **Asynchronous Schematic Pasting:**  
+  Paste a schematic file at a given location without blocking the main server thread.
+- **Clipboard Caching:**  
+  Loaded schematics are cached in memory to avoid repeated disk reads.
+- **Location Validation:**  
+  Check if a location is empty or suitable for pasting a schematic.
+- **Customizable Paste Options:**  
+  Control whether to copy biomes, entities, and whether to ignore air blocks.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.SchematicUtility;
+import org.bukkit.Location;
+
+// Asynchronously paste a schematic at a location
+SchematicUtility.asyncPaste(
+    "house.schem",           // Schematic file name (in the plugin's schematics folder)
+    location,                // Bukkit Location to paste at
+    () -> System.out.println("Paste complete!"), // Callback after paste
+    true,                    // Copy biomes
+    true,                    // Copy entities
+    true                     // Ignore air blocks
+);
+
+// Synchronously paste a schematic and get the paste location
+BlockVector3 pastedAt = SchematicUtility.paste(
+    "tree.schem",
+    location,
+    true,    // Copy biomes
+    false,   // Copy entities
+    false    // Do not ignore air blocks
+);
+
+// Check if a location is empty before pasting
+boolean isEmpty = SchematicUtility.isLocationEmpty(
+    faweWorld,               // WorldEdit World instance
+    blockVector,             // BlockVector3 location
+    clipboard                // Loaded Clipboard
+);
+```
+
+**Note:**
+- Schematic files should be placed in the `schematics` folder inside your plugin's data directory.
+- The class uses WorldEdit and FAWE APIs; make sure these plugins are installed and configured.
+- All methods are thread-safe.
+---
+
+## ReflectionUtility
+
+Utility class for advanced reflection operations in Java.  
+Provides methods to dynamically access constructors, methods, and fields, invoke them, and handle type casting, with built-in caching for performance.
+
+### Key Features
+
+- **Constructor Access:**  
+  Retrieve and cache constructors by parameter types.
+- **Object Instantiation:**  
+  Dynamically create objects with given arguments.
+- **Method Access & Invocation:**  
+  Find, cache, and invoke methods by name and parameters, including private ones.
+- **Field Access & Manipulation:**  
+  Get, set, and retrieve fields (including private and inherited fields).
+- **Type-Safe Argument Checking:**  
+  Validate and cast arguments to match method or constructor parameter types.
+- **Primitive Type Casting:**  
+  Utility for casting between primitive types and their wrappers.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.ReflectionUtility;
+import java.lang.reflect.Method;
+import java.lang.reflect.Field;
+
+// Get a constructor and instantiate an object
+Object myObj = ReflectionUtility.initializeObject(MyClass.class, "arg1", 42);
+
+// Get and invoke a method
+Object result = ReflectionUtility.invokeMethod(myObj, "myMethod", "param");
+
+// Get and set a private field
+Field field = ReflectionUtility.getField(MyClass.class, "privateField");
+field.set(myObj, 123);
+
+// Get a method with specific return type and parameters
+Method typedMethod = ReflectionUtility.getTypedMethod(MyClass.class, "compute", int.class, String.class);
+Object value = ReflectionUtility.executeMethod(typedMethod, myObj, "input");
+
+// Set a field value by name
+ReflectionUtility.setValue(myObj, "fieldName", "newValue");
+
+// Get a private field value
+Object fieldValue = ReflectionUtility.getPrivateField(myObj, "secret");
+```
+
+---
+
+## RandomUtility
+
+Utility class for generating random numbers and performing random-based calculations.  
+Provides methods for generating random integers, simulating chance-based outcomes, and producing values with uniform or Gaussian distributions.
+
+### Key Features
+
+- **Chance Simulation:**  
+  Calculate the number of successful outcomes based on a given probability and number of attempts.
+- **Random Integer Generation:**  
+  Generate random integers within a specified range, with optional scaling and exponent adjustment.
+- **Gaussian Distribution:**  
+  Generate random values using a normal (Gaussian) distribution for more natural randomness in large ranges.
+- **Helper Methods:**  
+  Internal helpers for average, standard deviation, and range enforcement.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.RandomUtility;
+
+// Simulate 100 attempts with a 25% chance of success each
+int successes = RandomUtility.nextChance(25.0, 100);
+
+// Generate a random integer from 0 (inclusive) to 10 (exclusive)
+int random = RandomUtility.nextInt(10);
+
+// Generate a random integer between 5 and 15, scaled by 2, with exponent 1.5
+int ranged = RandomUtility.nextInt(5, 15, 2, 1.5);
+
+// Generate a random integer between 10 and 50, scaled by 20 (uses Gaussian distribution)
+int gaussian = RandomUtility.nextInt(10, 50, 20);
+```
+
+**Note:**
+- All methods are thread-safe.
+- Useful for loot tables, random events, and probability-based mechanics in plugins.
+
+---
+## ParticleUtility
+### TO-DO
+---
+
+---
+
+## PageObject
+
+Utility class for managing paginated collections of objects.  
+Allows you to split a collection into pages of a specified size and retrieve objects by page number.
+
+### Key Features
+
+- **Pagination:**  
+  Divide any collection into pages with a fixed number of objects per page.
+- **Page Retrieval:**  
+  Get the list of objects for a specific page.
+- **Page Count:**  
+  Retrieve the total number of pages.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.PageObject;
+import java.util.List;
+import java.util.Arrays;
+
+// Create a PageObject with 10 items, 3 per page
+List<String> items = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
+PageObject<String> pageObject = new PageObject<>(items, 3);
+
+// Load pages (must be called before accessing pages)
+pageObject.loadPages();
+
+// Get total number of pages
+int totalPages = pageObject.getPagesAmount(); // 4
+
+// Get objects from page 2
+List<String> page2 = pageObject.getObjectsFromPage(2); // ["D", "E", "F"]
+```
+
+**Note:**
+- Call `loadPages()` after creating the `PageObject` to initialize pagination.
+- Page numbers start from 1.
+- If a page does not exist, `getObjectsFromPage` returns `null`.
+
+---
+---
+
+## MinecraftVersionUtility
+
+Utility class for handling Minecraft server version information.  
+Provides methods to compare the current server version with a given version and retrieve the server version as a string or integer.
+
+### Key Features
+
+- **Version Comparison:**  
+  Check if the server version matches, is before, or is after a specified version.
+- **Version Retrieval:**  
+  Get the server version as a string (e.g., "1 20 R1") or as an integer (e.g., 20).
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.MinecraftVersionUtility;
+
+// Check if the server is running version 1.20
+boolean is20 = MinecraftVersionUtility.is(20);
+
+// Check if the server version is after 1.19
+boolean after19 = MinecraftVersionUtility.isAfter(19);
+
+// Check if the server version is before 1.21
+boolean before21 = MinecraftVersionUtility.isBefore(21);
+
+// Check if the server version is 1.20 or newer
+boolean isOrAfter20 = MinecraftVersionUtility.isOrAfter(20);
+
+// Get the string representation of the server version
+String versionString = MinecraftVersionUtility.getStringVersion(); // e.g., "1 20 R1"
+
+// Get the integer representation of the server version
+int versionInt = MinecraftVersionUtility.getIntVersion(); // e.g., 20
+```
+
+**Note:**
+- Useful for version-dependent plugin features and compatibility checks.
+
+---
+## MessageUtility
+
+Utility class for sending messages to players, audiences, and the console in various formats.  
+Supports placeholders, Adventure components, MiniMessage formatting, and integration with PlaceholderAPI.
+
+### Key Features
+
+- **Send messages to players and audiences:**  
+  Send single or multiple messages as strings, components, or custom ApareciumComponent objects.
+- **Placeholder support:**  
+  Replace placeholders in messages using custom placeholders and PlaceholderAPI.
+- **Paper API integration:**  
+  Use Adventure `Audience` and `Component` for advanced message formatting (Paper only).
+- **Console messaging:**  
+  Send messages directly to the server console.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.MessageUtility;
+import com.ignitedev.aparecium.util.text.Placeholder;
+import com.ignitedev.aparecium.component.ApareciumComponent;
+import net.kyori.adventure.audience.Audience;
+import org.bukkit.entity.Player;
+import java.util.List;
+
+// Send a message with placeholders to a player
+MessageUtility.send(player, "Hello, {player}!", Placeholder.of("player", player.getName()));
+
+// Send an ApareciumComponent message to a player
+MessageUtility.send(player, ApareciumComponent.of("Welcome!"));
+
+// Send a message to an Adventure Audience (Paper)
+MessageUtility.send(audience, "Welcome to the server!");
+
+// Send a list of messages to a player
+MessageUtility.send(player, List.of("Line 1", "Line 2"));
+
+// Send a component message to an Audience (Paper)
+MessageUtility.send(audience, ApareciumComponent.of("Component message"));
+
+// Send a message to the console
+MessageUtility.sendConsole(ApareciumComponent.of("Server started!"));
+
+// Send a list of ApareciumComponents to the console
+MessageUtility.sendConsole(List.of(ApareciumComponent.of("Line 1"), ApareciumComponent.of("Line 2")));
+```
+
+**Note:**
+- Most methods support optional placeholders for dynamic text replacement.
+- Paper-specific methods require the server to be running Paper or a compatible fork.
+- Use `ApareciumComponent` for advanced formatting and MiniMessage support.
+---
+
+## MathUtility
+
+Utility class providing various mathematical helper methods for number operations, randomization, trigonometry, and formatting.  
+Includes optimized trigonometric calculations, random number generation, Roman numeral conversion, and more.
+
+### Key Features
+
+- **Roman Numeral Conversion:**  
+  Convert integers to Roman numeral strings.
+- **Number Normalization & Rounding:**  
+  Normalize and round numbers to a specified number of decimal places.
+- **Range Checks:**  
+  Check if a number is between two values or clamp it within a range.
+- **Randomization:**  
+  Generate random integers or doubles within a range, or simulate chance-based outcomes.
+- **Pluralization:**  
+  Get the correct plural form of a word based on a count.
+- **Trigonometric Functions:**  
+  Fast sine and cosine calculations using precomputed tables.
+- **Color Calculation:**  
+  Get a color representing a percentage value.
+- **Vector Math:**  
+  Calculate squared length of 2D/3D vectors.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.MathUtility;
+
+// Convert 42 to Roman numerals
+String roman = MathUtility.toRoman(42); // "XLII"
+
+// Normalize a double to 2 decimal places
+double normalized = MathUtility.normalizeDouble(3.14159); // 3.14
+
+// Check if a number is between 5 and 10
+boolean inRange = MathUtility.isBetween(7, 5, 10); // true
+
+// Get a random integer between 1 and 100
+int randomInt = MathUtility.getRandomNumber(1, 100);
+
+// Get a random double between 0.0 and 1.0
+double randomDouble = MathUtility.getRandomNumber(0.0, 1.0);
+
+// Simulate a 25% chance
+boolean success = MathUtility.getRandomPercent(25);
+
+// Get the correct plural form
+String plural = MathUtility.getCorrectPlural("apple", 3); // "apples"
+
+// Fast sine and cosine
+float sin = MathUtility.sin(Math.PI / 2); // ~1.0
+float cos = MathUtility.cos(0);           // ~1.0
+
+// Get a color for 75%
+Color color = MathUtility.getColor(75);
+
+// Round a double to 3 decimal places
+double rounded = MathUtility.round(2.71828, 3); // 2.718
+```
+
+**Note:**
+- Useful for plugin development, especially for random events, formatting, and performance-critical math operations.
+---
+
+
+## LocationUtility
+
+Utility class for manipulating and calculating locations in the Minecraft world.  
+Provides methods for distance calculations, conversions, random location selection, safety checks, and various location-based operations.
+
+### Key Features
+
+- **Distance Calculations:**  
+  Calculate 2D or 3D distance between two locations, including safe checks for world equality.
+- **Location Serialization:**  
+  Convert `Location` objects to and from strings, with customizable delimiters and readable formats.
+- **Radius and Safety Checks:**  
+  Check if a location is within a radius, or if a location is safe for landing (on land or liquid).
+- **Random Location Selection:**  
+  Pick a random location within a given area, with optional safety checks.
+- **Block and Direction Utilities:**  
+  Get blocks or locations behind a player, convert yaw to `BlockFace`, get blocks around a location, and more.
+- **Shape Generation:**  
+  Generate lists of locations forming circles or spheres for effects or area calculations.
+- **Teleportation with Chunk Loading:**  
+  Teleport a player, ensuring the destination chunk is loaded asynchronously.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.LocationUtility;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
+
+// Calculate 2D distance between two locations
+double dist2D = LocationUtility.calculateDistance2D(loc1, loc2);
+
+// Convert a Location to a string and back
+String locString = LocationUtility.toString(loc, ";");
+Location parsed = LocationUtility.fromString(locString, ";");
+
+// Check if a location is within a 10-block radius of another
+boolean within = LocationUtility.isWithinRadius(loc1, 10, loc2);
+
+// Pick a random safe location in a world
+Location randomLoc = LocationUtility.decideLocation(world, 0, 100, 0, 100, 64, 100, true);
+
+// Get a list of locations forming a circle
+List<Location> circle = LocationUtility.getCircle(center, 5.0, 20);
+
+// Teleport a player to a location, loading the chunk if needed
+LocationUtility.teleportWithChunkLoad(player, targetLoc, aparecium);
+
+// Get the block behind a player
+Block behind = LocationUtility.getBlockBehindPlayer(player, 2);
+
+// Get a fancy string representation of a location
+String fancy = LocationUtility.toFancyString(loc, true);
+```
+
+**Note:**
+- Useful for plugin features involving location math, random spawns, area effects, and safe teleportation.
+
+---
+
+## ItemUtility
+
+Utility class providing helper methods for item manipulation in Bukkit/Spigot plugins.  
+Includes validation, normalization, enchantment compatibility checks, and mob spawner item creation.
+
+### Key Features
+
+- **Item Validation:**  
+  Check if an `ItemStack` has metadata, display name, and lore.
+- **Item Normalization:**  
+  Add all available `ItemFlag`s to an `ItemStack` for consistent appearance.
+- **Enchantment Compatibility:**  
+  Get a list of enchantments compatible with a given `ItemStack`.
+- **Mob Spawner Item Creation:**  
+  Create an `ItemStack` representing a mob spawner, copying the spawn type from a block if possible.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.ItemUtility;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
+
+// Validate an item stack data
+boolean valid = ItemUtility.isValid(itemStack);
+
+// Normalize an item stack (add all item flags)
+ItemStack normalized = ItemUtility.normalizeItemStack(itemStack);
+
+// Get compatible enchantments for an item
+List<Enchantment> enchantments = ItemUtility.getCompatibleEnchantments(itemStack);
+
+// Create a mob spawner item stack from a block
+ItemStack spawner = ItemUtility.getMobSpawnerItemStackFromBlock(block);
+```
+
+**Note:**
+- Useful for custom item creation, GUI systems, and plugin features involving item manipulation.
+
+---
+
+## InventoryUtility
+
+Utility class providing helper methods for inventory manipulation and checks in Bukkit/Spigot plugins.  
+Includes methods for checking inventory contents, slot status, available space, free slots, and comparing inventory titles.
+
+### Key Features
+
+- **Check if inventory contains an item:**  
+  Determine if a specific `ItemStack` is present in the inventory.
+- **Check if a slot is empty:**  
+  Verify if a given slot in the inventory is empty or contains air.
+- **Check available space:**  
+  Assess if the inventory has enough space for a specified number of items.
+- **Count free slots:**  
+  Get the number of empty slots in the inventory.
+- **Compare inventory titles:**  
+  Compare inventory titles as strings or Adventure `Component`s, ignoring color codes.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.InventoryUtility;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.InventoryView;
+import net.kyori.adventure.text.Component;
+
+// Check if inventory contains a specific item
+boolean hasItem = InventoryUtility.inventoryContainsItemStack(inventory, itemStack);
+
+// Check if slot 5 is empty
+boolean isEmpty = InventoryUtility.isSlotEmpty(inventory, 5);
+
+// Check if inventory has space for 128 items
+boolean hasSpace = InventoryUtility.hasPlace(128, inventory);
+
+// Get the number of free slots
+int freeSlots = InventoryUtility.getFreeSlots(inventory);
+
+// Compare two inventory views by their titles
+boolean sameTitle = InventoryUtility.compareInventories(view1, view2);
+
+// Compare two inventory titles as strings
+boolean sameStringTitle = InventoryUtility.compareInventories("Title1", "Title2");
+
+// Compare two inventory titles as Adventure Components
+boolean sameComponentTitle = InventoryUtility.compareInventories(component1, component2);
+```
+
+**Note:**
+- Useful for GUI systems, custom inventory logic, and plugin features involving inventory management.
+
+---
+
+## EntityUtility
+
+Utility class providing helper methods for entity manipulation in Bukkit/Spigot plugins.  
+Includes methods for pushing entities, checking spawn times, and finding entities by UUID across all worlds.
+
+### Key Features
+
+- **Push Entity Forward:**  
+  Pushes an entity in the direction it is facing with a specified velocity.
+- **Check Spawn Time:**  
+  Checks if entities can spawn at the current world time based on a given day cycle.
+- **Find Entity by UUID:**  
+  Finds a living entity or any entity by UUID across all loaded worlds.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.EntityUtility;
+import com.ignitedev.aparecium.util.enums.DayCycle;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.World;
+import java.util.UUID;
+
+// Push an entity forward with velocity 1.5
+EntityUtility.pushEntityForward(entity, 1.5);
+
+// Check if mobs can spawn at the current world time (e.g., NIGHT)
+boolean canSpawn = EntityUtility.canSpawnAtCurrentWorldTime(DayCycle.NIGHT, world);
+
+// Find a living entity by UUID across all worlds
+LivingEntity living = EntityUtility.findLivingEntityInAllWorlds(uuid);
+
+// Find any entity by UUID across all worlds
+Entity found = EntityUtility.findEntityInAllWorlds(uuid);
+```
+
+**Note:**
+- Useful for custom mob mechanics, entity management, and time-based spawning logic.
+
+---
+
+## DataUtility
+
+Utility class providing various helper methods for data manipulation, validation, and common operations used throughout the plugin.
+
+### Key Features
+
+- **Placeholder Management:**  
+  Update or add placeholders in a list, useful for dynamic text replacement.
+- **Type Validation:**  
+  Check if a string is a valid UUID or boolean, or if an enum contains a value.
+- **List Operations:**  
+  Remove elements, merge lists, get random elements, flatten arrays.
+- **Block and World Utilities:**  
+  Check if a block is a crop, replace text on signs, check if it is day in a world.
+- **Time Formatting:**  
+  Convert milliseconds to a human-readable duration string.
+- **Command Unregistration:**  
+  Unregister Bukkit commands at runtime using reflection.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.DataUtility;
+
+// Update or add a placeholder
+List<Placeholder> updated = DataUtility.updateData(placeholders, "playerName", "Steve");
+
+// Check if a string is a UUID
+boolean valid = DataUtility.isUUID("123e4567-e89b-12d3-a456-426614174000");
+
+// Remove first 3 elements from a list
+DataUtility.removeListElements(myList, 3);
+
+// Get a random element from an array
+String random = DataUtility.getRandomElement(new String[]{"A", "B", "C"});
+
+// Flatten a 2D array
+String[] flat = DataUtility.flatten(new String[][]{{"A", "B"}, {"C"}});
+
+// Round a double to 2 decimal places
+double rounded = DataUtility.round(3.14159, 2);
+
+// Replace text on a sign
+DataUtility.replaceSignText(sign, "old", "new");
+
+// Unregister a Bukkit command
+DataUtility.unRegisterBukkitCommand(command, aparecium);
+```
+---
+## BungeeUtility
+
+#### TO-DO: Add BungeeCord utility methods for cross-server communication, player management, and other Bungee-specific functionalities.
+
+---
+
+## BlockVisualizerUtility
+
+Utility for visualizing blocks in the Minecraft world by spawning glowing, named falling blocks at specific locations. Useful for highlighting or previewing blocks to players.
+
+### Key Features
+
+- **Visualize a Block:**  
+  Temporarily replaces a block with a glowing, named falling block for all players in the world.
+- **Stop Visualizing:**  
+  Removes the visualization and restores the original block appearance for all players.
+- **Stop All Visualizations:**  
+  Removes all currently visualized blocks.
+- **Check Visualization:**  
+  Checks if a block is currently being visualized.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.BlockVisualizerUtility;
+
+// Visualize a block with custom name and appearance
+BlockVisualizerUtility.visualize(block, blockData, "Special Block", aparecium);
+
+// Stop visualizing a specific block
+BlockVisualizerUtility.stopVisualizing(block, aparecium);
+
+// Stop all visualizations
+BlockVisualizerUtility.stopAll(aparecium);
+
+// Check if a block is visualized
+boolean isVisualized = BlockVisualizerUtility.isVisualized(block);
+```
+
+---
+LoreBuilderUtility
+LoreReaderUtility
+Placeholder
+TextUtility
+RandomSelector
+WeightCollection

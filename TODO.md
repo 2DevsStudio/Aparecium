@@ -11,8 +11,6 @@
 
 [-] onEnable
 
-[-] Add wrapper for layer
-
 ---
 
 ## Items
