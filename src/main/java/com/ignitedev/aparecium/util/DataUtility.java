@@ -26,12 +26,21 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.material.Crops;
 
+/**
+ * Utility class providing various helper methods for data manipulation, validation, and common
+ * operations.
+ */
 @SuppressWarnings("unused")
 @UtilityClass
 public class DataUtility {
 
   /**
-   * @implNote checking placeholder list and updating specified data with specified value
+   * Updates or adds a placeholder in the provided list.
+   *
+   * @param placeholdersToUpdate The list of placeholders to update.
+   * @param dataToUpdate The key of the placeholder to update.
+   * @param updateValue The new value for the placeholder.
+   * @return The updated list of placeholders.
    */
   public List<Placeholder> updateData(
       List<Placeholder> placeholdersToUpdate, String dataToUpdate, String updateValue) {
@@ -56,6 +65,12 @@ public class DataUtility {
     return updatedList;
   }
 
+  /**
+   * Checks if a string is a valid UUID.
+   *
+   * @param string The string to check.
+   * @return True if the string is a valid UUID, false otherwise.
+   */
   @SuppressWarnings("ResultOfMethodCallIgnored")
   public boolean isUUID(String string) {
     try {
@@ -66,6 +81,14 @@ public class DataUtility {
     }
   }
 
+  /**
+   * Checks if an enum contains a specific value.
+   *
+   * @param enumValues The array of enum values.
+   * @param string The value to check.
+   * @param <T> The type of the enum.
+   * @return True if the enum contains the value, false otherwise.
+   */
   public <T extends Enum<?>> boolean enumsContains(T[] enumValues, String string) {
     for (T enumValue : enumValues) {
       if (enumValue.name().equalsIgnoreCase(string)) {
@@ -75,10 +98,24 @@ public class DataUtility {
     return false;
   }
 
+  /**
+   * Checks if a string represents a boolean value ("true" or "false").
+   *
+   * @param string The string to check.
+   * @return True if the string is a boolean value, false otherwise.
+   */
   public boolean isBoolean(String string) {
     return string.equalsIgnoreCase("true") || string.equalsIgnoreCase("false");
   }
 
+  /**
+   * Removes a specified number of elements from the start of a list.
+   *
+   * @param list The list to modify.
+   * @param elements The number of elements to remove.
+   * @param <T> The type of elements in the list.
+   * @throws IllegalArgumentException If the number of elements to remove exceeds the list size.
+   */
   public <T> void removeListElements(List<T> list, int elements) {
     if (list.size() <= elements) {
       throw new IllegalArgumentException("Removing more elements than list contains!");
@@ -88,10 +125,23 @@ public class DataUtility {
     }
   }
 
+  /**
+   * Returns a random element from an array.
+   *
+   * @param list The array to select from.
+   * @param <T> The type of elements in the array.
+   * @return A random element from the array.
+   */
   public <T> T getRandomElement(T[] list) {
     return list[ThreadLocalRandom.current().nextInt(list.length)];
   }
 
+  /**
+   * Flattens a 2D string array into a 1D array.
+   *
+   * @param data The 2D array to flatten.
+   * @return A 1D array containing all elements of the 2D array.
+   */
   public String[] flatten(String[][] data) {
     List<String> list = new ArrayList<>();
     for (String[] datum : data) {
@@ -100,6 +150,12 @@ public class DataUtility {
     return list.toArray(new String[0]);
   }
 
+  /**
+   * Flattens a 2D integer array into a 1D array.
+   *
+   * @param data The 2D array to flatten.
+   * @return A 1D array containing all elements of the 2D array.
+   */
   public int[] flatten(int[][] data) {
     int[] arr = new int[totalSize(data)];
     int j = 0;
@@ -112,6 +168,12 @@ public class DataUtility {
     return arr;
   }
 
+  /**
+   * Calculates the total size of a 2D integer array.
+   *
+   * @param a2 The 2D array.
+   * @return The total number of elements in the array.
+   */
   public int totalSize(int[][] a2) {
     int result = 0;
     for (int[] a1 : a2) {
@@ -120,6 +182,13 @@ public class DataUtility {
     return result;
   }
 
+  /**
+   * Replaces text on a sign.
+   *
+   * @param signState The sign to modify.
+   * @param from The text to replace.
+   * @param to The replacement text.
+   */
   public void replaceSignText(Sign signState, String from, String to) {
     if (signState == null) {
       return;
@@ -131,6 +200,13 @@ public class DataUtility {
     }
   }
 
+  /**
+   * Merges multiple lists into one.
+   *
+   * @param lists The lists to merge.
+   * @param <C> The type of elements in the lists.
+   * @return A single list containing all elements from the input lists.
+   */
   @SafeVarargs
   public <C> List<C> mergeLists(List<C>... lists) {
     List<C> returnList = new ArrayList<>();
@@ -141,25 +217,45 @@ public class DataUtility {
     return returnList;
   }
 
+  /**
+   * Rounds a double value to a specified number of decimal places.
+   *
+   * @param value The value to round.
+   * @param precision The number of decimal places.
+   * @return The rounded value.
+   */
   public double round(double value, int precision) {
     int scale = (int) Math.pow(10, precision);
     return (double) Math.round(value * scale) / scale;
   }
 
+  /**
+   * Checks if a block is a crop.
+   *
+   * @param block The block to check.
+   * @return True if the block is a crop, false otherwise.
+   */
   public boolean isCrop(Block block) {
     return block.getState().getData() instanceof Crops;
   }
 
+  /**
+   * Checks if it is day in a given world.
+   *
+   * @param world The world to check.
+   * @return True if it is day, false otherwise.
+   */
   private boolean isDay(World world) {
     long time = world.getTime();
     return time < 12300 || time > 23850;
   }
 
   /**
-   * Convert a millisecond duration to a string format
+   * Converts a millisecond duration to a human-readable string format.
    *
-   * @param millis A duration to convert to a string form
-   * @return A string of the form "X Days Y Hours Z Minutes A Seconds".
+   * @param millis The duration in milliseconds.
+   * @return A string representing the duration in the format "X Hours Y Minutes Z Seconds".
+   * @throws IllegalArgumentException If the duration is negative.
    */
   public String getDurationBreakdown(long millis) {
     if (millis < 0) {
@@ -176,6 +272,13 @@ public class DataUtility {
     return (hours + " Hours " + minutes + " Minutes " + seconds + " Seconds");
   }
 
+  /**
+   * Unregisters a Bukkit command using reflection.
+   *
+   * @param command The command to unregister.
+   * @param aparecium The plugin instance.
+   * @throws Exception If reflection fails.
+   */
   @SneakyThrows
   public void unRegisterBukkitCommand(PluginCommand command, Aparecium aparecium) {
     Object result =

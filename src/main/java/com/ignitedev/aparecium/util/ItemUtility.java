@@ -18,12 +18,20 @@ import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Utility class providing helper methods for item manipulation
+ */
 @SuppressWarnings("unused")
 @UtilityClass
 public class ItemUtility {
 
   /**
-   * @implNote check if item has ItemMeta & display name & lore
+   * Checks if the given item stack is valid.
+   * An item stack is considered valid if it has item metadata, a display name, and lore.
+   *
+   * @param itemStack The item stack to check.
+   * @return True if the item stack is valid, false otherwise.
+   * @implNote This method checks for the presence of item metadata, display name, and lore.
    */
   public boolean isValid(ItemStack itemStack) {
     if (itemStack != null && itemStack.hasItemMeta()) {
@@ -34,7 +42,11 @@ public class ItemUtility {
   }
 
   /**
-   * @implNote adding all flags for items tack
+   * Normalizes the given item stack by adding all available item flags.
+   *
+   * @param itemStack The item stack to normalize.
+   * @return The normalized item stack with all item flags added.
+   * @implNote This method modifies the item metadata to include all item flags.
    */
   public ItemStack normalizeItemStack(ItemStack itemStack) {
     ItemMeta itemMeta = itemStack.getItemMeta();
@@ -45,20 +57,34 @@ public class ItemUtility {
     return itemStack;
   }
 
+  /**
+   * Retrieves a list of enchantments compatible with the given item stack.
+   *
+   * @param itemStack The item stack to check for compatible enchantments.
+   * @return A list of compatible enchantments for the item stack.
+   */
   public List<Enchantment> getCompatibleEnchantments(ItemStack itemStack) {
     List<Enchantment> compatible = new ArrayList<>();
 
     Arrays.stream(Enchantment.values())
-        .forEach(
-            enchantment -> {
-              if (enchantment.getItemTarget().includes(itemStack)) {
-                compatible.add(enchantment);
-              }
-            });
+            .forEach(
+                    enchantment -> {
+                      if (enchantment.getItemTarget().includes(itemStack)) {
+                        compatible.add(enchantment);
+                      }
+                    });
 
     return compatible;
   }
 
+  /**
+   * Creates an item stack representing a mob spawner based on the given block.
+   * If the block is a creature spawner, its spawn type is copied to the item stack.
+   *
+   * @param block The block to create the mob spawner item stack from.
+   * @return An item stack representing a mob spawner.
+   * @implNote If the block is not a creature spawner, a default spawner item stack is returned.
+   */
   @NotNull
   public static ItemStack getMobSpawnerItemStackFromBlock(Block block) {
     ItemStack spawner = new ItemStack(Material.SPAWNER);

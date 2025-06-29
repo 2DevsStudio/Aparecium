@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
+ * Copyright (c) 2025. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
 package com.ignitedev.aparecium.util;
@@ -29,14 +29,22 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Utility class for interacting with WorldGuard regions.
+ * Provides methods for retrieving regions, checking player presence in regions, and creating new regions.
+ */
 @UtilityClass
 public class WorldGuardUtility {
 
+  /** Container for managing WorldGuard regions. */
   private static final RegionContainer container =
-      WorldGuard.getInstance().getPlatform().getRegionContainer();
+          WorldGuard.getInstance().getPlatform().getRegionContainer();
 
   /**
-   * @implNote get applicable region at location
+   * Retrieves the applicable region at a specific location.
+   *
+   * @param location The location to check for regions.
+   * @return The first applicable region at the location, or null if no region is found.
    */
   @Nullable
   public ProtectedRegion getRegionByLocation(Location location) {
@@ -46,18 +54,18 @@ public class WorldGuardUtility {
       return null;
     }
     return regionManager
-        .getApplicableRegions(BlockVector3.at(location.getX(), location.getY(), location.getZ()))
-        .getRegions()
-        .stream()
-        .findFirst()
-        .orElse(null);
+            .getApplicableRegions(BlockVector3.at(location.getX(), location.getY(), location.getZ()))
+            .getRegions()
+            .stream()
+            .findFirst()
+            .orElse(null);
   }
 
   /**
-   * Gets the regions a player is currently in.
+   * Retrieves the regions a player is currently in.
    *
-   * @param playerUUID UUID of the player
-   * @return Set of WorldGuard protected regions that the player is currently in.
+   * @param playerUUID The UUID of the player.
+   * @return A set of WorldGuard protected regions the player is currently in.
    */
   @Nonnull
   public Set<ProtectedRegion> getRegions(UUID playerUUID) {
@@ -67,16 +75,16 @@ public class WorldGuardUtility {
       return Collections.emptySet();
     }
     return container
-        .createQuery()
-        .getApplicableRegions(BukkitAdapter.adapt(player.getLocation()))
-        .getRegions();
+            .createQuery()
+            .getApplicableRegions(BukkitAdapter.adapt(player.getLocation()))
+            .getRegions();
   }
 
   /**
-   * Gets the regions names a player is currently in.
+   * Retrieves the names of the regions a player is currently in.
    *
-   * @param playerUUID UUID of the player
-   * @return Set of Strings with the names of the regions the player is currently in.
+   * @param playerUUID The UUID of the player.
+   * @return A set of strings containing the names of the regions the player is currently in.
    */
   @Nonnull
   public Set<String> getRegionsNames(UUID playerUUID) {
@@ -84,11 +92,12 @@ public class WorldGuardUtility {
   }
 
   /**
-   * Checks whether a player is in one or several regions
+   * Checks whether a player is in all specified regions.
    *
-   * @param playerUUID UUID of the player
-   * @param regionNames Set of regions to check.
-   * @return True if the player is in (all) the named region(s).
+   * @param playerUUID The UUID of the player.
+   * @param regionNames A set of region names to check.
+   * @return True if the player is in all specified regions, false otherwise.
+   * @throws IllegalArgumentException If no regions are provided for checking.
    */
   public boolean isPlayerInAllRegions(UUID playerUUID, Set<String> regionNames) {
     Set<String> regions = getRegionsNames(playerUUID);
@@ -97,15 +106,16 @@ public class WorldGuardUtility {
       throw new IllegalArgumentException("You need to check for at least one region !");
     }
     return regions.containsAll(
-        regionNames.stream().map(String::toLowerCase).collect(Collectors.toSet()));
+            regionNames.stream().map(String::toLowerCase).collect(Collectors.toSet()));
   }
 
   /**
-   * Checks whether a player is in one or several regions
+   * Checks whether a player is in any of the specified regions.
    *
-   * @param playerUUID UUID of the player.
-   * @param regionNames Set of regions to check.
-   * @return True if the player is in (any of) the named region(s).
+   * @param playerUUID The UUID of the player.
+   * @param regionNames A set of region names to check.
+   * @return True if the player is in any of the specified regions, false otherwise.
+   * @throws IllegalArgumentException If no regions are provided for checking.
    */
   public boolean isPlayerInAnyRegion(UUID playerUUID, Set<String> regionNames) {
     Set<String> regions = getRegionsNames(playerUUID);
@@ -122,36 +132,44 @@ public class WorldGuardUtility {
   }
 
   /**
-   * Checks whether a player is in one or several regions
+   * Checks whether a player is in any of the specified regions.
    *
-   * @param playerUUID UUID of the player
-   * @param regionName List of regions to check.
-   * @return True if the player is in (any of) the named region(s).
+   * @param playerUUID The UUID of the player.
+   * @param regionName A list of region names to check.
+   * @return True if the player is in any of the specified regions, false otherwise.
    */
   public boolean isPlayerInAnyRegion(UUID playerUUID, String... regionName) {
     return isPlayerInAnyRegion(playerUUID, new HashSet<>(Arrays.asList(regionName)));
   }
 
   /**
-   * Checks whether a player is in one or several regions
+   * Checks whether a player is in all specified regions.
    *
-   * @param playerUUID UUID of the player
-   * @param regionName List of regions to check.
-   * @return True if the player is in (any of) the named region(s).
+   * @param playerUUID The UUID of the player.
+   * @param regionName A list of region names to check.
+   * @return True if the player is in all specified regions, false otherwise.
    */
   public boolean isPlayerInAllRegions(UUID playerUUID, String... regionName) {
     return isPlayerInAllRegions(playerUUID, new HashSet<>(Arrays.asList(regionName)));
   }
 
+  /**
+   * Creates a new WorldGuard region based on a cuboid.
+   *
+   * @param cuboidId The ID of the new region.
+   * @param cuboid The cuboid defining the region boundaries.
+   * @param flags A map of flags to set for the region (optional).
+   * @throws Exception If an error occurs while creating the region.
+   */
   @SneakyThrows
   public void createRegion(
-      @NotNull String cuboidId, @NotNull Cuboid cuboid, @Nullable Map<Flag<?>, Object> flags) {
+          @NotNull String cuboidId, @NotNull Cuboid cuboid, @Nullable Map<Flag<?>, Object> flags) {
     Location firstCorner = cuboid.getMinimum();
     Location secondCorner = cuboid.getMaximum();
     BlockVector3 minimum =
-        BlockVector3.at(firstCorner.getX(), firstCorner.getY(), firstCorner.getZ());
+            BlockVector3.at(firstCorner.getX(), firstCorner.getY(), firstCorner.getZ());
     BlockVector3 maximum =
-        BlockVector3.at(secondCorner.getX(), secondCorner.getY(), secondCorner.getZ());
+            BlockVector3.at(secondCorner.getX(), secondCorner.getY(), secondCorner.getZ());
     RegionManager regionManager = container.get(BukkitAdapter.adapt(firstCorner.getWorld()));
 
     if (regionManager == null || regionManager.hasRegion(cuboidId)) {
