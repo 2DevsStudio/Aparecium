@@ -1,17 +1,20 @@
 /*
- * Copyright (c) 2022. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
+ * Copyright (c) 2025. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
 package com.ignitedev.aparecium.example;
 
 import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.component.ApareciumComponent;
+import com.ignitedev.aparecium.config.LayerBase;
+import com.ignitedev.aparecium.config.LayoutBase;
 import com.ignitedev.aparecium.config.wrapper.MagicItemWrapper;
 import com.ignitedev.aparecium.gui.basic.Layout;
 import com.ignitedev.aparecium.gui.interaction.LayoutInteractions;
 import com.ignitedev.aparecium.gui.layer.LayoutLayer;
 import com.ignitedev.aparecium.interfaces.Example;
 import com.ignitedev.aparecium.item.factory.factories.LayoutItemFactory;
+import com.twodevsstudio.simplejsonconfig.interfaces.Autowired;
 import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryType;
@@ -19,6 +22,12 @@ import org.bukkit.inventory.Inventory;
 
 @Example
 public class GuiExample {
+
+  @Autowired
+  private static LayerBase layerBase;
+
+  @Autowired
+  private static LayoutBase layoutBase;
 
   @Example
   public void createGuiWithLayout() {

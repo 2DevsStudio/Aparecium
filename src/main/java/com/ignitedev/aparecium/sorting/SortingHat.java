@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
+ * Copyright (c) 2025. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
 package com.ignitedev.aparecium.sorting;
@@ -92,7 +92,7 @@ public class SortingHat<T extends Comparable<T>> {
 
   /**
    * @implNote Collection is sorted by default using comparator implementation, so you don't need to
-   *     use that method, this method is used to get clone of collection sorted by comparator
+   *     use that method, this method is used to get clone of a collection sorted by comparator
    *     specified
    * @param comparator comparator to sort {@link Comparator#comparing(Function)}
    * @return cloned collection (ConcurrentSkipListSet) sorted by given comparator

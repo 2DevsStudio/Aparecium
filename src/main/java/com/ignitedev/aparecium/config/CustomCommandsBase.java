@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
+ * Copyright (c) 2025. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
 package com.ignitedev.aparecium.config;
@@ -34,7 +34,7 @@ public class CustomCommandsBase extends Config {
   }
 
   /**
-   * @param alias one of aliases of command you are looking for
+   * @param alias one of the aliases of command you are looking for
    * @return command with given alias or null if not found
    */
   @Nullable

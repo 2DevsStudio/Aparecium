@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
+ * Copyright (c) 2025. Made by 2DevsStudio LLC ( https://2devsstudio.com/ ), using one of our available slaves: IgniteDEV. All rights reserved.
  */
 
 package com.ignitedev.aparecium.config;
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 @Configuration("layer-base.json")
 public class LayerBase extends Config {
 
-  private Map<String, LayoutLayer> layouts = defaultLayouts();
+  private Map<String, LayoutLayer> layers = defaultLayers();
 
   private LayoutLayer defaultLayer =
       LayoutLayer.builder()
@@ -32,7 +32,7 @@ public class LayerBase extends Config {
    *     in your config file then it might be overridden
    */
   public void saveLayer(LayoutLayer layer) {
-    this.layouts.put(layer.getId(), layer);
+    this.layers.put(layer.getId(), layer);
 
     save();
     reload();
@@ -40,14 +40,14 @@ public class LayerBase extends Config {
 
   @NotNull
   public LayoutLayer getById(String layer) {
-    return getLayouts().getOrDefault(layer, defaultLayer);
+    return getLayers().getOrDefault(layer, defaultLayer);
   }
 
   public boolean exists(String id) {
-    return layouts.containsKey(id);
+    return layers.containsKey(id);
   }
 
-  private Map<String, LayoutLayer> defaultLayouts() {
+  private Map<String, LayoutLayer> defaultLayers() {
     return new HashMap<>(
         Map.of(
             "default",
