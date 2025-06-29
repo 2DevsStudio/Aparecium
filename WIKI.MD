@@ -320,9 +320,9 @@ int gaussian = RandomUtility.nextInt(10, 50, 20);
 - Useful for loot tables, random events, and probability-based mechanics in plugins.
 
 ---
+
 ## ParticleUtility
 ### TO-DO
----
 
 ---
 
@@ -366,7 +366,6 @@ List<String> page2 = pageObject.getObjectsFromPage(2); // ["D", "E", "F"]
 - Page numbers start from 1.
 - If a page does not exist, `getObjectsFromPage` returns `null`.
 
----
 ---
 
 ## MinecraftVersionUtility
@@ -593,7 +592,7 @@ String fancy = LocationUtility.toFancyString(loc, true);
 
 ## ItemUtility
 
-Utility class providing helper methods for item manipulation in Bukkit/Spigot plugins.  
+Utility class providing helper methods for item manipulation.  
 Includes validation, normalization, enchantment compatibility checks, and mob spawner item creation.
 
 ### Key Features
@@ -635,7 +634,7 @@ ItemStack spawner = ItemUtility.getMobSpawnerItemStackFromBlock(block);
 
 ## InventoryUtility
 
-Utility class providing helper methods for inventory manipulation and checks in Bukkit/Spigot plugins.  
+Utility class providing helper methods for inventory manipulation and checks.  
 Includes methods for checking inventory contents, slot status, available space, free slots, and comparing inventory titles.
 
 ### Key Features
@@ -689,7 +688,7 @@ boolean sameComponentTitle = InventoryUtility.compareInventories(component1, com
 
 ## EntityUtility
 
-Utility class providing helper methods for entity manipulation in Bukkit/Spigot plugins.  
+Utility class providing helper methods for entity manipulation.  
 Includes methods for pushing entities, checking spawn times, and finding entities by UUID across all worlds.
 
 ### Key Features
@@ -818,9 +817,344 @@ boolean isVisualized = BlockVisualizerUtility.isVisualized(block);
 ```
 
 ---
-LoreBuilderUtility
-LoreReaderUtility
-Placeholder
-TextUtility
-RandomSelector
-WeightCollection
+## LoreBuilderUtility
+
+Utility class for building and manipulating item lore (list of `Component` lines). 
+Allows you to easily append, insert, remove, replace, and conditionally modify lore lines, supporting method chaining and advanced predicates.
+
+### Key Features
+
+- **Append and Insert:**  
+  Add new lore lines at the end or at a specific index.
+- **Conditional Operations:**  
+  Append, insert, or remove lines only if a predicate is satisfied.
+- **Remove and Replace:**  
+  Remove lines by index or value, replace lines by value or using a predicate.
+- **Clear and Check:**  
+  Clear all lore, check if lore is empty or contains a specific line.
+- **Build:**  
+  Retrieve the final list of lore components.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.text.LoreBuilderUtility;
+import net.kyori.adventure.text.Component;
+import java.util.List;
+
+// Create a new lore builder
+LoreBuilderUtility builder = new LoreBuilderUtility();
+
+// Append lines to the lore
+builder.append(Component.text("Line 1"))
+       .append(Component.text("Line 2"));
+
+// Insert a line at index 1
+builder.insert(1, Component.text("Inserted Line"));
+
+// Conditionally append a line if a value is true
+builder.appendIf(Component.text("Special Line"), true, b -> b);
+
+// Remove a line by value
+builder.remove(Component.text("Line 1"));
+
+// Replace a line
+builder.replace(Component.text("Line 2"), Component.text("Replaced Line"));
+
+// Build the final lore list
+List<Component> lore = builder.build();
+```
+
+**Note:**
+- All methods support method chaining for fluent usage.
+- Useful for dynamic item creation, custom GUIs, and advanced lore manipulation.
+- For reading lore, use `LoreReaderUtility`.
+
+---
+
+## LoreReaderUtility
+
+Utility class for reading and extracting information from item lore (a list of `Component` lines).
+Allows you to convert lore to strings, get values by key, filter lines, and parse numbers from lore.
+
+### Key Features
+
+- **Lore as String List:**  
+  Convert all lore components to a list of plain strings.
+- **Get Line by Index:**  
+  Retrieve a specific lore line by its index.
+- **Filter Lines:**  
+  Get all lore lines matching a predicate.
+- **Get Values by Key:**  
+  Extract all or the first value from lore lines starting with a specific key.
+- **Parse Numbers:**  
+  Parse integer or double values from lore lines with a given key.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.text.LoreReaderUtility;
+import net.kyori.adventure.text.Component;
+import java.util.List;
+
+// Create a LoreReaderUtility from a list of Components
+List<Component> lore = List.of(Component.text("Level: 5"), Component.text("Owner: Steve"));
+LoreReaderUtility reader = new LoreReaderUtility(lore);
+
+// Get all lore as plain strings
+List<String> lines = reader.getAsStringList(); // ["Level: 5", "Owner: Steve"]
+
+// Get the first lore line
+String firstLine = reader.get(0).toString();
+
+// Get all values for a key
+List<String> levels = reader.getAllValues("Level: "); // ["5"]
+
+// Get the first value for a key
+String owner = reader.getFirstValue("Owner: "); // "Steve"
+
+// Parse a double from lore
+double value = reader.getDouble("Level: "); // 5.0
+
+// Parse an int from lore
+int level = (int) reader.getInt("Level: "); // 5
+
+// Get all lines containing "Owner"
+List<String> owners = reader.getMatching(line -> line.contains("Owner"));
+```
+
+**Note:**
+- Useful for extracting custom data from item lore, such as stats, owner names, or custom tags.
+- For building or modifying lore, use `LoreBuilderUtility`.
+
+---
+
+## Placeholder
+
+Utility class for handling text placeholders, especially for dynamic message formatting and component replacement.  
+Allows you to define key-value pairs (as `ApareciumComponent`) and replace them in text or lists of components.
+
+### Key Features
+
+- **Create Placeholders:**  
+  Easily create placeholders from components, numbers, or objects.
+- **Replace in Text:**  
+  Replace all occurrences of the placeholder key with its value in a single component or a list of components.
+- **Flexible Value Types:**  
+  Supports string, number, and object values for dynamic replacement.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.text.Placeholder;
+import com.ignitedev.aparecium.component.ApareciumComponent;
+import java.util.List;
+
+// Create a placeholder for player name
+Placeholder playerPlaceholder = Placeholder.replacing(
+    ApareciumComponent.of("{player}"),
+    ApareciumComponent.of("Steve")
+);
+
+// Replace in a single component
+ApareciumComponent message = ApareciumComponent.of("Hello, {player}!");
+ApareciumComponent replaced = playerPlaceholder.replaceIn(message); // "Hello, Steve!"
+
+// Replace in a list of components
+List<ApareciumComponent> lore = List.of(
+    ApareciumComponent.of("Owner: {player}"),
+    ApareciumComponent.of("Level: {level}")
+);
+Placeholder levelPlaceholder = Placeholder.replacing(
+    ApareciumComponent.of("{level}"),
+    5
+);
+List<ApareciumComponent> replacedLore = levelPlaceholder.replaceIn(
+    playerPlaceholder.replaceIn(lore)
+);
+// ["Owner: Steve", "Level: 5"]
+```
+
+**Note:**
+- Useful for dynamic message formatting, lore generation, and any situation where text needs to be customized with variable values.
+
+---
+
+## TextUtility
+
+Utility class for manipulating strings and Adventure `Component`s
+Provides methods for colorizing text, parsing MiniMessage, serializing components, removing color codes, placeholder replacement, formatting, and more.
+
+### Key Features
+
+- **Colorize Strings:**  
+  Translate `&` color codes to Bukkit color codes.
+- **MiniMessage Parsing:**  
+  Parse strings or lists to Adventure `Component`s using MiniMessage (Paper only).
+- **Component Serialization:**  
+  Serialize Adventure `Component`s to MiniMessage strings.
+- **Remove Color Codes:**  
+  Remove color codes from strings or components.
+- **Placeholder Replacement:**  
+  Replace placeholders in components or custom `ApareciumComponent`s.
+- **Enum Name Formatting:**  
+  Convert enum names to user-friendly strings.
+- **Integer Parsing:**  
+  Extract all integers from a string.
+- **Invisible/Visible Text:**  
+  Make text invisible (for hidden data) or revert it to visible.
+- **Progress Bar Generation:**  
+  Create a colored progress bar string.
+- **Percentage Formatting:**  
+  Format a float as a percentage string.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.text.TextUtility;
+import com.ignitedev.aparecium.util.text.Placeholder;
+import com.ignitedev.aparecium.component.ApareciumComponent;
+import net.kyori.adventure.text.Component;
+import org.bukkit.ChatColor;
+import java.util.List;
+
+// Colorize a string with & codes
+String colored = TextUtility.colorize("&aHello &bWorld!");
+
+// Parse MiniMessage to Component (Paper only)
+Component comp = TextUtility.parseMiniMessage("<red>Hello <yellow>World!");
+
+// Serialize a Component to MiniMessage string (Paper only)
+String serialized = TextUtility.serializeComponent(comp);
+
+// Remove color codes from a string
+String noColor = TextUtility.removeColor("&aTest &bString");
+
+// Replace placeholders in an ApareciumComponent
+ApareciumComponent text = ApareciumComponent.of("Hello, {player}!");
+ApareciumComponent replaced = TextUtility.replace(text, Placeholder.of("{player}", "Steve"));
+
+// Get a user-friendly enum name
+String friendly = TextUtility.getEnumFriendlyName(ChatColor.DARK_RED); // "Dark Red"
+
+// Parse all integers from a string
+int[] numbers = TextUtility.parseStringIntegers("Level 5 XP 100");
+
+// Make a string invisible (hidden data)
+String hidden = TextUtility.invisible("Secret");
+
+// Make an invisible string visible again
+String visible = TextUtility.visible(hidden);
+
+// Create a progress bar
+String bar = TextUtility.getProgressBar(3, 10, 10, '|', ChatColor.GREEN, ChatColor.GRAY);
+
+// Format a float as a percentage
+String percent = TextUtility.toPercentage(0.85f, 1); // "85.0%"
+```
+
+**Note:**
+- Methods using Adventure `Component` or MiniMessage require Paper or compatible server.
+- Useful for chat formatting, GUI text, placeholder handling, and advanced string manipulation in plugins.
+
+---
+
+## RandomSelector
+
+Utility class for randomly selecting elements from a collection, supporting both uniform and weighted distributions.  
+Useful for loot tables, random events, and any scenario where you need to pick random elements with or without custom weights.
+
+### Key Features
+
+- **Uniform Selection:**  
+  Selects elements with equal probability from a collection.
+- **Weighted Selection:**  
+  Selects elements based on custom weights, using Vose's alias method for efficient O(1) selection.
+- **Thread-Safe:**  
+  All methods are thread-safe and suitable for concurrent use.
+- **Streaming Support:**  
+  Provides an infinite stream of random selections for advanced use cases.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.collection.RandomSelector;
+import java.util.*;
+
+// Uniform random selection from a list
+List<String> items = Arrays.asList("A", "B", "C", "D");
+RandomSelector<String> uniformSelector = RandomSelector.uniform(items);
+Random random = new Random();
+String randomItem = uniformSelector.next(random);
+
+// Weighted random selection from a map of weights
+Map<String, Double> weights = new HashMap<>();
+weights.put("Common", 70d);
+weights.put("Rare", 25d);
+weights.put("Epic", 5d);
+RandomSelector<String> weightedSelector = RandomSelector.weighted(weights.keySet(), weights::get);
+String loot = weightedSelector.next(random);
+
+// Infinite stream of random selections
+uniformSelector.stream(random)
+    .limit(5)
+    .forEach(System.out::println); // Prints 5 random items
+```
+
+**Note:**
+- The collection passed to the selector is copied internally; changes to the original collection do not affect the selector.
+- For weighted selection, all weights must be positive and non-zero.
+- Efficient for large collections and frequent random selections.
+
+---
+
+## WeightCollection
+
+Utility class for weighted random selection from a collection of elements.  
+Each element is assigned a weight (the higher the weight, the higher the chance of being selected).  
+Useful for loot tables, random events, or any scenario where you want to pick elements with different probabilities.
+
+### Key Features
+
+- **Add elements with weights:**  
+  Add elements to the collection with a specified weight (must be greater than 0).
+- **Weighted random selection:**  
+  Efficiently select a random element, where the probability is proportional to its weight.
+- **Cloneable map:**  
+  Retrieve a copy of the internal map for inspection or debugging.
+- **Custom Random instance:**  
+  Optionally use your own `Random` instance for deterministic results.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.util.collection.WeightCollection;
+import java.util.Random;
+
+// Create a WeightCollection with default Random
+WeightCollection<String> collection = new WeightCollection<>();
+
+// Add elements with weights
+collection.add(70, "Common");
+collection.add(25, "Rare");
+collection.add(5, "Epic");
+
+// Get a random element based on weights
+String result = collection.next(); // "Common" is most likely
+
+// Use a custom Random for reproducible results
+Random random = new Random(123);
+WeightCollection<Integer> numbers = new WeightCollection<>(random);
+numbers.add(1, 10);
+numbers.add(2, 20);
+numbers.add(7, 30);
+int picked = numbers.next(); // 30 is most likely
+
+// Get a copy of the internal map
+var mapCopy = collection.getMap();
+```
+
+**Note:**
+- Weights must be positive; elements with weight \<= 0 are ignored.
+- The selection is efficient even for large collections.
+- Useful for any plugin feature requiring weighted randomness.
