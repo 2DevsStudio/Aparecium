@@ -16,37 +16,18 @@ import com.ignitedev.aparecium.command.ItemBaseCommand;
 import com.ignitedev.aparecium.command.custom.CustomCommand;
 import com.ignitedev.aparecium.command.custom.CustomCommandProcessor;
 import com.ignitedev.aparecium.config.CustomCommandsBase;
-import com.ignitedev.aparecium.config.adapter.ComponentAdapter;
-import com.ignitedev.aparecium.config.adapter.InstantAdapter;
-import com.ignitedev.aparecium.config.adapter.MagicItemAdapter;
-import com.ignitedev.aparecium.item.MagicItem;
 import com.ignitedev.aparecium.item.interaction.listener.ItemInteractionListener;
 import com.ignitedev.aparecium.logging.HedwigLogger;
 import com.ignitedev.aparecium.util.ReflectionUtility;
 import com.twodevsstudio.simplejsonconfig.SimpleJSONConfig;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.def.Serializer;
-import com.twodevsstudio.simplejsonconfig.def.SharedGsonBuilder;
-import com.twodevsstudio.simplejsonconfig.def.adapters.ChronoUnitAdapter;
-import com.twodevsstudio.simplejsonconfig.def.adapters.ClassAdapter;
-import com.twodevsstudio.simplejsonconfig.def.adapters.InterfaceAdapter;
-import com.twodevsstudio.simplejsonconfig.def.adapters.ItemStackAdapter;
-import com.twodevsstudio.simplejsonconfig.def.adapters.ReferenceAdapter;
-import com.twodevsstudio.simplejsonconfig.def.adapters.WorldAdapter;
-import com.twodevsstudio.simplejsonconfig.def.strategies.SuperclassExclusionStrategy;
 import java.io.File;
-import java.lang.ref.Reference;
 import java.lang.reflect.Field;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandMap;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 
 /**
@@ -70,7 +51,7 @@ public class ApareciumMain extends Aparecium {
   public void onEnabling() {
     instance = this;
 
-    registerGson(Serializer.getInst().toBuilder());
+    Serializer.getInst().setGson(new ApareciumGsonBuilder().build());
     SimpleJSONConfig.INSTANCE.register(this);
 
     registerCommands(new PaperCommandManager(this));
@@ -114,25 +95,5 @@ public class ApareciumMain extends Aparecium {
               value.getCommandName(),
               value.getCommandAliases()));
     }
-  }
-
-  private void registerGson(SharedGsonBuilder sharedGsonBuilder) {
-    sharedGsonBuilder
-        .registerTypeHierarchyAdapter(Class.class, new ClassAdapter())
-        .registerTypeHierarchyAdapter(Instant.class, new InstantAdapter())
-        .registerTypeHierarchyAdapter(ChronoUnit.class, new ChronoUnitAdapter());
-
-    if (Aparecium.isUsingPaper()) {
-      sharedGsonBuilder.registerTypeHierarchyAdapter(Component.class, new ComponentAdapter());
-    }
-    sharedGsonBuilder
-        .registerTypeHierarchyAdapter(ItemStack.class, new ItemStackAdapter())
-        .registerTypeHierarchyAdapter(World.class, new WorldAdapter())
-        .registerTypeHierarchyAdapter(Reference.class, new ReferenceAdapter())
-        .registerTypeAdapter(BlockState.class, new InterfaceAdapter())
-        .addDeserializationExclusionStrategy(new SuperclassExclusionStrategy())
-        .addSerializationExclusionStrategy(new SuperclassExclusionStrategy())
-        .registerTypeAdapter(MagicItem.class, new MagicItemAdapter())
-        .build();
   }
 }

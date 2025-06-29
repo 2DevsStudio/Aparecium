@@ -22,14 +22,14 @@ import com.ignitedev.aparecium.item.basic.Item;
 import com.ignitedev.aparecium.item.basic.LayoutItem;
 import com.ignitedev.aparecium.item.basic.PatternItem;
 import com.ignitedev.aparecium.item.factory.factories.DefaultMagicItemFactory;
+import com.ignitedev.aparecium.util.MinecraftVersionUtility;
 import java.lang.reflect.Type;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.Nullable;
@@ -126,7 +126,17 @@ public class MagicItemAdapter implements JsonSerializer<MagicItem>, JsonDeserial
     }
     if (enchantmentsString != null) {
       for (Entry<String, Double> entry : enchantmentsString.entrySet()) {
-        enchantments.put(Enchantment.getByName(entry.getKey()), entry.getValue().intValue());
+        if (MinecraftVersionUtility.isAfter(13)) {
+          NamespacedKey key = NamespacedKey.fromString(entry.getKey().toLowerCase(Locale.ROOT));
+
+          if (key == null) {
+            throw new JsonParseException(
+                "Enchantment key is null, check your enchantments in item config: " + jsonObject);
+          }
+          enchantments.put(Registry.ENCHANTMENT.get(key), entry.getValue().intValue());
+        } else {
+          enchantments.put(Enchantment.getByName(entry.getKey()), entry.getValue().intValue());
+        }
       }
     }
     Item item =
@@ -218,7 +228,16 @@ public class MagicItemAdapter implements JsonSerializer<MagicItem>, JsonDeserial
       jsonObject.add(DESCRIPTION, context.serialize(description));
     }
     if (enchants != null) {
-      enchants.forEach((enchantment, level) -> enchantments.put(enchantment.getName(), level));
+      // for versions before 1.13 enchantments are stored as a map of enchantment name and level
+      // for versions after 1.13 enchantments are stored as a map of enchantment and level,
+      // so we need to convert it to the old format
+      if (MinecraftVersionUtility.isAfter(13)) {
+        enchants.forEach(
+            (enchantment, level) -> enchantments.put(enchantment.getKey().getKey(), level));
+      } else {
+          //noinspection removal
+          enchants.forEach((enchantment, level) -> enchantments.put(enchantment.getName(), level));
+      }
     }
     jsonObject.add(ENCHANTMENTS, context.serialize(enchantments));
 
