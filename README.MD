@@ -1,134 +1,89 @@
-![Aparecium](https://www.2devsstudio.com/resources/aparecium/title.png)
+# Aparecium - Minecraft Plugin Development Library
 
-Aparecium is a powerful Library that helps you with creating everything you can imagine with Minecraft.
+Aparecium is a comprehensive, high-performance library designed to empower developers and server configurators in creating advanced Minecraft plugins.  
+The library emphasizes ease of use, robust configuration, and modularity, supporting both **Paper** and **Spigot** platforms (Java 21+ required).
 
-We are aiming for the best performance and easy-to-use API which has a powerful configuration for
-everything. One of our goal is to make it as easy as possible to work from the Developer side and the Configurator
-side.
 
-We support **PAPER** functionalities but as well we support plain **Spigot**, so you'll be able to
-run Aparecium everywhere you would like to, as long you are using at least **java 17**.
-
-The library is still in development, and we are working hard to make it better and better.
-
-![Functionalities](https://www.2devsstudio.com/resources/separators/functionalities.png)
-
-[+] Supports builder and factory patters
-
-[+] Over 30 Utility Classes
-
-[+] Sorting System (SortingHat)
-
-[+] Item system with Different types of Items; DropItem, LayoutItem, PatternItem, and the ability to
-implement your own
-item types and support for NBT tags.
-
-[+] Layout system with different types of Layouts; AnimatedLayout, Layout, and the ability to create
-your own
-implementation
-
-[+] Layer system with different types of Layers; AnimatedLayoutLayer, LayoutLayer,
-LayoutPatternLayer, and the ability
-to create your layer implementation, you can create layer prefabs and use them with different
-inventories, so it's going
-to speed up your development and you no longer have to duplicate code
-
-[+] Hologram system depending on HolographicDisplays (soon we're going to rewrite it to our own
-system)
-
-[+] Factories System which you can implement in your plugin, so you can create your own factories
-and use them, the
-library is using that factory system as well.
-
-[+] Configuration system (we are using the best API of
-course, https://github.com/2DevsStudio/SimpleJSONConfig),
-ItemBase which is holding all Items, LayerBase which is holding all Layers, and LayoutBase which is
-holding all Layouts,
-everything is saved in JSON, but SimpleJsonConfig allows you to save it in YAML as well ( we'll add
-Aparecium support
-for that soon)
-
-[+] Configuration Adapters and Wrappers for giving you the possibility to create a configuration
-which will for example
-give the possibility for Configurator to choose between creating Item/Layer...etc. or getting it
-from Layer/Item/Layout
-Base.
-
-[+] ApareciumComponent which is used instead of String/Paper Component, it's holding all information
-about String/Paper
-Component, and depending on the platform you are running you can use it as String or Paper
-Component. It automatically
-converts String to Paper Component and vice versa.
-
-[+] Simple Command system, so you can create your own simple text commands with using only
-configuration. ( Helpful for
-commands like /info etc.)
-
-[+] Cuboid System for wrapping two locations into one object, and you can get all locations between
-two locations.
-
---- 
-
-![Planned](https://www.2devsstudio.com/resources/separators/planned.png)
-
-[-] Advanced Command System
-
-[-] Event system
-
-[-] Sound system
-
-[-] Chat System
-
-![Compatibility](https://www.2devsstudio.com/resources/separators/compatibility.png)
-
-> 1.12.2 <-> 1.19
----
-> Spigot and Paper API ( Paper Currently is most stable, WIP.)
----
-> Java 17+
----
-
-![Dependency](https://www.2devsstudio.com/resources/separators/dependency.png)
+## Dependency
 
 ```xml
-
 <repository>
-  <id>com.2devsstudio</id>
-  <name>2DevsStudio Repository</name>
-  <url>https://repo.2devsstudio.com/latest</url>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
 </repository>
 
 <dependency>
-    <groupId>com.ignitedev</groupId>
+    <groupId>com.github.2DevsStudio</groupId>
     <artifactId>Aparecium</artifactId>
-    <version>1.0.0</version>
-    <scope>provided</scope>
+    <version>-SNAPSHOT</version>
 </dependency>
-
 ```
 
 Don't forget to add `depend` in your plugin.yml in order to make sure that Aparecium is loaded
 before your plugin.
 
 ```yaml
-
 depend: [ Aparecium ]
-
 ```
 
-![Requirements](https://www.2devsstudio.com/resources/separators/requirements.png)
+## Key Features
 
-### Holographic Displays
+- **Builder and Factory Patterns:**  
+  Modern design patterns are utilized to streamline object creation and management, ensuring maintainable and scalable codebases.
 
-If you want to use Holograms you need to download **HolographicDisplays** and add it to your plugins folder.
-Currently, we are working on our own hologram system but for now you have to use HolographicDisplays :(
+- **Extensive Utility Suite:**  
+  Over 30 utility classes are provided, covering a wide range of common plugin development needs, including items, locations, math, reflection, serialization, randomization, messaging, and more.
 
-[Here](https://ci.codemc.io/job/filoghost/job/HolographicDisplays/) you can download the latest version of
-HolographicDisplays ( for 1.19, 3.0.1 is dev build )
+- **Advanced Sorting System:**  
+  The `SortingHat` system enables thread-safe, dynamic sorting and filtering of collections, supporting custom predicates and comparators for flexible data management.
 
-## PlaceholderAPI
+- **Sophisticated Item System:**  
+  Multiple item types are supported, such as DropItem, LayoutItem, and PatternItem, with full NBT tag compatibility and extensibility for custom item logic.
 
-Aparecium base many things on PlaceholderAPI so that plugin is definitely **REQUIRED**.
+- **Modular Layout and Layer System:**  
+  The layout system allows for the creation of complex, reusable GUI layouts and layers, supporting animated and pattern-based inventories for highly configurable user interfaces.
 
-[here](https://www.spigotmc.org/resources/placeholderapi.6245/) you can download the latest version of PlaceholderAPI
+- **Hologram Management:**  
+  An object-oriented API is provided for creating and managing holograms, with integration for HolographicDisplays and plans for a native solution.
 
+- **Centralized Factories System:**  
+  A global manager oversees the registration and retrieval of factories for items, holograms, layouts, and more, supporting both default and custom implementations.
+
+- **Flexible Configuration:**  
+  The library leverages [SimpleJSONConfig](https://github.com/2DevsStudio/SimpleJSONConfig) for seamless JSON/YAML storage and retrieval of items, layers, and layouts.
+
+- **PlaceholderAPI Integration:**  
+  Deep integration with PlaceholderAPI enables dynamic text and configuration, enhancing plugin flexibility and user experience.
+
+- **Cross-Platform Support:**  
+  Full compatibility with both Paper and Spigot servers, with additional enhancements available for Paper.
+
+## Compatibility
+
+- **Minecraft Versions:**  
+  Compatible with Minecraft versions from 1.12.2 to 1.21, ensuring broad support for various server setups.
+- **Java Version:**  
+  Requires Java 21 or newer, leveraging modern language features for improved performance and maintainability.
+- **Server Platforms:**  
+  Designed for use with both Paper and Spigot servers, with a focus on stability and performance on Paper.
+
+## Requirements
+
+- Java 21 or newer
+- Paper or Spigot server
+- [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) (required)
+- [HolographicDisplays](https://ci.codemc.io/job/filoghost/job/HolographicDisplays/) (for hologram features)
+
+## Additional Information
+
+- Aparecium is under active development, with frequent updates and new features.
+- Comprehensive documentation and advanced usage examples are available in the project readme(down below) and the `src/main/java/com/ignitedev/aparecium/example` directory.
+- Contributions and feedback from the community are highly encouraged.
+
+---
+# Planned
+
+- Advanced Command System
+- Event system
+- Sound system
+- Chat System
