@@ -272,6 +272,29 @@ public class DataUtility {
     return (hours + " Hours " + minutes + " Minutes " + seconds + " Seconds");
   }
 
+  public String convertMinutesToTimeString(int pastMinutes) {
+    long days = TimeUnit.MINUTES.toDays(pastMinutes);
+    long years = days / 365;
+    long months = (days % 365) / 30;
+    long weeks = (days % 30) / 7;
+    days = days % 7;
+    long hours = TimeUnit.MINUTES.toHours(pastMinutes) % 24;
+    long minutes = pastMinutes % 60;
+
+    StringBuilder result = new StringBuilder();
+
+    if (years > 0) result.append(years).append(" year").append(years == 1 ? "" : "s").append(" ");
+    if (months > 0)
+      result.append(months).append(" month").append(months == 1 ? "" : "s").append(" ");
+    if (weeks > 0) result.append(weeks).append(" week").append(weeks == 1 ? "" : "s").append(" ");
+    if (days > 0) result.append(days).append(" day").append(days == 1 ? "" : "s").append(" ");
+    if (hours > 0) result.append(hours).append(" hour").append(hours == 1 ? "" : "s").append(" ");
+    if (minutes > 0)
+      result.append(minutes).append(" minute").append(minutes == 1 ? "" : "s").append(" ");
+
+    return result.toString();
+  }
+
   /**
    * Unregisters a Bukkit command using reflection.
    *
