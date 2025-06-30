@@ -1,5 +1,399 @@
-# Aparecium Components
+## Aparecium - Plugin Base Class
 
+`Aparecium` is the core abstract class that you should extend instead of `JavaPlugin` when developing plugins with the Aparecium framework.  
+It provides additional lifecycle hooks, utility methods, and integration points to simplify plugin development and enhance functionality.
+
+### Key Features
+
+- **Extended Lifecycle:**  
+  Offers extra loading stages (`onPreLoad`, `onInnerLoad`, `onPostLoad`, `onEnabling`, `onDisabling`) for better control over plugin initialization and shutdown.
+- **Performance Measurement:**  
+  Built-in stopwatch utility to measure execution time of lifecycle methods.
+- **Factory Management:**  
+  Access to a global `FactoriesManager` for managing plugin factories.
+- **Paper Detection:**  
+  Static check to determine if the server is running Paper.
+- **TPS Monitoring:**  
+  Easy access to server TPS (ticks per second) statistics and console reporting.
+- **Integrated Logging:**  
+  Uses the `HedwigLogger` system for advanced logging.
+
+### Example Usage
+
+The Full example is available in the [Aparecium Main Example](src/main/java/com/ignitedev/aparecium/engine/ApareciumMain.java).
+
+```java
+import com.ignitedev.aparecium.Aparecium;
+
+public class MyPlugin extends Aparecium {
+
+    @Override
+    public void onPreLoad() {
+        // Pre-load logic here
+    }
+
+    @Override
+    public void onInnerLoad() {
+        // Inner load logic here
+    }
+
+    @Override
+    public void onPostLoad() {
+        // Post-load logic here
+    }
+
+    @Override
+    public void onEnabling() {
+        // Plugin enabling logic here
+    }
+
+    @Override
+    public void onDisabling() {
+        // Plugin disabling logic here
+    }
+}
+```
+
+**Note:**
+- You must extend `Aparecium` instead of `JavaPlugin` to use all features.
+- All standard `JavaPlugin` methods are still available.
+---
+
+# Cuboid - 3D Area Representation
+
+Represents a 3D rectangular area (cuboid) in the Minecraft world, defined by two corner `Location`s: minimum and maximum.  
+Provides utilities for checking if a location is inside, iterating blocks, clearing space, finding safe spawn points, and more.
+
+#### Key Features
+
+- **Area Representation:**  
+  Stores minimum and maximum corners as `Location` objects.
+- **Containment Check:**  
+  Check if a given `Location` is inside the cuboid.
+- **Block Iteration:**  
+  Retrieve all blocks within the cuboid.
+- **Block Counting:**  
+  Count all blocks, with optional inclusion of air blocks.
+- **Clear Space:**  
+  Set all blocks in the cuboid to air.
+- **Particle Effects:**  
+  Spawn particles at every block in the cuboid.
+- **Center Calculation:**  
+  Get the geometric center of the cuboid.
+- **Ground Items:**  
+  List all dropped items within the cuboid.
+- **Safe Spawn Location:**  
+  Find a safe spot for spawning entities inside the cuboid.
+
+#### Example Usage
+
+```java
+import com.ignitedev.aparecium.base.Cuboid;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.block.Block;
+
+// Create a cuboid from two corners
+Cuboid cuboid = new Cuboid(minLocation, maxLocation);
+
+// Check if a location is inside the cuboid
+boolean inside = cuboid.isInside(player.getLocation());
+
+// Get all blocks in the cuboid
+List<Block> blocks = cuboid.getBlocks();
+
+// Count all non-air blocks
+int blockCount = cuboid.getBlockCount(false);
+
+// Clear all blocks (set to air)
+cuboid.clearSpace();
+
+// Send particles to all blocks in the cuboid
+cuboid.sendParticles(Particle.FLAME);
+
+// Get the center location of the cuboid
+Location center = cuboid.getCenter();
+
+// Find a safe place to spawn an entity
+Location safeSpawn = cuboid.findSafePlace();
+```
+
+**Note:**
+- The minimum and maximum locations are automatically adjusted so that minimum is always less than or equal to maximum on all axes.
+- Useful for region selection, area effects, structure placement, and more.
+
+---
+
+# ApareciumComponent
+
+`ApareciumComponent` is a flexible wrapper for text used in Aparecium plugins, supporting both plain strings and Adventure `Component`s.  
+It allows you to work with messages, lore, and GUI text in a way that is compatible with both Bukkit and Paper servers, enabling advanced formatting, MiniMessage support, and easy placeholder replacement.
+
+### Key Features
+
+- **Dual Representation:**  
+  Stores text as both a list of strings and, if available, a list of Adventure `Component`s.
+- **Automatic Conversion:**  
+  Converts between strings and components as needed, depending on server capabilities.
+- **MiniMessage & Color Support:**  
+  Supports color codes and MiniMessage formatting for rich text.
+- **Placeholder Replacement:**  
+  Easily replace placeholders in text for dynamic messages.
+- **Flexible Construction:**  
+  Create from a string, list of strings, `Component`, or list of components.
+- **Safe Accessors:**  
+  Retrieve as string, list of strings, `Component`, or list of components.
+
+### Example Usage
+
+Full component Example can be found here [Aparecium Component Example](src/main/java/com/ignitedev/aparecium/example/ApareciumComponentExample.java)
+
+```java
+import com.ignitedev.aparecium.component.ApareciumComponent;
+import net.kyori.adventure.text.Component;
+
+// Create from a string
+ApareciumComponent text = ApareciumComponent.of("&aHello &bWorld!");
+
+// Create from an Adventure Component (Paper only)
+ApareciumComponent comp = ApareciumComponent.of(Component.text("Welcome!"));
+
+// Replace a placeholder
+ApareciumComponent replaced = text.replace("{player}", "Steve");
+
+// Get as a plain string
+String plain = text.getAsString();
+
+// Get as a list of strings
+List<String> lines = text.getAsStrings();
+
+// Get as an Adventure Component (Paper only)
+Component adventure = text.getAsComponent();
+```
+
+**Note:**
+- On Paper servers, Adventure `Component` features are fully supported.
+- On Bukkit/Spigot, only string-based features are available.
+- Useful for chat messages, item lore, GUI titles, and any plugin text handling.
+
+---
+
+# SortingHat - Aparecium's Sorting System
+
+`SortingHat` is a thread-safe utility class for managing, sorting, and filtering collections of elements.  
+It allows you to dynamically add, remove, sort, and filter elements using custom predicates, without modifying the original collection.
+
+### Key Features
+
+- **Thread-safe collection:**  
+  Stores elements in a `ConcurrentSkipListSet` for safe use in multi-threaded environments.
+- **Natural ordering:**  
+  Elements are sorted by their natural order (`Comparable`).
+- **Custom sorting:**  
+  Obtain a sorted copy of the collection using any comparator.
+- **Dynamic filtering:**  
+  Add and remove named filters (predicates) and get filtered copies of the collection.
+
+### Example Usage
+
+Full Sorting Example can be found in the [Aparecium Sorting Example](src/main/java/com/ignitedev/aparecium/example/SortingExample.java).
+
+```java
+import com.ignitedev.aparecium.sorting.SortingHat;
+import java.util.Comparator;
+import java.util.Set;
+
+// Create a SortingHat for integers
+SortingHat<Integer> hat = new SortingHat<>();
+hat.add(5, 2, 8, 1, 3);
+
+// Get naturally sorted collection
+Set<Integer> sorted = hat.getCollection(); // [1, 2, 3, 5, 8]
+
+// Sort by custom comparator (reverse order)
+Set<Integer> reversed = hat.sort(Comparator.reverseOrder()); // [8, 5, 3, 2, 1]
+
+// Add a filter (only even numbers)
+hat.addFilter("even", i -> i % 2 == 0);
+Set<Integer> evens = hat.filter(); // [2, 8]
+
+// Remove a filter
+hat.removeFilter("even");
+
+// Clear collection
+hat.clearCollection();
+```
+
+**Note:**
+- Filters are not applied automatically — use `filter()` to get a filtered copy.
+- The class requires type `T` to implement `Comparable<T>`.
+- Useful for managing collections, sorting results, dynamic filtering, and set operations in plugins.
+
+
+---
+
+# Hologram System - Aparecium wrapper for HolographicDisplays
+
+The Aparecium Hologram System provides a flexible, object-oriented API for creating, managing, and displaying holograms in Minecraft using the HolographicDisplays plugin.  
+It allows you to define holograms with text and item lines, manage their lifecycle, and easily update or destroy them as needed.
+
+### Key Features
+
+- **Abstract and Simple Hologram Classes:**  
+  Use `AbstractBaseHologram` as a base for custom implementations, or `SimpleBaseHologram` for quick creation.
+- **Line Flexibility:**  
+  Each hologram line can be either text (`ApareciumComponent`) or an item (`Material`).
+- **Placeholder Support:**  
+  Built-in placeholder system for dynamic text replacement in hologram lines.
+- **Factory Pattern:**  
+  Hologram creation is handled by pluggable `HologramFactory` implementations, allowing for easy extension and integration.
+- **Lifecycle Management:**  
+  Spawn, update, and destroy holograms programmatically. All active holograms are tracked by `HologramManager`.
+- **Integration with HolographicDisplays:**  
+  Uses the HolographicDisplays API for rendering holograms in-game.
+
+### Example Usage
+
+Full Hologram Example can be found in the [Aparecium Hologram Example](src/main/java/com/ignitedev/aparecium/example/HologramExample.java).
+
+```java
+import com.ignitedev.aparecium.hologram.SimpleBaseHologram;
+import com.ignitedev.aparecium.hologram.data.HologramEntry;
+import com.ignitedev.aparecium.component.ApareciumComponent;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import java.util.List;
+
+// Create hologram lines (text and item)
+List<HologramEntry> lines = List.of(
+    new HologramEntry(ApareciumComponent.of("&aWelcome!"), null),
+    new HologramEntry(null, Material.DIAMOND)
+);
+
+// Create and spawn a simple hologram
+SimpleBaseHologram hologram = SimpleBaseHologram.builder()
+    .id("spawn-holo")
+    .location(new Location(world, 0, 100, 0))
+    .lines(lines)
+    .build();
+
+hologram.spawn(apareciumInstance);
+
+// Update a line
+hologram.setLine(0, new HologramEntry(ApareciumComponent.of("&bEnjoy your stay!"), null));
+hologram.update(apareciumInstance);
+
+// Destroy the hologram
+hologram.destroy();
+```
+
+### Managing Holograms
+
+- **Destroy all holograms:**  
+  `HologramManager.destroyAll();`
+- **Destroy by ID:**  
+  `HologramManager.destroy("spawn-holo");`
+- **Check if spawned:**  
+  `hologram.isSpawned();`
+
+**Note:**
+- Holograms are automatically registered and unregistered in the global manager.
+- You can extend `AbstractBaseHologram` for advanced use cases.
+- Factories can be customized for different hologram backends or effects.
+- Requires HolographicDisplays plugin to be installed.
+
+---
+
+
+
+# Factories System
+
+The Aparecium Factories System provides a flexible and extensible way to manage the creation of various objects (such as items, holograms, and GUI elements) using the factory pattern.  
+It centralizes factory management, allowing you to register, retrieve, and use different factory implementations for custom behaviors and integrations.
+
+### Key Features
+
+- **Centralized Management:**  
+  All factories are managed by the global `FactoriesManager`, which holds references to all available factory types.
+- **Extensible Architecture:**  
+  Easily register new factories for items, holograms, layouts, drops, patterns, and more.
+- **FactoryHolder Cache:**  
+  Factories are stored in a non-persistent cache (`FactoryHolder`), so you must register them each time the plugin starts.
+- **Default and Custom Factories:**  
+  Use default factories out of the box, or register your own for advanced use cases.
+- **Type Safety:**  
+  All factories implement the marker `Factory` interface for type safety and consistency.
+
+### Example Usage
+
+Full Factories Example can be found in the [Aparecium Factories Example](src/main/java/com/ignitedev/aparecium/hologram/factory).
+
+```java
+import com.ignitedev.aparecium.factory.FactoriesManager;
+import com.ignitedev.aparecium.hologram.factory.HologramFactory;
+import com.ignitedev.aparecium.item.factory.MagicItemFactory;
+
+FactoriesManager factoriesManager = Aparecium.getFactoriesManager(); // Access the global FactoriesManager
+
+// Register a custom hologram factory
+factoriesManager.getHologramFactories().registerFactory("CUSTOM", new MyCustomHologramFactory());
+
+// Retrieve a factory by ID
+HologramFactory defaultHologramFactory = factoriesManager.getHologramFactories().getDefaultFactory();
+MagicItemFactory layoutItemFactory = factoriesManager.getMagicItemFactories().getFactory("LAYOUT_DEFAULT");
+```
+
+**Note:**
+- Factories must be registered every time the plugin starts, as the cache is not persistent.
+- The system is designed for modularity and easy extension, making it simple to swap or add new behaviors.
+- Useful for advanced plugin development, custom item systems, GUI layouts, and integration with other plugins.
+---
+
+# Hedwig Logger - Aparecium's Logging System
+
+`HedwigLogger` is the dedicated logging utility for Aparecium and your plugins.  
+It provides a unified, extensible way to log messages, warnings, and errors, either globally for Aparecium or per-plugin.  
+By using `HedwigLogger`, you ensure consistent log formatting and easy integration with Aparecium's internal systems.
+
+### Key Features
+
+- **Global and Plugin Loggers:**  
+  Obtain a global logger for Aparecium or create a dedicated logger for your plugin instance.
+- **Caching:**  
+  Loggers are cached per plugin instance for efficient reuse.
+- **Standard Logging Levels:**  
+  Supports info, warning, and error levels, mapped to standard Java logging.
+- **Integration:**  
+  Works seamlessly with Aparecium's lifecycle and utility systems.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.logging.HedwigLogger;
+import com.ignitedev.aparecium.Aparecium;
+
+// Get or create a logger for your plugin
+HedwigLogger logger = HedwigLogger.getOrCreate(apareciumInstance);
+
+// Log an info message
+logger.info("Plugin started successfully!");
+
+// Log a warning
+logger.warning("This is a warning!");
+
+// Log an error
+logger.error("An error occurred!");
+
+// Access the global Aparecium logger
+HedwigLogger mainLogger = HedwigLogger.getMainLogger();
+mainLogger.info("Aparecium is running.");
+```
+
+**Note:**
+- Use `HedwigLogger.getOrCreate(apareciumInstance)` to get a logger for your plugin.
+- Use `HedwigLogger.getMainLogger()` for global Aparecium logging.
+- Ensures all logs are consistent and easy to manage across your project.
 
 ---
 
@@ -55,6 +449,9 @@ public void test() {
 #### System that allows you to create complex GUIs with ease, saving you time with a serializable system, thanks to Clickable items you'll be able to create advanced configurable clickable inventories.
 #### The Whole idea is that we have a base class "Layout" that is used to create a GUI, and we have "LayoutLayer" which is a repeatable part of guis to avoid code duplication and complexity in configuration.
 #### Creating simple GUI:
+
+A Full example of GUI creation can be found in the [Aparecium GUI Example](src/main/java/com/ignitedev/aparecium/example/GuiExample.java)
+
 ```java
 
 Layout layout = Layout.builder()
@@ -84,6 +481,8 @@ Full example of GUI creation can be found in the [Aparecium GUI Example](src/mai
 
 ---
 # Item system
+
+A Full Item example can be found in the [Aparecium Item Example](src/main/java/com/ignitedev/aparecium/example/ItemExample.java)
 
 #### Default Item system implementation is [Item](src/main/java/com/ignitedev/aparecium/item/basic/Item.java), other useful implementations are: 
 * [ClickableItem](src/main/java/com/ignitedev/aparecium/item/basic/ClickableItem.java) - Item with interactions, can be used in the layout
