@@ -15,7 +15,7 @@ The library emphasizes ease of use, robust configuration, and modularity, suppor
 <dependency>
     <groupId>com.github.2DevsStudio</groupId>
     <artifactId>Aparecium</artifactId>
-    <version>-SNAPSHOT</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 
