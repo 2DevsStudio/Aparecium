@@ -114,7 +114,7 @@ public class PatternItem extends LayoutItem {
     PatternItem clone = ((PatternItem) super.clone());
 
     clone.dropChance = this.dropChance;
-    clone.patterns = this.patterns;
+    clone.patterns = this.patterns == null ? null : new ArrayList<>(this.patterns);
 
     return clone;
   }

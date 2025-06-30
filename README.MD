@@ -579,9 +579,11 @@ Full example of GUI creation can be found in the [Aparecium GUI Example](src/mai
 ---
 # Item system
 
+## To Quickly convert ItemStack to MagicItem you can use [Magic Item Converter](src/main/java/com/ignitedev/aparecium/item/util/MagicItemConverter.java)
+
 A Full Item example can be found in the [Aparecium Item Example](src/main/java/com/ignitedev/aparecium/example/ItemExample.java)
 
-#### Default Item system implementation is [Item](src/main/java/com/ignitedev/aparecium/item/basic/Item.java), other useful implementations are:
+#### Default Item system implementation of [MagicItem](src/main/java/com/ignitedev/aparecium/item/MagicItem.java) is [Item](src/main/java/com/ignitedev/aparecium/item/basic/Item.java), other useful implementations are:
 * [ClickableItem](src/main/java/com/ignitedev/aparecium/item/basic/ClickableItem.java) - Item with interactions, can be used in the layout
 * [LayoutItem](src/main/java/com/ignitedev/aparecium/item/basic/LayoutItem.java) - Item that can be used in the layout
 * [DropItem](src/main/java/com/ignitedev/aparecium/item/basic/DropItem.java) - Item that has a drop chance
