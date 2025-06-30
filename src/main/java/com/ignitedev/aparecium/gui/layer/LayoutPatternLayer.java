@@ -76,4 +76,13 @@ public class LayoutPatternLayer extends AbstractLayoutLayer {
           }
         });
   }
+
+  @Override
+  public LayoutPatternLayer clone() {
+    LayoutPatternLayer clone = (LayoutPatternLayer) super.clone();
+
+    clone.patternItemList = Map.copyOf(this.patternItemList);
+
+    return clone;
+  }
 }

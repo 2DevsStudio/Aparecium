@@ -66,10 +66,9 @@ public class Layout extends AbstractLayout {
     super(builder);
   }
 
-  public LayoutWrapper toWrapper(){
+  public LayoutWrapper toWrapper() {
     return new LayoutWrapper(this.id, this);
   }
-
 
   @Override
   public Inventory createLayout(AbstractLayoutLayer... additionalLayers) {

@@ -83,7 +83,7 @@ public abstract class AbstractLayoutLayer
     AbstractLayoutLayer clone = (AbstractLayoutLayer) super.clone();
 
     clone.layoutSize = this.layoutSize;
-    clone.contents = this.contents;
+    clone.contents = Map.copyOf(this.contents);
     clone.layoutInventoryType = this.layoutInventoryType;
     clone.id = this.id;
 

@@ -142,7 +142,7 @@ public abstract class AbstractLayout
     clone.inventoryType = this.inventoryType;
     clone.layoutBackgroundLayer = this.layoutBackgroundLayer;
     clone.layers = this.layers;
-    clone.contents = this.contents;
+    clone.contents = Map.copyOf(this.contents);
 
     return clone;
   }
