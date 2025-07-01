@@ -15,7 +15,7 @@ The library emphasizes ease of use, robust configuration, and modularity, suppor
 <dependency>
     <groupId>com.github.2DevsStudio</groupId>
     <artifactId>Aparecium</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 </dependency>
 ```
 
@@ -154,6 +154,68 @@ public class MyPlugin extends Aparecium {
 **Note:**
 - You must extend `Aparecium` instead of `JavaPlugin` to use all features.
 - All standard `JavaPlugin` methods are still available.
+---
+
+## MongoDB Integration
+
+Aparecium provides a simple, extensible integration with MongoDB for asynchronous and synchronous database operations.  
+The system is based on two main classes: `MongoDBConnection` (connection and thread management) and `SimpleMongo` (database operations).
+
+### Key Classes
+
+- **MongoDBConnection:**  
+  Manages the MongoDB client and a dedicated executor service for async operations.
+
+- **SimpleMongo:**  
+  Provides utility methods for retrieving, saving, and managing documents in MongoDB collections, supporting both sync and async workflows.
+
+### Example Usage
+
+```java
+import com.ignitedev.aparecium.database.MongoDBConnection;
+import com.ignitedev.aparecium.database.SimpleMongo;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
+
+// Create a connection to MongoDB
+MongoDBConnection connection = new MongoDBConnection("mongodb://localhost:27017");
+
+// Get a database instance
+MongoDatabase database = connection.getDatabase("myDatabase");
+
+// Create a SimpleMongo instance
+SimpleMongo simpleMongo = new SimpleMongo(connection, database);
+
+// Get a collection
+MongoCollection<Document> collection = simpleMongo.misc().getCollection("users");
+
+// Create a document identifier (e.g., by _id)
+Document identifier = new Document("_id", "user123");
+
+// Synchronously retrieve documents
+for (Document doc : simpleMongo.get().getObjectSync(collection, identifier)) {
+    // Process document
+}
+
+// Asynchronously retrieve documents
+simpleMongo.get().getObjectASync(collection, identifier).thenAccept(docs -> {
+    for (Document doc : docs) {
+        // Process document
+    }
+});
+
+// Save or update a document asynchronously
+Document newUser = new Document("_id", "user123").append("name", "Steve");
+simpleMongo.save().saveObjectAsync(collection, identifier, newUser);
+
+// Save or update a document synchronously
+simpleMongo.save().saveObjectSync(collection, identifier, newUser);
+```
+
+**Note:**
+- All async operations use a dedicated single-threaded executor for thread safety.
+- The API is designed for ease of use and can be extended for advanced MongoDB features.
 ---
 
 # Cuboid - 3D Area Representation

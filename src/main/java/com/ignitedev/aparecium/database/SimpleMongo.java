@@ -8,10 +8,11 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
 
-@Getter
 public class SimpleMongo {
 
+  @Getter
   private final MongoDBConnection mongoDBConnection;
+  @Getter
   private final MongoDatabase database;
 
   private final Get get;
@@ -26,7 +27,19 @@ public class SimpleMongo {
     this.save = new Save(mongoDBConnection);
   }
 
-  /**
+    public Get get() {
+        return this.get;
+    }
+
+    public Misc misc() {
+        return this.misc;
+    }
+
+    public Save save() {
+        return this.save;
+    }
+
+    /**
    * @implNote getting DBObjects, sync or async.
    */
   public static class Get {
