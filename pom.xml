@@ -144,6 +144,10 @@
       <artifactId>SimpleJSONConfig</artifactId>
       <version>1.4.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongodb-driver-sync</artifactId>
+    </dependency>
     <!-- MISC  -->
     <dependency>
       <artifactId>item-nbt-api-plugin</artifactId>
@@ -183,6 +187,7 @@
       <groupId>com.google.googlejavaformat</groupId>
       <version>1.15.0</version>
     </dependency>
+
   </dependencies>
 
   <dependencyManagement>
@@ -193,6 +198,13 @@
         <version>1.52</version>
         <scope>import</scope>
         <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.mongodb</groupId>
+        <artifactId>mongodb-driver-bom</artifactId>
+        <version>5.5.1</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
