@@ -8,7 +8,7 @@
          xsi:schemaLocation = "http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>Aparecium</artifactId>
   <groupId>com.ignitedev</groupId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <url>https://github.com/IM-IgniteDEV</url>
   <name>Aparecium</name>
   <description>"The Revealing Charm will reveal invisible ink and messages hidden by magical means.
