@@ -10,6 +10,7 @@ package com.ignitedev.aparecium.engine;
  *  ~~ Hermione using the spell on Tom Riddle's diary
  */
 
+import co.aikar.commands.MessageType;
 import co.aikar.commands.PaperCommandManager;
 import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.command.ItemBaseCommand;
@@ -24,9 +25,11 @@ import com.twodevsstudio.simplejsonconfig.api.Config;
 import com.twodevsstudio.simplejsonconfig.def.Serializer;
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.Locale;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.PluginManager;
 
@@ -54,7 +57,7 @@ public class ApareciumMain extends Aparecium {
     Serializer.getInst().setGson(new ApareciumGsonBuilder().build());
     SimpleJSONConfig.INSTANCE.register(this);
 
-    registerCommands(new PaperCommandManager(this));
+    registerCommands();
     registerListeners(Bukkit.getPluginManager());
     registerCustomCommands();
     initializeDirectories();
@@ -71,7 +74,29 @@ public class ApareciumMain extends Aparecium {
     }
   }
 
-  private void registerCommands(PaperCommandManager paperCommandManager) {
+  private void registerCommands() {
+    PaperCommandManager paperCommandManager = new PaperCommandManager(this);
+
+    paperCommandManager.addSupportedLanguage(Locale.ENGLISH);
+    paperCommandManager.setFormat(
+        MessageType.ERROR,
+        ChatColor.BLACK,
+        ChatColor.DARK_BLUE,
+        ChatColor.DARK_GREEN,
+        ChatColor.DARK_AQUA,
+        ChatColor.DARK_RED,
+        ChatColor.DARK_PURPLE,
+        ChatColor.GOLD,
+        ChatColor.GRAY,
+        ChatColor.DARK_GRAY,
+        ChatColor.BLUE,
+        ChatColor.GREEN,
+        ChatColor.AQUA,
+        ChatColor.RED,
+        ChatColor.LIGHT_PURPLE,
+        ChatColor.YELLOW,
+        ChatColor.WHITE);
+
     paperCommandManager.registerCommand(new ItemBaseCommand());
   }
 
