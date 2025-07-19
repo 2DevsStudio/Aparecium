@@ -38,15 +38,27 @@ public class ApareciumGsonBuilder {
   private GsonBuilder gsonBuilder;
 
   public ApareciumGsonBuilder() {
-    this.gsonBuilder =
-        new GsonBuilder()
-            .setPrettyPrinting()
-            .disableHtmlEscaping()
-            .excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC)
-            .serializeNulls()
-            .registerTypeHierarchyAdapter(Class.class, new ClassAdapter())
-            .registerTypeAdapter(Instant.class, new InstantAdapter())
-            .registerTypeAdapter(ChronoUnit.class, new ChronoUnitAdapter());
+    this.gsonBuilder = new GsonBuilder()
+        .setPrettyPrinting()
+        .disableHtmlEscaping()
+        .excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC)
+        .serializeNulls()
+        .registerTypeHierarchyAdapter(Class.class, new ClassAdapter())
+        .registerTypeAdapter(Instant.class, new InstantAdapter())
+        .registerTypeAdapter(Instant[].class, new InstantAdapter())
+        .registerTypeAdapter(ChronoUnit.class, new ChronoUnitAdapter())
+        // Add exclusion strategy to prevent Gson from trying to use reflection on Instant fields
+        .addSerializationExclusionStrategy(new com.google.gson.ExclusionStrategy() {
+            @Override
+            public boolean shouldSkipField(com.google.gson.FieldAttributes f) {
+                return false;
+            }
+
+            @Override
+            public boolean shouldSkipClass(Class<?> clazz) {
+                return false;
+            }
+        });
 
     if (Aparecium.isUsingPaper()) {
       this.gsonBuilder.registerTypeHierarchyAdapter(Component.class, new ComponentAdapter());

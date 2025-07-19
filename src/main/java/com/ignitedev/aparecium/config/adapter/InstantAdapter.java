@@ -7,7 +7,6 @@ package com.ignitedev.aparecium.config.adapter;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
@@ -18,18 +17,19 @@ public class InstantAdapter implements JsonSerializer<Instant>, JsonDeserializer
 
   @Override
   public Instant deserialize(
-      JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext)
+      JsonElement jsonElement, Type type, JsonDeserializationContext context)
       throws JsonParseException {
-    return Instant.ofEpochMilli(jsonElement.getAsJsonObject().get("instant").getAsLong());
+    if (jsonElement.isJsonObject()) {
+      return Instant.ofEpochMilli(jsonElement.getAsJsonObject().get("instant").getAsLong());
+    } else if (jsonElement.isJsonPrimitive()) {
+      return Instant.ofEpochMilli(jsonElement.getAsLong());
+    }
+    throw new JsonParseException("Expected number or object for Instant");
   }
 
   @Override
-  public JsonElement serialize(
-      Instant instant, Type type, JsonSerializationContext jsonSerializationContext) {
-    JsonObject jsonObject = new JsonObject();
-
-    jsonObject.add("instant", jsonSerializationContext.serialize(instant.toEpochMilli()));
-
-    return jsonObject;
+  public JsonElement serialize(Instant instant, Type type, JsonSerializationContext context) {
+    // Return as a simple number (millis since epoch) for better compatibility
+    return context.serialize(instant.toEpochMilli());
   }
 }
