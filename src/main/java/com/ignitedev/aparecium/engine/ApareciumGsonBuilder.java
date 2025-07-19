@@ -45,8 +45,8 @@ public class ApareciumGsonBuilder {
             .excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC)
             .serializeNulls()
             .registerTypeHierarchyAdapter(Class.class, new ClassAdapter())
-            .registerTypeHierarchyAdapter(Instant.class, new InstantAdapter())
-            .registerTypeHierarchyAdapter(ChronoUnit.class, new ChronoUnitAdapter());
+            .registerTypeAdapter(Instant.class, new InstantAdapter())
+            .registerTypeAdapter(ChronoUnit.class, new ChronoUnitAdapter());
 
     if (Aparecium.isUsingPaper()) {
       this.gsonBuilder.registerTypeHierarchyAdapter(Component.class, new ComponentAdapter());
