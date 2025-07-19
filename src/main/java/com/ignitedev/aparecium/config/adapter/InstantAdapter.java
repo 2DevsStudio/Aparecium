@@ -4,32 +4,38 @@
 
 package com.ignitedev.aparecium.config.adapter;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
+
 import java.lang.reflect.Type;
 import java.time.Instant;
 
 public class InstantAdapter implements JsonSerializer<Instant>, JsonDeserializer<Instant> {
-
   @Override
-  public Instant deserialize(
-      JsonElement jsonElement, Type type, JsonDeserializationContext context)
+  public Instant deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
       throws JsonParseException {
-    if (jsonElement.isJsonObject()) {
-      return Instant.ofEpochMilli(jsonElement.getAsJsonObject().get("instant").getAsLong());
-    } else if (jsonElement.isJsonPrimitive()) {
-      return Instant.ofEpochMilli(jsonElement.getAsLong());
+    try {
+      if (json.isJsonPrimitive()) {
+        return Instant.ofEpochMilli(json.getAsLong());
+      } else if (json.isJsonObject()) {
+        JsonObject obj = json.getAsJsonObject();
+        if (obj.has("epochSecond") && obj.has("nano")) {
+          return Instant.ofEpochSecond(
+              obj.get("epochSecond").getAsLong(),
+              obj.get("nano").getAsInt()
+          );
+        }
+        if (obj.has("instant")) {
+          return Instant.ofEpochMilli(obj.get("instant").getAsLong());
+        }
+      }
+      return Instant.now();
+    } catch (Exception e) {
+      return Instant.now();
     }
-    throw new JsonParseException("Expected number or object for Instant");
   }
 
   @Override
-  public JsonElement serialize(Instant instant, Type type, JsonSerializationContext context) {
-    // Return as a simple number (millis since epoch) for better compatibility
-    return context.serialize(instant.toEpochMilli());
+  public JsonElement serialize(Instant src, Type typeOfSrc, JsonSerializationContext context) {
+    return new JsonPrimitive(src.toEpochMilli());
   }
 }

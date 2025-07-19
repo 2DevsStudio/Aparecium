@@ -45,33 +45,19 @@ public class ApareciumGsonBuilder {
         .serializeNulls()
         .registerTypeHierarchyAdapter(Class.class, new ClassAdapter())
         .registerTypeAdapter(Instant.class, new InstantAdapter())
-        .registerTypeAdapter(Instant[].class, new InstantAdapter())
-        .registerTypeAdapter(ChronoUnit.class, new ChronoUnitAdapter())
-        // Add exclusion strategy to prevent Gson from trying to use reflection on Instant fields
-        .addSerializationExclusionStrategy(new com.google.gson.ExclusionStrategy() {
-            @Override
-            public boolean shouldSkipField(com.google.gson.FieldAttributes f) {
-                return false;
-            }
-
-            @Override
-            public boolean shouldSkipClass(Class<?> clazz) {
-                return false;
-            }
-        });
+        .registerTypeAdapter(ChronoUnit.class, new ChronoUnitAdapter());
 
     if (Aparecium.isUsingPaper()) {
       this.gsonBuilder.registerTypeHierarchyAdapter(Component.class, new ComponentAdapter());
     }
-    this.gsonBuilder =
-        this.gsonBuilder
-            .registerTypeHierarchyAdapter(ItemStack.class, new ItemStackAdapter())
-            .registerTypeHierarchyAdapter(World.class, new WorldAdapter())
-            .registerTypeHierarchyAdapter(Reference.class, new ReferenceAdapter())
-            .registerTypeAdapter(BlockState.class, new InterfaceAdapter())
-            .addDeserializationExclusionStrategy(new SuperclassExclusionStrategy())
-            .addSerializationExclusionStrategy(new SuperclassExclusionStrategy())
-            .registerTypeAdapter(MagicItem.class, new MagicItemAdapter());
+    this.gsonBuilder
+        .registerTypeHierarchyAdapter(ItemStack.class, new ItemStackAdapter())
+        .registerTypeHierarchyAdapter(World.class, new WorldAdapter())
+        .registerTypeHierarchyAdapter(Reference.class, new ReferenceAdapter())
+        .registerTypeAdapter(BlockState.class, new InterfaceAdapter())
+        .addDeserializationExclusionStrategy(new SuperclassExclusionStrategy())
+        .addSerializationExclusionStrategy(new SuperclassExclusionStrategy())
+        .registerTypeAdapter(MagicItem.class, new MagicItemAdapter());
   }
 
   public Gson build() {
