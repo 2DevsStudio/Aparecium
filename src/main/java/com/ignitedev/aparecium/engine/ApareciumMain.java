@@ -22,7 +22,6 @@ import com.ignitedev.aparecium.logging.HedwigLogger;
 import com.ignitedev.aparecium.util.ReflectionUtility;
 import com.twodevsstudio.simplejsonconfig.SimpleJSONConfig;
 import com.twodevsstudio.simplejsonconfig.api.Config;
-import com.twodevsstudio.simplejsonconfig.def.Serializer;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Locale;
@@ -52,9 +51,9 @@ public class ApareciumMain extends Aparecium {
 
   @Override
   public void onEnabling() {
+    new ApareciumGsonBuilder().build();
     instance = this;
 
-    Serializer.getInst().setGson(new ApareciumGsonBuilder().build());
     SimpleJSONConfig.INSTANCE.register(this, new File(getDataFolder(), "/aparecium"));
 
     registerCommands();

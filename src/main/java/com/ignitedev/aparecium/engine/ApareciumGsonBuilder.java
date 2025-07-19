@@ -4,13 +4,13 @@
 
 package com.ignitedev.aparecium.engine;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.ignitedev.aparecium.Aparecium;
 import com.ignitedev.aparecium.config.adapter.ComponentAdapter;
 import com.ignitedev.aparecium.config.adapter.InstantAdapter;
 import com.ignitedev.aparecium.config.adapter.MagicItemAdapter;
 import com.ignitedev.aparecium.item.MagicItem;
+import com.twodevsstudio.simplejsonconfig.def.Serializer;
+import com.twodevsstudio.simplejsonconfig.def.SharedGsonBuilder;
 import com.twodevsstudio.simplejsonconfig.def.adapters.ChronoUnitAdapter;
 import com.twodevsstudio.simplejsonconfig.def.adapters.ClassAdapter;
 import com.twodevsstudio.simplejsonconfig.def.adapters.InterfaceAdapter;
@@ -19,7 +19,6 @@ import com.twodevsstudio.simplejsonconfig.def.adapters.ReferenceAdapter;
 import com.twodevsstudio.simplejsonconfig.def.adapters.WorldAdapter;
 import com.twodevsstudio.simplejsonconfig.def.strategies.SuperclassExclusionStrategy;
 import java.lang.ref.Reference;
-import java.lang.reflect.Modifier;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import lombok.Data;
@@ -35,15 +34,11 @@ import org.bukkit.inventory.ItemStack;
 @Data
 public class ApareciumGsonBuilder {
 
-  private GsonBuilder gsonBuilder;
+  private SharedGsonBuilder gsonBuilder;
 
   public ApareciumGsonBuilder() {
-    this.gsonBuilder = new GsonBuilder()
-        .setPrettyPrinting()
-        .disableHtmlEscaping()
-        .excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC)
-        .serializeNulls()
-        .registerTypeHierarchyAdapter(Class.class, new ClassAdapter())
+    this.gsonBuilder = Serializer.getInst().toBuilder();
+    this.gsonBuilder.registerTypeHierarchyAdapter(Class.class, new ClassAdapter())
         .registerTypeAdapter(Instant.class, new InstantAdapter())
         .registerTypeAdapter(ChronoUnit.class, new ChronoUnitAdapter());
 
@@ -60,7 +55,7 @@ public class ApareciumGsonBuilder {
         .registerTypeAdapter(MagicItem.class, new MagicItemAdapter());
   }
 
-  public Gson build() {
-    return gsonBuilder.create();
+  public void build() {
+    this.gsonBuilder.build();
   }
 }
