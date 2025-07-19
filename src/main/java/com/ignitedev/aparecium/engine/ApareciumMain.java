@@ -55,7 +55,7 @@ public class ApareciumMain extends Aparecium {
     instance = this;
 
     Serializer.getInst().setGson(new ApareciumGsonBuilder().build());
-    SimpleJSONConfig.INSTANCE.register(this);
+    SimpleJSONConfig.INSTANCE.register(this, new File(getDataFolder(), "aparecium"));
 
     registerCommands();
     registerListeners(Bukkit.getPluginManager());
