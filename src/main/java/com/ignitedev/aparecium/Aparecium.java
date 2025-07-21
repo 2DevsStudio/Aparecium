@@ -87,7 +87,7 @@ public abstract class Aparecium extends JavaPlugin {
 
     this.startupStage = StartupStage.DISABLED;
     // Aparecium logic
-    AdmittanceBook.getAdmittanceBook().removePluginCache(this.getName(), this);
+    AdmittanceBook.getAdmittanceBook().removePluginCache(this.getName(), null);
   }
 
   /** LOAD STAGE 1 */
