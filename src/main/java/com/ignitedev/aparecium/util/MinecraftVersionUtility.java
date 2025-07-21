@@ -5,12 +5,11 @@
 package com.ignitedev.aparecium.util;
 
 import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 
 /**
- * Utility class for handling Minecraft server version information.
- * Provides methods to compare and retrieve the server version.
+ * Utility class for handling Minecraft server version information. Provides methods to compare and
+ * retrieve the server version.
  */
 @SuppressWarnings("unused")
 @UtilityClass
@@ -24,10 +23,10 @@ public class MinecraftVersionUtility {
 
   static {
     // Initialize the version information based on the server's package name.
-    String fullVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-    stringVersion = StringUtils.replace(fullVersion, "_", " ");
-    intVersion =
-            Integer.parseInt(StringUtils.replace(fullVersion.split("_")[1].split("_R")[0], "v", ""));
+    String fullVersion = Bukkit.getServer().getVersion().split("-")[0];
+
+    intVersion = Integer.parseInt(fullVersion.split("\\.")[1]);
+    stringVersion = fullVersion;
   }
 
   /**
