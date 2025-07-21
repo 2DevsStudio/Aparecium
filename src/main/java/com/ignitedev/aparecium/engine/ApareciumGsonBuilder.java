@@ -11,51 +11,38 @@ import com.ignitedev.aparecium.config.adapter.MagicItemAdapter;
 import com.ignitedev.aparecium.item.MagicItem;
 import com.twodevsstudio.simplejsonconfig.def.Serializer;
 import com.twodevsstudio.simplejsonconfig.def.SharedGsonBuilder;
-import com.twodevsstudio.simplejsonconfig.def.adapters.ChronoUnitAdapter;
-import com.twodevsstudio.simplejsonconfig.def.adapters.ClassAdapter;
-import com.twodevsstudio.simplejsonconfig.def.adapters.InterfaceAdapter;
-import com.twodevsstudio.simplejsonconfig.def.adapters.ItemStackAdapter;
-import com.twodevsstudio.simplejsonconfig.def.adapters.ReferenceAdapter;
-import com.twodevsstudio.simplejsonconfig.def.adapters.WorldAdapter;
-import com.twodevsstudio.simplejsonconfig.def.strategies.SuperclassExclusionStrategy;
-import java.lang.ref.Reference;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import lombok.Data;
 import net.kyori.adventure.text.Component;
-import org.bukkit.World;
-import org.bukkit.block.BlockState;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * @implNote This Gson Builder is used for SimpleJsonConfig .json files processing to provide type
  *     adapters for Aparecium stuff
  */
-@Data
 public class ApareciumGsonBuilder {
-
-  private SharedGsonBuilder gsonBuilder;
+  private final SharedGsonBuilder gsonBuilder;
 
   public ApareciumGsonBuilder() {
+    // Get the existing Gson builder
     this.gsonBuilder = Serializer.getInst().toBuilder();
-    this.gsonBuilder.registerTypeHierarchyAdapter(Class.class, new ClassAdapter())
-        .registerTypeAdapter(Instant.class, new InstantAdapter())
-        .registerTypeAdapter(ChronoUnit.class, new ChronoUnitAdapter());
+
+    // Register all our custom adapters
+    registerAdapters();
+  }
+
+  private void registerAdapters() {
+    InstantAdapter instantAdapter = new InstantAdapter();
+    MagicItemAdapter magicItemAdapter = new MagicItemAdapter();
+
+    gsonBuilder
+        .registerTypeHierarchyAdapter(Instant.class, instantAdapter)
+        .registerTypeHierarchyAdapter(MagicItem.class, magicItemAdapter);
 
     if (Aparecium.isUsingPaper()) {
-      this.gsonBuilder.registerTypeHierarchyAdapter(Component.class, new ComponentAdapter());
+      gsonBuilder.registerTypeHierarchyAdapter(Component.class, new ComponentAdapter());
     }
-    this.gsonBuilder
-        .registerTypeHierarchyAdapter(ItemStack.class, new ItemStackAdapter())
-        .registerTypeHierarchyAdapter(World.class, new WorldAdapter())
-        .registerTypeHierarchyAdapter(Reference.class, new ReferenceAdapter())
-        .registerTypeAdapter(BlockState.class, new InterfaceAdapter())
-        .addDeserializationExclusionStrategy(new SuperclassExclusionStrategy())
-        .addSerializationExclusionStrategy(new SuperclassExclusionStrategy())
-        .registerTypeAdapter(MagicItem.class, new MagicItemAdapter());
   }
 
   public void build() {
-    this.gsonBuilder.build();
+    gsonBuilder.build();
   }
 }
