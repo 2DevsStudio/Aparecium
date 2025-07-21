@@ -56,6 +56,9 @@ public abstract class Aparecium extends JavaPlugin {
 
   @Override
   public void onEnable() {
+    // Aparecium logic
+    HedwigLogger.initializeMainLogger(new HedwigLogger(), this);
+
     this.startupStage = StartupStage.ENABLING;
 
     // Aparecium logic
@@ -65,8 +68,6 @@ public abstract class Aparecium extends JavaPlugin {
     measure(this.stopwatch, this::onEnabling);
 
     this.startupStage = StartupStage.ENABLED;
-    // Aparecium logic
-    HedwigLogger.initializeMainLogger(new HedwigLogger(), this);
 
     AdmittanceBook.getAdmittanceBook().cachePlugin(this.getName(), this);
   }
