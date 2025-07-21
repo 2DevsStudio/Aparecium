@@ -54,7 +54,16 @@ public class ApareciumMain extends Aparecium {
     new ApareciumGsonBuilder().build();
     instance = this;
 
-    SimpleJSONConfig.INSTANCE.register(this, new File(getServer().getPluginsFolder(), "/Aparecium"));
+    File configsDirectory = new File(getServer().getPluginsFolder(), "/Aparecium");
+
+    if(!configsDirectory.exists()){
+      if(configsDirectory.mkdir()){
+        getLogger().info("Created Configs Directory");
+      }
+    }
+    SimpleJSONConfig.INSTANCE.register(this, configsDirectory);
+
+    System.out.println("Configs Directory: " + configsDirectory.getAbsolutePath());
 
     registerCommands();
     registerListeners(Bukkit.getPluginManager());
