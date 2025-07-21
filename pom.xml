@@ -54,12 +54,12 @@
             </relocation>
             <relocation>
               <pattern>co.aikar.commands</pattern>
-              <shadedPattern>com.ignitedev.aparecium.acf</shadedPattern> <!-- Replace this -->
+              <shadedPattern>com.ignitedev.aparecium.acf</shadedPattern>
             </relocation>
             <relocation>
               <pattern>co.aikar.locales</pattern>
               <shadedPattern>com.ignitedev.aparecium.locales
-              </shadedPattern> <!-- Replace this -->
+              </shadedPattern>
             </relocation>
           </relocations>
         </configuration>
@@ -180,7 +180,7 @@
     <dependency>
       <artifactId>acf-paper</artifactId>
       <groupId>co.aikar</groupId>
-      <version>0.5.0-SNAPSHOT</version>
+      <version>0.5.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <artifactId>google-java-format</artifactId>
