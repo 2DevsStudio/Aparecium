@@ -24,7 +24,6 @@ import com.twodevsstudio.simplejsonconfig.api.Config;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Locale;
-import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -36,9 +35,7 @@ import org.bukkit.plugin.PluginManager;
  *     example of how to set up Aparecium
  */
 public class ApareciumMain extends Aparecium {
-
-  @Getter private static ApareciumMain instance;
-
+  
   @Override
   public void onPreLoad() {}
 
@@ -50,8 +47,6 @@ public class ApareciumMain extends Aparecium {
 
   @Override
   public void onEnabling() {
-    instance = this;
-
     registerCommands();
     registerListeners(Bukkit.getPluginManager());
     registerCustomCommands();

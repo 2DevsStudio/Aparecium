@@ -5,7 +5,6 @@
 package com.ignitedev.aparecium.util;
 
 import com.fastasyncworldedit.core.FaweAPI;
-import com.ignitedev.aparecium.engine.ApareciumMain;
 import com.ignitedev.aparecium.logging.HedwigLogger;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
@@ -34,6 +33,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.jetbrains.annotations.Nullable;
 
@@ -60,17 +60,17 @@ public class SchematicUtility {
    * @param ignoreAirBlocks Whether to ignore air blocks during the paste operation.
    */
   public void asyncPaste(
-          String schematic,
-          Location location,
-          Runnable callback,
-          boolean copyBiomes,
-          boolean copyEntities,
-          boolean ignoreAirBlocks) {
+      String schematic,
+      Location location,
+      Runnable callback,
+      boolean copyBiomes,
+      boolean copyEntities,
+      boolean ignoreAirBlocks, JavaPlugin plugin) {
     asyncPaste(
             schematic,
             location,
             callback,
-            ApareciumMain.getInstance(),
+            plugin,
             copyBiomes,
             copyEntities,
             ignoreAirBlocks);
@@ -98,7 +98,7 @@ public class SchematicUtility {
           boolean ignoreAirBlocks) {
     BukkitScheduler scheduler = Bukkit.getScheduler();
     scheduler.runTaskAsynchronously(yourPlugin, () -> {
-      paste(schematic, location, copyBiomes, copyEntities, ignoreAirBlocks);
+      paste(schematic, location, yourPlugin, copyBiomes, copyEntities, ignoreAirBlocks);
       if (callback != null) {
         scheduler.runTask(yourPlugin, callback);
       }
@@ -121,11 +121,11 @@ public class SchematicUtility {
           Location location,
           boolean copyBiomes,
           boolean copyEntities,
-          boolean ignoreAirBlocks) {
+          boolean ignoreAirBlocks, JavaPlugin plugin) {
     return paste(
             schematic,
             location,
-            ApareciumMain.getInstance(),
+            plugin,
             copyBiomes,
             copyEntities,
             ignoreAirBlocks);
