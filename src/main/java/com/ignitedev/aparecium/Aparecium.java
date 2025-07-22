@@ -46,6 +46,9 @@ public abstract class Aparecium extends JavaPlugin {
 
   @Override
   public void onLoad() {
+    // Aparecium logic
+    factoriesManager.createFactories();
+
     new ApareciumGsonBuilder().build();
     
     SimpleJSONConfig.INSTANCE.register(this);
@@ -66,9 +69,6 @@ public abstract class Aparecium extends JavaPlugin {
     HedwigLogger.initializeMainLogger(new HedwigLogger(), this);
 
     this.startupStage = StartupStage.ENABLING;
-
-    // Aparecium logic
-    factoriesManager.createFactories();
 
     // plugin logic
     measure(this.stopwatch, this::onEnabling);
