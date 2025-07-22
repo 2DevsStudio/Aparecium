@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("FieldMayBeFinal") // simplejsonconfig is not supporting final fields yet
 @Getter
-@Configuration("layer-base.json")
+@Configuration(value = "layer-base.json", configPath = "ApareciumConfiguration/")
 public class LayerBase extends Config {
 
   private Map<String, LayoutLayer> layers = defaultLayers();

@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("FieldMayBeFinal") // simplejsonconfig is not supporting final fields yet
 @Getter
-@Configuration("item-base.json")
+@Configuration(value = "item-base.json", configPath = "ApareciumConfiguration/")
 public class ItemBase extends Config {
 
   private Map<String, MagicItem> savedItems = exampleItems();

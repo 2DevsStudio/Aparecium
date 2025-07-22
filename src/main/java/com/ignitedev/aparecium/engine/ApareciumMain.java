@@ -20,7 +20,6 @@ import com.ignitedev.aparecium.config.CustomCommandsBase;
 import com.ignitedev.aparecium.item.interaction.listener.ItemInteractionListener;
 import com.ignitedev.aparecium.logging.HedwigLogger;
 import com.ignitedev.aparecium.util.ReflectionUtility;
-import com.twodevsstudio.simplejsonconfig.SimpleJSONConfig;
 import com.twodevsstudio.simplejsonconfig.api.Config;
 import java.io.File;
 import java.lang.reflect.Field;
@@ -51,7 +50,6 @@ public class ApareciumMain extends Aparecium {
 
   @Override
   public void onEnabling() {
-    new ApareciumGsonBuilder().build();
     instance = this;
     // Config directory is now initialized in the base Aparecium class
     getLogger().info("Using config directory: " + Aparecium.getConfigsDirectory().getAbsolutePath());

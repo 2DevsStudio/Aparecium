@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("FieldMayBeFinal") // simplejsonconfig is not supporting final fields yet
 @Getter
-@Configuration("command-base.json")
+@Configuration(value = "command-base.json", configPath = "ApareciumConfiguration/")
 public class CustomCommandsBase extends Config {
 
   private ApareciumComponent noPermissionMessage = ApareciumComponent.of("No Permission.");

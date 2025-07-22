@@ -12,7 +12,7 @@ import lombok.Getter;
 
 @SuppressWarnings("FieldMayBeFinal")
 @Getter
-@Configuration("Aparecium-Configuration.json")
+@Configuration(value = "Aparecium-Configuration.json", configPath = "ApareciumConfiguration/")
 public class ApareciumConfiguration extends Config {
 
   /*

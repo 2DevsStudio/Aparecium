@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("FieldMayBeFinal") // simplejsonconfig is not supporting final fields yet
 @Getter
-@Configuration("layout-base.json")
+@Configuration(value = "layout-base.json", configPath = "ApareciumConfiguration/")
 public class LayoutBase extends Config {
 
   private Map<String, Layout> savedLayouts = exampleLayouts();
