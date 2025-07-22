@@ -11,7 +11,6 @@ import com.ignitedev.aparecium.factory.FactoriesManager;
 import com.ignitedev.aparecium.logging.HedwigLogger;
 import com.ignitedev.aparecium.util.PaperUtility;
 import com.twodevsstudio.simplejsonconfig.SimpleJSONConfig;
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -36,7 +35,6 @@ public abstract class Aparecium extends JavaPlugin {
   @Getter private static final FactoriesManager factoriesManager = new FactoriesManager();
 
   @Getter private static final boolean usingPaper = PaperUtility.checkPaperClass();
-  @Getter private static File configsDirectory;
 
   private final Stopwatch stopwatch = Stopwatch.createUnstarted();
 
@@ -49,17 +47,8 @@ public abstract class Aparecium extends JavaPlugin {
   @Override
   public void onLoad() {
     new ApareciumGsonBuilder().build();
-
-    // Initialize config directory
-    if (configsDirectory == null) {
-      configsDirectory = new File(getServer().getPluginsFolder(), "Aparecium");
-      if (!configsDirectory.exists()) {
-        if (configsDirectory.mkdirs()) {
-          System.out.println("[Aparecium] Created config directory at: " + configsDirectory.getAbsolutePath());
-        }
-      }
-    }
-    SimpleJSONConfig.INSTANCE.register(this, configsDirectory);
+    
+    SimpleJSONConfig.INSTANCE.register(this);
 
     this.startupStage = StartupStage.PRE_LOAD;
     measure(this.stopwatch, this::onPreLoad);
@@ -75,11 +64,6 @@ public abstract class Aparecium extends JavaPlugin {
   public void onEnable() {
     // Aparecium logic
     HedwigLogger.initializeMainLogger(new HedwigLogger(), this);
-    
-    // Log the config directory being used
-    if (configsDirectory != null) {
-      getLogger().info("Using config directory: " + configsDirectory.getAbsolutePath());
-    }
 
     this.startupStage = StartupStage.ENABLING;
 

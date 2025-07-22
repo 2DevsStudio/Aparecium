@@ -51,8 +51,6 @@ public class ApareciumMain extends Aparecium {
   @Override
   public void onEnabling() {
     instance = this;
-    // Config directory is now initialized in the base Aparecium class
-    getLogger().info("Using config directory: " + Aparecium.getConfigsDirectory().getAbsolutePath());
 
     registerCommands();
     registerListeners(Bukkit.getPluginManager());
