@@ -142,7 +142,7 @@
     <dependency>
       <groupId>com.github.2DevsStudio</groupId>
       <artifactId>SimpleJSONConfig</artifactId>
-      <version>1.4.0</version>
+      <version>1ad1d754c4</version>
     </dependency>
     <dependency>
       <groupId>org.mongodb</groupId>
